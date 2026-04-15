@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌊 海底世界探险 - 数学魔法任务 2026-04-14</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Comic Sans MS", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(180deg, #0a4d8c 0%, #0b6e9f 30%, #118ab2 60%, #073b4c 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #fff;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* 顶部标题和计分板 */
+  .header {
+    text-align: center;
+    margin-bottom: 24px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  .header h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .scoreboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    font-size: 22px;
+    font-weight: bold;
+  }
+
+  .scoreboard .score {
+    background: #ffd166;
+    color: #073b4c;
+    padding: 8px 24px;
+    border-radius: 16px;
+    min-width: 120px;
+  }
+
+  .retry-btn {
+    background: #ef476f;
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 16px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .retry-btn:hover { background: #d63a5e; transform: scale(1.05); }
+  .retry-btn:active { transform: scale(0.95); }
+
+  /* 各区域卡片 */
+  .section {
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(6px);
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+
+  .section-title {
+    font-size: 26px;
+    margin-bottom: 16px;
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  }
+
+  /* 题目卡片 */
+  .question-card {
+    background: rgba(255,255,255,0.18);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    transition: background 0.3s;
+  }
+
+  .question-card.correct { background: rgba(81, 207, 102, 0.35); }
+  .question-card.wrong { background: rgba(255, 183, 77, 0.35); }
+
+  .question-text {
+    font-size: 24px;
+    font-weight: bold;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .answer-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .answer-input {
+    width: 80px;
+    height: 50px;
+    font-size: 26px;
+    text-align: center;
+    border: 3px solid #ffd166;
+    border-radius: 14px;
+    outline: none;
+    background: #fff;
+    color: #073b4c;
+    font-weight: bold;
+    transition: border-color 0.3s, background 0.3s;
+    -moz-appearance: textfield;
+  }
+
+  .answer-input::-webkit-outer-spin-button,
+  .answer-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .answer-input.correct {
+    border-color: #51cf66;
+    background: #d3f9d8;
+  }
+
+  .answer-input.wrong {
+    border-color: #ffa94d;
+    background: #fff3e0;
+  }
+
+  .feedback {
+    font-size: 22px;
+    min-width: 80px;
+    min-height: 30px;
+  }
+
+  .correct-answer {
+    font-size: 18px;
+    color: #ffd166;
+    font-weight: bold;
+  }
+
+  /* 互动挑战区 - 拖拽/选择 */
+  .challenge-option {
+    display: inline-block;
+    background: rgba(255,255,255,0.25);
+    border: 3px solid #ffd166;
+    border-radius: 14px;
+    padding: 12px 20px;
+    margin: 6px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .challenge-option:hover { background: rgba(255,255,255,0.4); transform: scale(1.05); }
+  .challenge-option.selected { background: #ffd166; color: #073b4c; }
+  .challenge-option.correct-choice { background: #51cf66; border-color: #51cf66; color: #fff; }
+  .challenge-option.wrong-choice { background: #ef476f; border-color: #ef476f; color: #fff; }
+
+  /* 成就区 */
+  .achievement {
+    text-align: center;
+    padding: 30px;
+    display: none;
+  }
+
+  .achievement.show { display: block; }
+
+  .achievement h2 {
+    font-size: 36px;
+    margin-bottom: 16px;
+    animation: bounce 0.6s ease infinite alternate;
+  }
+
+  .achievement .badge {
+    font-size: 64px;
+    margin: 16px 0;
+  }
+
+  .achievement p {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  @keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); }
+  }
+
+  /* 烟花/Confetti */
+  .confetti-container {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 999;
+    overflow: hidden;
+  }
+
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    animation: fall 2.5s ease-out forwards;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* 海底气泡装饰 */
+  .bubble {
+    position: fixed;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    animation: float-up 8s ease-in infinite;
+    pointer-events: none;
+  }
+
+  @keyframes float-up {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 0.6; }
+    100% { transform: translateY(-100px) scale(1); opacity: 0; }
+  }
+
+  /* 响应式 */
+  @media (max-width: 599px) {
+    body { padding: 12px; }
+    .header h1 { font-size: 24px; }
+    .scoreboard { font-size: 18px; gap: 10px; }
+    .scoreboard .score { padding: 6px 16px; min-width: 100px; }
+    .section { padding: 16px; border-radius: 18px; }
+    .section-title { font-size: 22px; }
+    .question-card { padding: 12px 14px; flex-direction: column; align-items: flex-start; }
+    .question-text { font-size: 20px; }
+    .answer-input { width: 70px; height: 46px; font-size: 22px; }
+    .feedback { font-size: 18px; }
+    .challenge-option { font-size: 18px; padding: 10px 16px; }
+    .achievement h2 { font-size: 28px; }
+    .achievement .badge { font-size: 48px; }
+  }
+
+  @media (min-width: 600px) and (max-width: 1023px) {
+    .container { max-width: 700px; }
+    .header h1 { font-size: 28px; }
+    .section-title { font-size: 24px; }
+    .question-text { font-size: 22px; }
+  }
+
+  @media (min-width: 1024px) {
+    .container { max-width: 960px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 海底气泡装饰 -->
+<div id="bubbles"></div>
+
+<!-- 烟花容器 -->
+<div class="confetti-container" id="confetti-container"></div>
+
+<div class="container">
+  <!-- 顶部 -->
+  <div class="header">
+    <h1>🌊 海底世界探险 🐠</h1>
+    <p style="font-size:16px; margin-bottom:12px; opacity:0.85;">数学魔法任务 · 2026年4月14日</p>
+    <div class="scoreboard">
+      <span>答对：</span>
+      <span class="score" id="score-display">0 / 12</span>
+      <button class="retry-btn" id="retry-btn" onclick="retryAll()">🔄 再试一次</button>
+    </div>
+  </div>
+
+  <!-- 🔥 热身小游戏 -->
+  <div class="section">
+    <div class="section-title">🔥 热身小游戏：小鱼找朋友（2分钟）</div>
+    <p style="text-align:center; font-size:18px; margin-bottom:16px;">帮小鱼找到加起来等于 <strong style="color:#ffd166; font-size:22px;">15</strong> 的好朋友吧！</p>
+
+    <div class="question-card" id="warmup1">
+      <div class="question-text">🐟 5 + <input type="number" class="answer-input" data-answer="10" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"> = 15</div>
+      <div class="feedback" id="fb-warmup1"></div>
+    </div>
+
+    <div class="question-card" id="warmup2">
+      <div class="question-text">🐠 12 + <input type="number" class="answer-input" data-answer="3" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"> = 15</div>
+      <div class="feedback" id="fb-warmup2"></div>
+    </div>
+
+    <div class="question-card" id="warmup3">
+      <div class="question-text">🐡 <input type="number" class="answer-input" data-answer="7" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"> + 8 = 15</div>
+      <div class="feedback" id="fb-warmup3"></div>
+    </div>
+  </div>
+
+  <!-- ⭐ 今日核心任务 -->
+  <div class="section">
+    <div class="section-title">⭐ 今日核心任务：海底宝藏计算（8分钟）</div>
+    <p style="text-align:center; font-size:18px; margin-bottom:16px;">帮助潜水员算出正确答案，找到海底宝藏！</p>
+
+    <div class="question-card" id="core1">
+      <div class="question-text">🐚 13 + 4 = <input type="number" class="answer-input" data-answer="17" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback" id="fb-core1"></div>
+    </div>
+
+    <div class="question-card" id="core2">
+      <div class="question-text">🦀 16 - 5 = <input type="number" class="answer-input" data-answer="11" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback" id="fb-core2"></div>
+    </div>
+
+    <div class="question-card" id="core3">
+      <div class="question-text">🐙 10 + 7 = <input type="number" class="answer-input" data-answer="17" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback" id="fb-core3"></div>
+    </div>
+
+    <div class="question-card" id="core4">
+      <div class="question-text">🦈 18 - 6 = <input type="number" class="answer-input" data-answer="12" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback" id="fb-core4"></div>
+    </div>
+
+    <div class="question-card" id="core5">
+      <div class="question-text">🐬 11 + 5 = <input type="number" class="answer-input" data-answer="16" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback" id="fb-core5"></div>
+    </div>
+
+    <div class="question-card" id="core6">
+      <div class="question-text">🐋 19 - 8 = <input type="number" class="answer-input" data-answer="11" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback" id="fb-core6"></div>
+    </div>
+
+    <div class="question-card" id="core7">
+      <div class="question-text">🦑 14 + 3 = <input type="number" class="answer-input" data-answer="17" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback" id="fb-core7"></div>
+    </div>
+
+    <div class="question-card" id="core8">
+      <div class="question-text">🐳 15 - 4 = <input type="number" class="answer-input" data-answer="11" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback" id="fb-core8"></div>
+    </div>
+
+    <div class="question-card" id="core9">
+      <div class="question-text">🦐 12 + 6 = <input type="number" class="answer-input" data-answer="18" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback" id="fb-core9"></div>
+    </div>
+
+    <div class="question-card" id="core10">
+      <div class="question-text">🐠 17 - 3 = <input type="number" class="answer-input" data-answer="14" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback" id="fb-core10"></div>
+    </div>
+  </div>
+
+  <!-- 🎮 互动挑战 -->
+  <div class="section">
+    <div class="section-title">🎮 互动挑战：谁最大？（3-5分钟）</div>
+    <p style="text-align:center; font-size:18px; margin-bottom:16px;">点击选出计算结果最大的那一道题！</p>
+
+    <div style="text-align:center; margin-bottom:20px;">
+      <div class="challenge-option" data-value="15" onclick="selectChallenge(this, event)">A. 12 + 3</div>
+      <div class="challenge-option" data-value="13" onclick="selectChallenge(this, event)">B. 18 - 5</div>
+      <div class="challenge-option" data-value="16" onclick="selectChallenge(this, event)">C. 11 + 5</div>
+      <div class="challenge-option" data-value="14" onclick="selectChallenge(this, event)">D. 19 - 4</div>
+    </div>
+
+    <div id="challenge-feedback" style="text-align:center; font-size:20px; min-height:36px;"></div>
+  </div>
+
+  <!-- 🏆 今日成就 -->
+  <div class="section achievement" id="achievement">
+    <h2>🎉 太棒了！</h2>
+    <div class="badge">🏆🐠🌟</div>
+    <p>你完成了所有海底数学魔法任务！</p>
+    <p id="achievement-detail"></p>
+    <p style="font-size:18px; margin-top:12px; opacity:0.8;">明天继续来海底探险吧！🌊</p>
+  </div>
+</div>
+
+<script>
+// ============ 音效系统 ============
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+
+function getAudioCtx() {
+  if (!audioCtx) {
+    audioCtx = new AudioCtx();
+  }
+  return audioCtx;
+}
+
+// 答对音效：C-E-G 升调和弦
+function playCorrectSound() {
+  try {
+    const ctx = getAudioCtx();
+    const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.2, ctx.currentTime + i * 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.4);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + i * 0.1);
+      osc.stop(ctx.currentTime + i * 0.1 + 0.4);
+    });
+  } catch(e) {}
+}
+
+// 答错音效：降调
+function playWrongSound() {
+  try {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(300, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.3);
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.3);
+  } catch(e) {}
+}
+
+// ============ 烟花/Confetti ============
+function launchConfetti() {
+  const container = document.getElementById('confetti-container');
+  const colors = ['#ff6b6b', '#ffd166', '#51cf66', '#339af0', '#cc5de8', '#ff922b', '#20c997'];
+
+  for (let i = 0; i < 80; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + '%';
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.animationDelay = Math.random() * 1.5 + 's';
+    confetti.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+    confetti.style.width = (6 + Math.random() * 8) + 'px';
+    confetti.style.height = (6 + Math.random() * 8) + 'px';
+    container.appendChild(confetti);
+  }
+
+  setTimeout(() => {
+    container.innerHTML = '';
+  }, 4000);
+}
+
+// ============ 气泡装饰 ============
+function createBubbles() {
+  const container = document.getElementById('bubbles');
+  for (let i = 0; i < 12; i++) {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    const size = 20 + Math.random() * 40;
+    bubble.style.width = size + 'px';
+    bubble.style.height = size + 'px';
+    bubble.style.left = Math.random() * 100 + '%';
+    bubble.style.animationDelay = Math.random() * 8 + 's';
+    bubble.style.animationDuration = (6 + Math.random() * 6) + 's';
+    container.appendChild(bubble);
+  }
+}
+createBubbles();
+
+// ============ 计分系统 ============
+let totalQuestions = 12; // 10 core + 1 challenge + 1 (warmup counted but not required)
+let answeredCorrectly = new Set();
+
+// 跟踪所有题目ID
+const allQuestionIds = [];
+document.querySelectorAll('.answer-input[data-answer]').forEach((input, idx) => {
+  const id = 'q' + idx;
+  input.dataset.qid = id;
+  allQuestionIds.push(id);
+});
+
+function updateScore() {
+  const coreInputs = document.querySelectorAll('#core1 .answer-input, #core2 .answer-input, #core3 .answer-input, #core4 .answer-input, #core5 .answer-input, #core6 .answer-input, #core7 .answer-input, #core8 .answer-input, #core9 .answer-input, #core10 .answer-input');
+  const challengeDone = answeredCorrectly.has('challenge');
+  const warmupDone = answeredCorrectly.has('qw0') && answeredCorrectly.has('qw1') && answeredCorrectly.has('qw2');
+
+  let coreCorrect = 0;
+  coreInputs.forEach(input => {
+    if (input.classList.contains('correct')) coreCorrect++;
+  });
+
+  let total = coreCorrect + (challengeDone ? 1 : 0);
+  let max = 10 + 1;
+
+  document.getElementById('score-display').textContent = total + ' / ' + max;
+
+  // 检查是否全部完成
+  if (coreCorrect === 10 && challengeDone) {
+    showAchievement();
+  }
+}
+
+// ============ 答案检查 ============
+function checkAnswer(input) {
+  const userAnswer = parseInt(input.value);
+  const correctAnswer = parseInt(input.dataset.answer);
+  const qid = input.dataset.qid;
+  const card = input.closest('.question-card');
+  const fbSpan = card.querySelector('.feedback');
+
+  if (isNaN(userAnswer) || input.value === '') {
+    input.classList.remove('correct', 'wrong');
+    card.classList.remove('correct', 'wrong');
+    if (fbSpan) fbSpan.innerHTML = '';
+    if (qid) answeredCorrectly.delete(qid);
+    updateScore();
+    return;
+  }
+
+  if (userAnswer === correctAnswer) {
+    input.classList.remove('wrong');
+    input.classList.add('correct');
+    card.classList.remove('wrong');
+    card.classList.add('correct');
+    if (fbSpan) fbSpan.innerHTML = '<span style="color:#51cf66;">✅ 太棒了！</span>';
+    if (qid) answeredCorrectly.add(qid);
+    playCorrectSound();
+  } else {
+    input.classList.remove('correct');
+    input.classList.add('wrong');
+    card.classList.remove('correct');
+    card.classList.add('wrong');
+    if (fbSpan) fbSpan.innerHTML = '<span style="color:#ffa94d;">❌ 答案是 ' + correctAnswer + '</span>';
+    if (qid) answeredCorrectly.delete(qid);
+    playWrongSound();
+  }
+
+  updateScore();
+}
+
+function handleEnter(event, input) {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    checkAnswer(input);
+    // 聚焦下一个输入框
+    const allInputs = Array.from(document.querySelectorAll('.answer-input'));
+    const idx = allInputs.indexOf(input);
+    if (idx < allInputs.length - 1) {
+      allInputs[idx + 1].focus();
+    }
+  }
+}
+
+// ============ 互动挑战 ============
+function selectChallenge(el, event) {
+  event.stopPropagation();
+  const options = document.querySelectorAll('.challenge-option');
+  const selectedValue = parseInt(el.dataset.value);
+  const correctValue = 16; // C. 11 + 5 = 16 最大
+
+  // 清除之前的选择
+  options.forEach(opt => {
+    opt.classList.remove('selected', 'correct-choice', 'wrong-choice');
+  });
+
+  if (selectedValue === correctValue) {
+    el.classList.add('correct-choice');
+    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#51cf66;">✅ 答对了！C. 11+5=16 是最大的！</span>';
+    answeredCorrectly.add('challenge');
+    playCorrectSound();
+  } else {
+    el.classList.add('wrong-choice');
+    // 高亮正确答案
+    options.forEach(opt => {
+      if (parseInt(opt.dataset.value) === correctValue) {
+        opt.classList.add('correct-choice');
+      }
+    });
+    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#ffa94d;">❌ 不对哦，正确答案是 C. 11+5=16</span>';
+    answeredCorrectly.delete('challenge');
+    playWrongSound();
+  }
+
+  updateScore();
+}
+
+// ============ 成就 ============
+function showAchievement() {
+  const ach = document.getElementById('achievement');
+  if (ach.classList.contains('show')) return;
+  ach.classList.add('show');
+  document.getElementById('achievement-detail').textContent = '你答对了全部 11 道题，真是海底数学小达人！';
+  launchConfetti();
+
+  // 播放庆祝音效
+  try {
+    const ctx = getAudioCtx();
+    const melody = [523.25, 587.33, 659.25, 698.46, 783.99, 880, 987.77, 1046.5];
+    melody.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.15, ctx.currentTime + i * 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.3);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + i * 0.12);
+      osc.stop(ctx.currentTime + i * 0.12 + 0.3);
+    });
+  } catch(e) {}
+}
+
+// ============ 再试一次 ============
+function retryAll() {
+  // 清空所有输入
+  document.querySelectorAll('.answer-input').forEach(input => {
+    input.value = '';
+    input.classList.remove('correct', 'wrong');
+  });
+
+  // 清空反馈
+  document.querySelectorAll('.feedback').forEach(fb => { fb.innerHTML = ''; });
+  document.querySelectorAll('.question-card').forEach(card => {
+    card.classList.remove('correct', 'wrong');
+  });
+
+  // 清空挑战
+  document.querySelectorAll('.challenge-option').forEach(opt => {
+    opt.classList.remove('selected', 'correct-choice', 'wrong-choice');
+  });
+  document.getElementById('challenge-feedback').innerHTML = '';
+
+  // 重置状态
+  answeredCorrectly.clear();
+  updateScore();
+
+  // 隐藏成就
+  document.getElementById('achievement').classList.remove('show');
+
+  // 聚焦第一个输入
+  const firstInput = document.querySelector('.answer-input');
+  if (firstInput) firstInput.focus();
+}
+
+// 初始化
+updateScore();
+</script>
+</body>
+</html>
