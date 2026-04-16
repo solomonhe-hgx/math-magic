@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🚀 太空探险 - 数学魔法任务 2026-04-16</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Comic Sans MS", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(180deg, #0d1b2a 0%, #1b2838 30%, #2d3a5e 60%, #4a5f8a 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* 顶部标题和计分板 */
+  .header {
+    text-align: center;
+    margin-bottom: 24px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    border: 3px solid rgba(255,255,255,0.2);
+  }
+
+  .header h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .scoreboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    font-size: 22px;
+    font-weight: bold;
+  }
+
+  .scoreboard .score {
+    background: #ffd166;
+    color: #2d3436;
+    padding: 8px 24px;
+    border-radius: 16px;
+    min-width: 120px;
+  }
+
+  .retry-btn {
+    background: #e17055;
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 16px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .retry-btn:hover { background: #d35400; transform: scale(1.05); }
+  .retry-btn:active { transform: scale(0.95); }
+
+  /* 各区域卡片 */
+  .section {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(6px);
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    border: 2px solid rgba(255,255,255,0.15);
+  }
+
+  .section-title {
+    font-size: 26px;
+    margin-bottom: 16px;
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  }
+
+  /* 题目卡片 */
+  .question-card {
+    background: rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .question-card.correct { background: rgba(81, 207, 102, 0.3); transform: scale(1.01); }
+  .question-card.wrong { background: rgba(255, 183, 77, 0.3); }
+
+  .question-text {
+    font-size: 24px;
+    font-weight: bold;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .answer-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .answer-input {
+    width: 80px;
+    height: 50px;
+    font-size: 26px;
+    text-align: center;
+    border: 3px solid #ffd166;
+    border-radius: 14px;
+    outline: none;
+    background: #fff;
+    color: #2d3436;
+    font-weight: bold;
+    transition: border-color 0.3s, background 0.3s;
+    -moz-appearance: textfield;
+  }
+
+  .answer-input::-webkit-outer-spin-button,
+  .answer-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .answer-input.correct {
+    border-color: #51cf66;
+    background: #d3f9d8;
+  }
+
+  .answer-input.wrong {
+    border-color: #ffa94d;
+    background: #fff3e0;
+  }
+
+  .feedback {
+    font-size: 22px;
+    min-width: 80px;
+    min-height: 30px;
+  }
+
+  .correct-answer {
+    font-size: 18px;
+    color: #ffd166;
+    font-weight: bold;
+  }
+
+  /* 互动挑战区 */
+  .challenge-question {
+    background: rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .challenge-question p {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .challenge-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .challenge-option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.2);
+    border: 3px solid #ffd166;
+    border-radius: 14px;
+    padding: 12px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .challenge-option:hover { background: rgba(255,255,255,0.4); transform: scale(1.05); }
+  .challenge-option.selected { background: #ffd166; color: #2d3436; }
+  .challenge-option.correct-choice { background: #51cf66; border-color: #51cf66; color: #fff; }
+  .challenge-option.wrong-choice { background: #ef476f; border-color: #ef476f; color: #fff; }
+
+  /* 成就区 */
+  .achievement {
+    text-align: center;
+    padding: 30px;
+    display: none;
+  }
+
+  .achievement.show { display: block; }
+
+  .achievement h2 {
+    font-size: 36px;
+    margin-bottom: 16px;
+    animation: bounce 0.6s ease infinite alternate;
+  }
+
+  .achievement .badge {
+    font-size: 64px;
+    margin: 16px 0;
+  }
+
+  .achievement p {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  @keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); }
+  }
+
+  /* 烟花/Confetti */
+  .confetti-container {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 999;
+    overflow: hidden;
+  }
+
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    animation: fall 2.5s ease-out forwards;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* 星星闪烁装饰 */
+  .star {
+    position: fixed;
+    color: #fff;
+    opacity: 0.6;
+    animation: twinkle 3s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+
+  @keyframes twinkle {
+    0% { opacity: 0.3; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* 火箭动画 */
+  .rocket {
+    position: fixed;
+    font-size: 32px;
+    animation: rocket-fly 8s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  @keyframes rocket-fly {
+    0% { transform: translateY(100vh) rotate(-45deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100px) rotate(-45deg); opacity: 0; }
+  }
+
+  /* 响应式 */
+  @media (max-width: 599px) {
+    body { padding: 12px; }
+    .header h1 { font-size: 24px; }
+    .scoreboard { font-size: 18px; gap: 10px; flex-wrap: wrap; }
+    .scoreboard .score { padding: 6px 16px; min-width: 100px; }
+    .section { padding: 16px; border-radius: 18px; }
+    .section-title { font-size: 22px; }
+    .question-card { padding: 12px 14px; flex-direction: column; align-items: flex-start; }
+    .question-text { font-size: 20px; }
+    .answer-input { width: 70px; height: 46px; font-size: 22px; }
+    .feedback { font-size: 18px; }
+    .challenge-option { font-size: 18px; padding: 10px 16px; }
+    .achievement h2 { font-size: 28px; }
+    .achievement .badge { font-size: 48px; }
+  }
+
+  @media (min-width: 600px) and (max-width: 1023px) {
+    .container { max-width: 700px; }
+    .header h1 { font-size: 28px; }
+    .section-title { font-size: 24px; }
+    .question-text { font-size: 22px; }
+  }
+
+  @media (min-width: 1024px) {
+    .container { max-width: 960px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 星星装饰 -->
+<div id="stars"></div>
+
+<!-- 火箭动画 -->
+<div id="rockets"></div>
+
+<!-- 烟花容器 -->
+<div class="confetti-container" id="confetti-container"></div>
+
+<div class="container">
+  <!-- 顶部 -->
+  <div class="header">
+    <h1>🚀 太空探险 🌙</h1>
+    <p style="font-size:16px; margin-bottom:12px; opacity:0.85;">数学魔法任务 · 2026年4月16日</p>
+    <div class="scoreboard">
+      <span>答对：</span>
+      <span class="score" id="score-display">0 / 10</span>
+      <button class="retry-btn" id="retry-btn" onclick="retryAll()">🔄 再试一次</button>
+    </div>
+  </div>
+
+  <!-- 🔥 热身小游戏 -->
+  <div class="section">
+    <div class="section-title">🔥 热身小游戏：火箭发射倒数操（2分钟）</div>
+    <p style="text-align:center; font-size:18px; margin-bottom:16px;">站起来！像小宇航员一样，边做动作边算题！</p>
+
+    <div style="text-align:center; font-size:18px; margin-bottom:16px; padding:16px; background:rgba(255,255,255,0.1); border-radius:16px;">
+      <p style="font-size:22px; margin-bottom:12px;">🚀 <strong>第一题：</strong>火箭上有 <strong style="color:#ffd166; font-size:26px;">15</strong> 颗燃料球，用了 <strong style="color:#ffd166; font-size:26px;">4</strong> 颗，还剩几颗？</p>
+      <p style="font-size:16px; opacity:0.8; margin-bottom:12px;">（踮起脚尖，用手指比出答案，然后输入）</p>
+      <input type="number" class="answer-input" data-answer="11" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)" style="margin:0 auto; display:block;">
+    </div>
+
+    <div style="text-align:center; font-size:18px; padding:16px; background:rgba(255,255,255,0.1); border-radius:16px;">
+      <p style="font-size:22px; margin-bottom:12px;">🌟 <strong>第二题：</strong>太空飘着 <strong style="color:#ffd166; font-size:26px;">12</strong> 颗小星星，又来了 <strong style="color:#ffd166; font-size:26px;">5</strong> 颗，现在有几颗？</p>
+      <p style="font-size:16px; opacity:0.8; margin-bottom:12px;">（挥动双臂像翅膀一样，然后输入答案）</p>
+      <input type="number" class="answer-input" data-answer="17" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)" style="margin:0 auto; display:block;">
+    </div>
+  </div>
+
+  <!-- ⭐ 今日核心任务 -->
+  <div class="section">
+    <div class="section-title">⭐ 今日核心任务：太空燃料补给站（8分钟）</div>
+    <p style="text-align:center; font-size:18px; margin-bottom:16px;">帮小宇航员计算飞船的燃料和物资吧！</p>
+
+    <div class="question-card" id="core1">
+      <div class="question-text">🚀 飞船有13桶燃料，又加了5桶，一共有几桶？<input type="number" class="answer-input" data-answer="18" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="core2">
+      <div class="question-text">🌙 月球基地有19颗能量石，用了7颗，还剩几颗？<input type="number" class="answer-input" data-answer="12" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="core3">
+      <div class="question-text">🛸 UFO上有11个外星糖果，又收到6个，一共有几个？<input type="number" class="answer-input" data-answer="17" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="core4">
+      <div class="question-text">🪐 土星环上有18颗宝石，掉了6颗，还剩几颗？<input type="number" class="answer-input" data-answer="12" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="core5">
+      <div class="question-text">👽 外星人有14个能量块，又收集了3个，现在有几个？<input type="number" class="answer-input" data-answer="17" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="core6">
+      <div class="question-text">🌍 地球空间站有16颗卫星，发射了4颗出去，还剩几颗？<input type="number" class="answer-input" data-answer="12" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="core7">
+      <div class="question-text">☄️ 彗星上有12块冰晶，又碰到4块，一共有几块？<input type="number" class="answer-input" data-answer="16" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="core8">
+      <div class="question-text">🔭 望远镜看到15颗星星，又发现3颗，一共几颗？<input type="number" class="answer-input" data-answer="18" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="core9">
+      <div class="question-text">🛸 太空舱有17个氧气罐，用了5个，还剩几个？<input type="number" class="answer-input" data-answer="12" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="core10">
+      <div class="question-text">🌠 银河号飞船有13颗推进器，又装了4颗，一共有几颗？<input type="number" class="answer-input" data-answer="17" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- 🎮 互动挑战 -->
+  <div class="section">
+    <div class="section-title">🎮 互动挑战：谁的飞船最快？（3-5分钟）</div>
+    <p style="text-align:center; font-size:18px; margin-bottom:16px;">算出每艘飞船的能量值，选出能量最多的！</p>
+
+    <div class="challenge-question">
+      <p>🚀 红色飞船：10桶燃料 + 8桶 = ?</p>
+      <div class="challenge-options">
+        <div class="challenge-option" data-value="18" data-correct="true" onclick="selectChallenge(this, event)">A. 18桶</div>
+      </div>
+    </div>
+
+    <div class="challenge-question">
+      <p>🛸 蓝色飞船：19桶燃料 - 6桶 = ?</p>
+      <div class="challenge-options">
+        <div class="challenge-option" data-value="13" onclick="selectChallenge(this, event)">B. 13桶</div>
+      </div>
+    </div>
+
+    <div class="challenge-question">
+      <p>🌟 黄色飞船：12桶燃料 + 5桶 = ?</p>
+      <div class="challenge-options">
+        <div class="challenge-option" data-value="17" onclick="selectChallenge(this, event)">C. 17桶</div>
+      </div>
+    </div>
+
+    <div class="challenge-question">
+      <p>🌙 绿色飞船：16桶燃料 - 3桶 = ?</p>
+      <div class="challenge-options">
+        <div class="challenge-option" data-value="13" onclick="selectChallenge(this, event)">D. 13桶</div>
+      </div>
+    </div>
+
+    <p style="text-align:center; font-size:20px; margin:16px 0;">🤔 红色飞船18桶、蓝色飞船13桶、黄色飞船17桶、绿色飞船13桶——<br><strong style="color:#ffd166;">谁的能量最多，飞得最快？</strong></p>
+
+    <div style="text-align:center;">
+      <div class="challenge-option" data-challenge-final="red" onclick="selectFinalAnswer(this, event)">🚀 红色飞船</div>
+      <div class="challenge-option" data-challenge-final="blue" onclick="selectFinalAnswer(this, event)">🛸 蓝色飞船</div>
+      <div class="challenge-option" data-challenge-final="yellow" onclick="selectFinalAnswer(this, event)">🌟 黄色飞船</div>
+      <div class="challenge-option" data-challenge-final="green" onclick="selectFinalAnswer(this, event)">🌙 绿色飞船</div>
+    </div>
+
+    <div id="challenge-feedback" style="text-align:center; font-size:20px; min-height:36px; margin-top:16px;"></div>
+  </div>
+
+  <!-- 🏆 今日成就 -->
+  <div class="section achievement" id="achievement">
+    <h2>🎉 太棒了！</h2>
+    <div class="badge">🏆🚀🌟</div>
+    <p>你完成了所有太空数学魔法任务！</p>
+    <p id="achievement-detail"></p>
+    <p style="font-size:18px; margin-top:12px; opacity:0.8;">明天继续来探险吧！🎈</p>
+  </div>
+</div>
+
+<script>
+// ============ 音效系统 ============
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+
+function getAudioCtx() {
+  if (!audioCtx) {
+    audioCtx = new AudioCtx();
+  }
+  return audioCtx;
+}
+
+// 答对音效：C-E-G 升调和弦
+function playCorrectSound() {
+  try {
+    const ctx = getAudioCtx();
+    const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.2, ctx.currentTime + i * 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.4);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + i * 0.1);
+      osc.stop(ctx.currentTime + i * 0.1 + 0.4);
+    });
+  } catch(e) {}
+}
+
+// 答错音效：降调
+function playWrongSound() {
+  try {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(392, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(349.23, ctx.currentTime + 0.3);
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.3);
+  } catch(e) {}
+}
+
+// ============ 烟花/Confetti ============
+function launchConfetti() {
+  const container = document.getElementById('confetti-container');
+  const colors = ['#ff6b6b', '#ffd166', '#51cf66', '#339af0', '#cc5de8', '#ff922b', '#20c997'];
+
+  for (let i = 0; i < 80; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + '%';
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.animationDelay = Math.random() * 1.5 + 's';
+    confetti.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+    confetti.style.width = (6 + Math.random() * 8) + 'px';
+    confetti.style.height = (6 + Math.random() * 8) + 'px';
+    container.appendChild(confetti);
+  }
+
+  setTimeout(() => {
+    container.innerHTML = '';
+  }, 4000);
+}
+
+// ============ 星星装饰 ============
+function createStars() {
+  const container = document.getElementById('stars');
+  for (let i = 0; i < 20; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.textContent = '✦';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.fontSize = (10 + Math.random() * 16) + 'px';
+    star.style.animationDelay = Math.random() * 3 + 's';
+    star.style.animationDuration = (2 + Math.random() * 3) + 's';
+    container.appendChild(star);
+  }
+}
+createStars();
+
+// ============ 火箭动画 ============
+function createRockets() {
+  const container = document.getElementById('rockets');
+  for (let i = 0; i < 3; i++) {
+    const rocket = document.createElement('div');
+    rocket.className = 'rocket';
+    rocket.textContent = '🚀';
+    rocket.style.left = (15 + Math.random() * 70) + '%';
+    rocket.style.animationDelay = Math.random() * 8 + 's';
+    rocket.style.animationDuration = (7 + Math.random() * 4) + 's';
+    container.appendChild(rocket);
+  }
+}
+createRockets();
+
+// ============ 计分系统 ============
+let challengeCorrect = false;
+
+function updateScore() {
+  const coreInputs = document.querySelectorAll('.section:nth-of-type(3) .answer-input');
+  let coreCorrect = 0;
+  coreInputs.forEach(input => {
+    if (input.classList.contains('correct')) coreCorrect++;
+  });
+
+  let total = coreCorrect + (challengeCorrect ? 1 : 0);
+  let max = 10 + 1;
+
+  document.getElementById('score-display').textContent = total + ' / ' + max;
+
+  // 检查是否全部完成（核心10题+挑战）
+  if (coreCorrect === 10 && challengeCorrect) {
+    showAchievement();
+  }
+}
+
+// ============ 答案检查 ============
+function checkAnswer(input) {
+  const userAnswer = parseInt(input.value);
+  const correctAnswer = parseInt(input.dataset.answer);
+  const card = input.closest('.question-card') || input.closest('div[style*="text-align"]');
+  const fbSpan = card ? card.querySelector('.feedback') : null;
+
+  if (isNaN(userAnswer) || input.value === '') {
+    input.classList.remove('correct', 'wrong');
+    if (card) card.classList.remove('correct', 'wrong');
+    if (fbSpan) fbSpan.innerHTML = '';
+    updateScore();
+    return;
+  }
+
+  if (userAnswer === correctAnswer) {
+    input.classList.remove('wrong');
+    input.classList.add('correct');
+    if (card) {
+      card.classList.remove('wrong');
+      card.classList.add('correct');
+    }
+    if (fbSpan) fbSpan.innerHTML = '<span style="color:#51cf66;">✅ 太棒了！</span>';
+    playCorrectSound();
+  } else {
+    input.classList.remove('correct');
+    input.classList.add('wrong');
+    if (card) {
+      card.classList.remove('correct');
+      card.classList.add('wrong');
+    }
+    if (fbSpan) fbSpan.innerHTML = '<span style="color:#ffa94d;">❌ 答案是 ' + correctAnswer + '</span>';
+    playWrongSound();
+  }
+
+  updateScore();
+}
+
+function handleEnter(event, input) {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    checkAnswer(input);
+    // 聚焦下一个输入框
+    const allInputs = Array.from(document.querySelectorAll('.answer-input'));
+    const idx = allInputs.indexOf(input);
+    if (idx < allInputs.length - 1) {
+      allInputs[idx + 1].focus();
+    }
+  }
+}
+
+// ============ 互动挑战 ============
+function selectChallenge(el, event) {
+  event.stopPropagation();
+  const parent = el.closest('.challenge-question');
+  const options = parent.querySelectorAll('.challenge-option');
+
+  // 清除之前的选择
+  options.forEach(opt => {
+    opt.classList.remove('selected', 'correct-choice', 'wrong-choice');
+  });
+
+  const isCorrect = el.dataset.correct === 'true';
+
+  if (isCorrect) {
+    el.classList.add('correct-choice');
+    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#51cf66;">✅ 算对了！继续看下一题吧！</span>';
+    playCorrectSound();
+  } else {
+    el.classList.add('wrong-choice');
+    // 高亮正确答案
+    options.forEach(opt => {
+      if (opt.dataset.correct === 'true') {
+        opt.classList.add('correct-choice');
+      }
+    });
+    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#ffa94d;">❌ 不对哦，看看正确答案是哪个吧！</span>';
+    playWrongSound();
+  }
+}
+
+function selectFinalAnswer(el, event) {
+  event.stopPropagation();
+  const options = document.querySelectorAll('[data-challenge-final]');
+  const selected = el.dataset.challengeFinal;
+
+  // 清除之前的选择
+  options.forEach(opt => {
+    opt.classList.remove('selected', 'correct-choice', 'wrong-choice');
+  });
+
+  // 红色飞船18桶是最多的
+  if (selected === 'red') {
+    el.classList.add('correct-choice');
+    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#51cf66;">✅ 太聪明了！红色飞船18桶能量最多，飞得最快！</span>';
+    challengeCorrect = true;
+    playCorrectSound();
+  } else {
+    el.classList.add('wrong-choice');
+    // 高亮正确答案
+    options.forEach(opt => {
+      if (opt.dataset.challengeFinal === 'red') {
+        opt.classList.add('correct-choice');
+      }
+    });
+    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#ffa94d;">❌ 不对哦，红色飞船18桶能量最多！</span>';
+    challengeCorrect = false;
+    playWrongSound();
+  }
+
+  updateScore();
+}
+
+// ============ 成就 ============
+function showAchievement() {
+  const ach = document.getElementById('achievement');
+  if (ach.classList.contains('show')) return;
+  ach.classList.add('show');
+  document.getElementById('achievement-detail').textContent = '你答对了所有太空数学任务，真是小宇航员数学高手！';
+  launchConfetti();
+
+  // 播放庆祝音效
+  try {
+    const ctx = getAudioCtx();
+    const melody = [523.25, 587.33, 659.25, 698.46, 783.99, 880, 987.77, 1046.5];
+    melody.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.15, ctx.currentTime + i * 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.3);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + i * 0.12);
+      osc.stop(ctx.currentTime + i * 0.12 + 0.3);
+    });
+  } catch(e) {}
+}
+
+// ============ 再试一次 ============
+function retryAll() {
+  // 清空所有输入
+  document.querySelectorAll('.answer-input').forEach(input => {
+    input.value = '';
+    input.classList.remove('correct', 'wrong');
+  });
+
+  // 清空反馈
+  document.querySelectorAll('.feedback').forEach(fb => { fb.innerHTML = ''; });
+  document.querySelectorAll('.question-card').forEach(card => {
+    card.classList.remove('correct', 'wrong');
+  });
+
+  // 清空热身区样式
+  document.querySelectorAll('.section:nth-of-type(2) div[style*="text-align"]').forEach(div => {
+    div.classList.remove('correct', 'wrong');
+  });
+
+  // 清空挑战
+  document.querySelectorAll('.challenge-option, [data-challenge-final]').forEach(opt => {
+    opt.classList.remove('selected', 'correct-choice', 'wrong-choice');
+  });
+  document.getElementById('challenge-feedback').innerHTML = '';
+
+  // 重置状态
+  challengeCorrect = false;
+  updateScore();
+
+  // 隐藏成就
+  document.getElementById('achievement').classList.remove('show');
+
+  // 聚焦第一个输入
+  const firstInput = document.querySelector('.answer-input');
+  if (firstInput) firstInput.focus();
+}
+
+// 初始化
+updateScore();
+</script>
+</body>
+</html>
