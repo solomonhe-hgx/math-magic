@@ -3,279 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🦁 动物园探险 - 数学魔法任务 2026-04-15</title>
+<title>🌊 海底世界 - 数学魔法任务 2026-04-15</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     font-family: "Comic Sans MS", "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: linear-gradient(180deg, #87ceeb 0%, #90EE90 40%, #228B22 80%, #006400 100%);
+    background: linear-gradient(180deg, #0a4d8c 0%, #0b6e9f 30%, #118ab2 60%, #073b4c 100%);
     min-height: 100vh;
     padding: 20px;
     color: #fff;
+    overflow-x: hidden;
   }
 
-  .container {
-    max-width: 960px;
-    margin: 0 auto;
-  }
+  .container { max-width: 960px; margin: 0 auto; }
 
-  /* 顶部标题和计分板 */
   .header {
-    text-align: center;
-    margin-bottom: 24px;
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(8px);
-    border-radius: 24px;
-    padding: 20px;
+    text-align: center; margin-bottom: 24px;
+    background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);
+    border-radius: 24px; padding: 20px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    border: 3px solid rgba(255,255,255,0.3);
   }
-
-  .header h1 {
-    font-size: 32px;
-    margin-bottom: 8px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-  }
+  .header h1 { font-size: 32px; margin-bottom: 8px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
 
   .scoreboard {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    font-size: 22px;
-    font-weight: bold;
+    display: flex; justify-content: center; align-items: center; gap: 16px;
+    font-size: 22px; font-weight: bold;
   }
-
   .scoreboard .score {
-    background: #ffd166;
-    color: #2d3436;
-    padding: 8px 24px;
-    border-radius: 16px;
-    min-width: 120px;
+    background: #ffd166; color: #073b4c;
+    padding: 8px 24px; border-radius: 16px; min-width: 120px;
   }
-
   .retry-btn {
-    background: #e17055;
-    color: #fff;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 16px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
-    min-height: 44px;
-    min-width: 44px;
+    background: #ef476f; color: #fff; border: none;
+    padding: 10px 24px; border-radius: 16px; font-size: 18px;
+    cursor: pointer; transition: transform 0.2s, background 0.2s;
+    min-height: 44px; min-width: 44px;
   }
-
-  .retry-btn:hover { background: #d35400; transform: scale(1.05); }
+  .retry-btn:hover { background: #d63a5e; transform: scale(1.05); }
   .retry-btn:active { transform: scale(0.95); }
 
-  /* 各区域卡片 */
   .section {
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(6px);
-    border-radius: 24px;
-    padding: 24px;
-    margin-bottom: 24px;
+    background: rgba(255,255,255,0.12); backdrop-filter: blur(6px);
+    border-radius: 24px; padding: 24px; margin-bottom: 24px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-    border: 2px solid rgba(255,255,255,0.2);
   }
-
   .section-title {
-    font-size: 26px;
-    margin-bottom: 16px;
-    text-align: center;
+    font-size: 26px; margin-bottom: 16px; text-align: center;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
   }
 
-  /* 题目卡片 */
   .question-card {
-    background: rgba(255,255,255,0.2);
-    border-radius: 16px;
-    padding: 16px 20px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-    transition: background 0.3s, transform 0.2s;
+    background: rgba(255,255,255,0.18); border-radius: 16px;
+    padding: 16px 20px; margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px; transition: background 0.3s;
   }
+  .question-card.correct { background: rgba(81, 207, 102, 0.35); }
+  .question-card.wrong { background: rgba(255, 183, 77, 0.35); }
 
-  .question-card.correct { background: rgba(81, 207, 102, 0.4); transform: scale(1.01); }
-  .question-card.wrong { background: rgba(255, 183, 77, 0.4); }
-
-  .question-text {
-    font-size: 24px;
-    font-weight: bold;
-    flex: 1;
-    min-width: 200px;
-  }
-
-  .answer-area {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  .question-text { font-size: 24px; font-weight: bold; flex: 1; min-width: 200px; }
 
   .answer-input {
-    width: 80px;
-    height: 50px;
-    font-size: 26px;
-    text-align: center;
-    border: 3px solid #ffd166;
-    border-radius: 14px;
-    outline: none;
-    background: #fff;
-    color: #2d3436;
-    font-weight: bold;
+    width: 80px; height: 50px; font-size: 26px; text-align: center;
+    border: 3px solid #ffd166; border-radius: 14px; outline: none;
+    background: #fff; color: #073b4c; font-weight: bold;
     transition: border-color 0.3s, background 0.3s;
     -moz-appearance: textfield;
   }
-
   .answer-input::-webkit-outer-spin-button,
-  .answer-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+  .answer-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .answer-input.correct { border-color: #51cf66; background: #d3f9d8; }
+  .answer-input.wrong { border-color: #ffa94d; background: #fff3e0; }
 
-  .answer-input.correct {
-    border-color: #51cf66;
-    background: #d3f9d8;
-  }
-
-  .answer-input.wrong {
-    border-color: #ffa94d;
-    background: #fff3e0;
-  }
-
-  .feedback {
-    font-size: 22px;
-    min-width: 80px;
-    min-height: 30px;
-  }
-
-  .correct-answer {
-    font-size: 18px;
-    color: #ffd166;
-    font-weight: bold;
-  }
-
-  /* 互动挑战区 */
-  .challenge-question {
-    background: rgba(255,255,255,0.2);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 16px;
-  }
-
-  .challenge-question p {
-    font-size: 20px;
-    margin-bottom: 12px;
-  }
-
-  .challenge-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-  }
+  .feedback { font-size: 22px; min-width: 80px; min-height: 30px; }
 
   .challenge-option {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255,255,255,0.3);
-    border: 3px solid #ffd166;
-    border-radius: 14px;
-    padding: 12px 20px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s;
-    min-height: 44px;
-    min-width: 44px;
+    display: inline-block; background: rgba(255,255,255,0.25);
+    border: 3px solid #ffd166; border-radius: 14px;
+    padding: 12px 20px; margin: 6px; font-size: 22px; font-weight: bold;
+    cursor: pointer; transition: all 0.2s; min-height: 44px; min-width: 44px;
   }
-
-  .challenge-option:hover { background: rgba(255,255,255,0.5); transform: scale(1.05); }
-  .challenge-option.selected { background: #ffd166; color: #2d3436; }
+  .challenge-option:hover { background: rgba(255,255,255,0.4); transform: scale(1.05); }
   .challenge-option.correct-choice { background: #51cf66; border-color: #51cf66; color: #fff; }
   .challenge-option.wrong-choice { background: #ef476f; border-color: #ef476f; color: #fff; }
 
-  /* 成就区 */
-  .achievement {
-    text-align: center;
-    padding: 30px;
-    display: none;
-  }
-
+  .achievement { text-align: center; padding: 30px; display: none; }
   .achievement.show { display: block; }
+  .achievement h2 { font-size: 36px; margin-bottom: 16px; animation: bounce 0.6s ease infinite alternate; }
+  .achievement .badge { font-size: 64px; margin: 16px 0; }
+  .achievement p { font-size: 22px; margin-bottom: 8px; }
+  @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
 
-  .achievement h2 {
-    font-size: 36px;
-    margin-bottom: 16px;
-    animation: bounce 0.6s ease infinite alternate;
-  }
-
-  .achievement .badge {
-    font-size: 64px;
-    margin: 16px 0;
-  }
-
-  .achievement p {
-    font-size: 22px;
-    margin-bottom: 8px;
-  }
-
-  @keyframes bounce {
-    from { transform: translateY(0); }
-    to { transform: translateY(-10px); }
-  }
-
-  /* 烟花/Confetti */
   .confetti-container {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none;
-    z-index: 999;
-    overflow: hidden;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none; z-index: 999; overflow: hidden;
   }
-
   .confetti {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
+    position: absolute; width: 10px; height: 10px; border-radius: 2px;
     animation: fall 2.5s ease-out forwards;
   }
-
   @keyframes fall {
     0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
     100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
   }
 
-  /* 动物脚印装饰 */
-  .paw {
-    position: fixed;
-    font-size: 24px;
-    opacity: 0.15;
-    animation: paw-walk 12s linear infinite;
+  .bubble {
+    position: fixed; border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    animation: float-up 8s ease-in infinite;
     pointer-events: none;
   }
-
-  @keyframes paw-walk {
-    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-    10% { opacity: 0.15; }
-    90% { opacity: 0.15; }
-    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  @keyframes float-up {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 0.6; }
+    100% { transform: translateY(-100px) scale(1); opacity: 0; }
   }
 
-  /* 响应式 */
   @media (max-width: 599px) {
     body { padding: 12px; }
     .header h1 { font-size: 24px; }
-    .scoreboard { font-size: 18px; gap: 10px; flex-wrap: wrap; }
+    .scoreboard { font-size: 18px; gap: 10px; }
     .scoreboard .score { padding: 6px 16px; min-width: 100px; }
     .section { padding: 16px; border-radius: 18px; }
     .section-title { font-size: 22px; }
@@ -287,32 +134,19 @@
     .achievement h2 { font-size: 28px; }
     .achievement .badge { font-size: 48px; }
   }
-
-  @media (min-width: 600px) and (max-width: 1023px) {
-    .container { max-width: 700px; }
-    .header h1 { font-size: 28px; }
-    .section-title { font-size: 24px; }
-    .question-text { font-size: 22px; }
-  }
-
-  @media (min-width: 1024px) {
-    .container { max-width: 960px; }
-  }
+  @media (min-width: 600px) and (max-width: 1023px) { .container { max-width: 700px; } }
+  @media (min-width: 1024px) { .container { max-width: 960px; } }
 </style>
 </head>
 <body>
 
-<!-- 动物脚印装饰 -->
-<div id="paws"></div>
-
-<!-- 烟花容器 -->
+<div id="bubbles"></div>
 <div class="confetti-container" id="confetti-container"></div>
 
 <div class="container">
-  <!-- 顶部 -->
   <div class="header">
-    <h1>🦁 动物园探险 🐘</h1>
-    <p style="font-size:16px; margin-bottom:12px; opacity:0.85;">数学魔法任务 · 2026年4月15日</p>
+    <h1>🌊 海底世界 🌊</h1>
+    <p style="font-size:16px; margin-bottom:12px; opacity:0.85;">数学魔法任务 · 2026年04月15日 星期三 · 第1周 · 10以内加减法</p>
     <div class="scoreboard">
       <span>答对：</span>
       <span class="score" id="score-display">0 / 11</span>
@@ -320,329 +154,225 @@
     </div>
   </div>
 
-  <!-- 🔥 热身小游戏 -->
+  <!-- 热身 -->
   <div class="section">
-    <div class="section-title">🔥 热身小游戏：动物拍拍操（2分钟）</div>
-    <p style="text-align:center; font-size:18px; margin-bottom:16px;">站起来！听到题目后，用手势比出答案数字！</p>
-
+    <div class="section-title">🔥 热身小游戏：动动身体算一算（2分钟）</div>
+    <p style="text-align:center; font-size:18px; margin-bottom:16px;">站起来！边做动作边算题！</p>
     <div style="text-align:center; font-size:18px; margin-bottom:16px; padding:16px; background:rgba(255,255,255,0.15); border-radius:16px;">
-      <p style="font-size:22px; margin-bottom:12px;">👋 <strong>第一题：</strong>伸出 <strong style="color:#ffd166; font-size:26px;">12</strong> 根手指，再收起 <strong style="color:#ffd166; font-size:26px;">3</strong> 根，还剩几根？</p>
-      <p style="font-size:16px; opacity:0.8; margin-bottom:12px;">（用手比一比，然后在下面输入答案）</p>
-      <input type="number" class="answer-input" data-answer="9" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)" style="margin:0 auto; display:block;">
+      <p style="font-size:22px; margin-bottom:12px;">👋 <strong>第一题：</strong>有 <strong style="color:#ffd166; font-size:26px;">9</strong> 个，又加 <strong style="color:#ffd166; font-size:26px;">1</strong> 个，一共几个？</p>
+      <p style="font-size:16px; opacity:0.8; margin-bottom:12px;">（踮起脚尖，用手指比出答案，然后输入）</p>
+      <input type="number" class="answer-input" data-answer="10" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)" style="margin:0 auto; display:block;">
     </div>
-
     <div style="text-align:center; font-size:18px; padding:16px; background:rgba(255,255,255,0.15); border-radius:16px;">
-      <p style="font-size:22px; margin-bottom:12px;">👋 <strong>第二题：</strong>拍拍手 <strong style="color:#ffd166; font-size:26px;">10</strong> 下，再拍 <strong style="color:#ffd166; font-size:26px;">5</strong> 下，一共拍了多少下？</p>
-      <p style="font-size:16px; opacity:0.8; margin-bottom:12px;">（站起来拍一拍，然后输入答案）</p>
-      <input type="number" class="answer-input" data-answer="15" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)" style="margin:0 auto; display:block;">
+      <p style="font-size:22px; margin-bottom:12px;">👋 <strong>第二题：</strong>有 <strong style="color:#ffd166; font-size:26px;">14</strong> 个，又加 <strong style="color:#ffd166; font-size:26px;">2</strong> 个，一共几个？</p>
+      <p style="font-size:16px; opacity:0.8; margin-bottom:12px;">（挥动双臂，然后输入答案）</p>
+      <input type="number" class="answer-input" data-answer="16" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)" style="margin:0 auto; display:block;">
     </div>
   </div>
 
-  <!-- ⭐ 今日核心任务 -->
+  <!-- 核心任务 -->
   <div class="section">
-    <div class="section-title">⭐ 今日核心任务：动物园喂食计算（8分钟）</div>
-    <p style="text-align:center; font-size:18px; margin-bottom:16px;">帮饲养员叔叔算出每种动物需要多少食物吧！</p>
-
+    <div class="section-title">⭐ 今日核心任务：海底世界计算（8分钟）</div>
+    <p style="text-align:center; font-size:18px; margin-bottom:16px;">10以内加减法 · 帮小朋友算出正确答案！</p>
+    
     <div class="question-card" id="core1">
-      <div class="question-text">🦁 狮子吃了12块肉，又吃了4块，一共吃了多少块？<input type="number" class="answer-input" data-answer="16" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🌊 海底有6条小鱼，又来了1条，一共几条？<input type="number" class="answer-input" data-answer="7" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback"></div>
     </div>
-
     <div class="question-card" id="core2">
-      <div class="question-text">🐘 大象有18根香蕉，吃了5根，还剩几根？<input type="number" class="answer-input" data-answer="13" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🌊 珊瑚丛有8只螃蟹，爬走了2只，还剩几只？<input type="number" class="answer-input" data-answer="6" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback"></div>
     </div>
-
     <div class="question-card" id="core3">
-      <div class="question-text">🐼 熊猫吃了11根竹子，又吃了6根，一共吃了几根？<input type="number" class="answer-input" data-answer="17" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🌊 珊瑚丛有8只螃蟹，爬走了6只，还剩几只？<input type="number" class="answer-input" data-answer="2" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback"></div>
     </div>
-
     <div class="question-card" id="core4">
-      <div class="question-text">🦒 长颈鹿有19片叶子，吃了7片，还剩几片？<input type="number" class="answer-input" data-answer="12" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🌊 珊瑚丛有2只螃蟹，爬走了1只，还剩几只？<input type="number" class="answer-input" data-answer="1" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback"></div>
     </div>
-
     <div class="question-card" id="core5">
-      <div class="question-text">🐒 小猴子有13个桃子，又得到5个，现在有几个？<input type="number" class="answer-input" data-answer="18" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🌊 海底有3条小鱼，又来了3条，一共几条？<input type="number" class="answer-input" data-answer="6" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback"></div>
     </div>
-
     <div class="question-card" id="core6">
-      <div class="question-text">🦩 火烈鸟有16条小鱼，送给朋友4条，还剩几条？<input type="number" class="answer-input" data-answer="12" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🌊 海底有5条小鱼，又来了1条，一共几条？<input type="number" class="answer-input" data-answer="6" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback"></div>
     </div>
-
     <div class="question-card" id="core7">
-      <div class="question-text">🐧 企鹅有14条鱼，又抓到3条，一共有几条？<input type="number" class="answer-input" data-answer="17" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🌊 珊瑚丛有9只螃蟹，爬走了2只，还剩几只？<input type="number" class="answer-input" data-answer="7" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback"></div>
     </div>
-
     <div class="question-card" id="core8">
-      <div class="question-text">🦜 鹦鹉有15颗瓜子，吃了4颗，还剩几颗？<input type="number" class="answer-input" data-answer="11" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🌊 珊瑚丛有10只螃蟹，爬走了8只，还剩几只？<input type="number" class="answer-input" data-answer="2" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback"></div>
     </div>
-
     <div class="question-card" id="core9">
-      <div class="question-text">🐢 乌龟有12片菜叶，又得到6片，现在有几片？<input type="number" class="answer-input" data-answer="18" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🌊 海底有3条小鱼，又来了4条，一共几条？<input type="number" class="answer-input" data-answer="7" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback"></div>
     </div>
-
     <div class="question-card" id="core10">
-      <div class="question-text">🐍 蛇有17只小老鼠，吃了5只，还剩几只？<input type="number" class="answer-input" data-answer="12" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🌊 珊瑚丛有8只螃蟹，爬走了6只，还剩几只？<input type="number" class="answer-input" data-answer="2" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback"></div>
     </div>
   </div>
 
-  <!-- 🎮 互动挑战 -->
+  <!-- 互动挑战 -->
   <div class="section">
-    <div class="section-title">🎮 互动挑战：谁的食物最多？（3-5分钟）</div>
-    <p style="text-align:center; font-size:18px; margin-bottom:16px;">算一算，选出最终食物最多的动物！</p>
+    <div class="section-title">🎮 互动挑战：哪个结果最大？（3-5分钟）</div>
+    <p style="text-align:center; font-size:18px; margin-bottom:16px;">算出每个式子的结果，选出最大的！</p>
 
-    <div class="challenge-question">
-      <p>🦁 狮子：10块肉 + 6块 = ?</p>
-      <div class="challenge-options">
-        <div class="challenge-option" data-value="16" data-correct="true" onclick="selectChallenge(this, event)">A. 16块</div>
-      </div>
+    <div style="text-align:center; margin-bottom:20px;">
+      <div class="challenge-option" data-value="19" data-correct="true" onclick="selectChallenge(this, event)">A. 16 + 3 = 19</div>
+      <div class="challenge-option" data-value="10" onclick="selectChallenge(this, event)">B. 12 - 2 = 10</div>
+      <div class="challenge-option" data-value="11" onclick="selectChallenge(this, event)">C. 10 + 1 = 11</div>
+      <div class="challenge-option" data-value="17" onclick="selectChallenge(this, event)">D. 18 - 1 = 17</div>
     </div>
 
-    <div class="challenge-question">
-      <p>🐘 大象：19根香蕉 - 7根 = ?</p>
-      <div class="challenge-options">
-        <div class="challenge-option" data-value="12" onclick="selectChallenge(this, event)">B. 12根</div>
-      </div>
-    </div>
-
-    <div class="challenge-question">
-      <p>🐼 熊猫：11根竹子 + 5根 = ?</p>
-      <div class="challenge-options">
-        <div class="challenge-option" data-value="16" onclick="selectChallenge(this, event)">C. 16根</div>
-      </div>
-    </div>
-
-    <div class="challenge-question">
-      <p>🐒 猴子：18个桃子 - 4个 = ?</p>
-      <div class="challenge-options">
-        <div class="challenge-option" data-value="14" onclick="selectChallenge(this, event)">D. 14个</div>
-      </div>
-    </div>
-
-    <p style="text-align:center; font-size:20px; margin:16px 0;">🤔 狮子的16块、大象的12根、熊猫的16根、猴子的14个——<br><strong style="color:#ffd166;">谁的最多？（有多个答案一样多，选出所有最多的！）</strong></p>
+    <p style="text-align:center; font-size:20px; margin:16px 0;">🤔 <strong style="color:#ffd166;">哪个结果最大？选出所有最大的选项！</strong></p>
 
     <div style="text-align:center;">
-      <div class="challenge-option" data-challenge-final="lion" onclick="selectFinalAnswer(this, event)">🦁 狮子</div>
-      <div class="challenge-option" data-challenge-final="elephant" onclick="selectFinalAnswer(this, event)">🐘 大象</div>
-      <div class="challenge-option" data-challenge-final="panda" onclick="selectFinalAnswer(this, event)">🐼 熊猫</div>
-      <div class="challenge-option" data-challenge-final="monkey" onclick="selectFinalAnswer(this, event)">🐒 猴子</div>
+      <div class="challenge-option" data-challenge-final="A" onclick="selectFinalAnswer(this, event)">A. 19</div>
+      <div class="challenge-option" data-challenge-final="B" onclick="selectFinalAnswer(this, event)">B. 10</div>
+      <div class="challenge-option" data-challenge-final="C" onclick="selectFinalAnswer(this, event)">C. 11</div>
+      <div class="challenge-option" data-challenge-final="D" onclick="selectFinalAnswer(this, event)">D. 17</div>
     </div>
 
     <div id="challenge-feedback" style="text-align:center; font-size:20px; min-height:36px; margin-top:16px;"></div>
   </div>
 
-  <!-- 🏆 今日成就 -->
+  <!-- 成就 -->
   <div class="section achievement" id="achievement">
     <h2>🎉 太棒了！</h2>
-    <div class="badge">🏆🦁🌟</div>
-    <p>你完成了所有动物园数学魔法任务！</p>
+    <div class="badge">🏆🌊🌟</div>
+    <p>你完成了所有海底世界数学魔法任务！</p>
     <p id="achievement-detail"></p>
     <p style="font-size:18px; margin-top:12px; opacity:0.8;">明天继续来探险吧！🎈</p>
   </div>
 </div>
 
 <script>
-// ============ 音效系统 ============
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let audioCtx = null;
+function getAudioCtx() { if (!audioCtx) audioCtx = new AudioCtx(); return audioCtx; }
 
-function getAudioCtx() {
-  if (!audioCtx) {
-    audioCtx = new AudioCtx();
-  }
-  return audioCtx;
-}
-
-// 答对音效：C-E-G 升调和弦
 function playCorrectSound() {
   try {
     const ctx = getAudioCtx();
-    const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
-    notes.forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.2, ctx.currentTime + i * 0.1);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.4);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime + i * 0.1);
-      osc.stop(ctx.currentTime + i * 0.1 + 0.4);
+    [523.25, 659.25, 783.99].forEach((f, i) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(0.2, ctx.currentTime + i * 0.1);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.4);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(ctx.currentTime + i * 0.1); o.stop(ctx.currentTime + i * 0.1 + 0.4);
     });
   } catch(e) {}
 }
 
-// 答错音效：降调
 function playWrongSound() {
   try {
-    const ctx = getAudioCtx();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(392, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(349.23, ctx.currentTime + 0.3);
-    gain.gain.setValueAtTime(0.2, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.3);
+    const ctx = getAudioCtx(), o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = 'triangle';
+    o.frequency.setValueAtTime(300, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.3);
+    g.gain.setValueAtTime(0.2, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+    o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime + 0.3);
   } catch(e) {}
 }
 
-// ============ 烟花/Confetti ============
 function launchConfetti() {
-  const container = document.getElementById('confetti-container');
-  const colors = ['#ff6b6b', '#ffd166', '#51cf66', '#339af0', '#cc5de8', '#ff922b', '#20c997'];
-
+  const c = document.getElementById('confetti-container');
+  const colors = ['#ff6b6b','#ffd166','#51cf66','#339af0','#cc5de8','#ff922b','#20c997'];
   for (let i = 0; i < 80; i++) {
-    const confetti = document.createElement('div');
-    confetti.className = 'confetti';
-    confetti.style.left = Math.random() * 100 + '%';
-    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    confetti.style.animationDelay = Math.random() * 1.5 + 's';
-    confetti.style.animationDuration = (2 + Math.random() * 1.5) + 's';
-    confetti.style.width = (6 + Math.random() * 8) + 'px';
-    confetti.style.height = (6 + Math.random() * 8) + 'px';
-    container.appendChild(confetti);
+    const d = document.createElement('div');
+    d.className = 'confetti';
+    d.style.left = Math.random() * 100 + '%';
+    d.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    d.style.animationDelay = Math.random() * 1.5 + 's';
+    d.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+    d.style.width = (6 + Math.random() * 8) + 'px';
+    d.style.height = (6 + Math.random() * 8) + 'px';
+    c.appendChild(d);
   }
-
-  setTimeout(() => {
-    container.innerHTML = '';
-  }, 4000);
+  setTimeout(() => { c.innerHTML = ''; }, 4000);
 }
 
-// ============ 动物脚印装饰 ============
-function createPaws() {
-  const container = document.getElementById('paws');
-  const pawEmojis = ['🐾', '🐾', '🐾', '🐾'];
-  for (let i = 0; i < 8; i++) {
-    const paw = document.createElement('div');
-    paw.className = 'paw';
-    paw.textContent = pawEmojis[i % pawEmojis.length];
-    paw.style.left = (10 + Math.random() * 80) + '%';
-    paw.style.animationDelay = Math.random() * 12 + 's';
-    paw.style.animationDuration = (10 + Math.random() * 6) + 's';
-    container.appendChild(paw);
+function createBubbles() {
+  const c = document.getElementById('bubbles');
+  for (let i = 0; i < 12; i++) {
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const size = 20 + Math.random() * 40;
+    b.style.width = size + 'px';
+    b.style.height = size + 'px';
+    b.style.left = Math.random() * 100 + '%';
+    b.style.animationDelay = Math.random() * 8 + 's';
+    b.style.animationDuration = (6 + Math.random() * 6) + 's';
+    c.appendChild(b);
   }
 }
-createPaws();
+createBubbles();
 
-// ============ 计分系统 ============
 let answeredCorrectly = new Set();
+let challengeCorrect = false;
 
 function updateScore() {
-  const coreInputs = document.querySelectorAll('.section:nth-of-type(3) .answer-input');
-  const warmupInputs = document.querySelectorAll('.section:nth-of-type(2) .answer-input');
-  const challengeDone = answeredCorrectly.has('challenge');
-
+  const coreInputs = document.querySelectorAll('#core1 .answer-input, #core2 .answer-input, #core3 .answer-input, #core4 .answer-input, #core5 .answer-input, #core6 .answer-input, #core7 .answer-input, #core8 .answer-input, #core9 .answer-input, #core10 .answer-input');
   let coreCorrect = 0;
-  coreInputs.forEach(input => {
-    if (input.classList.contains('correct')) coreCorrect++;
-  });
-
-  let warmupCorrect = 0;
-  warmupInputs.forEach(input => {
-    if (input.classList.contains('correct')) warmupCorrect++;
-  });
-
-  let total = coreCorrect + (challengeDone ? 1 : 0);
-  let max = 10 + 1;
-
-  document.getElementById('score-display').textContent = total + ' / ' + max;
-
-  // 检查是否全部完成（核心10题+挑战）
-  if (coreCorrect === 10 && challengeDone) {
-    showAchievement();
-  }
+  coreInputs.forEach(i => { if (i.classList.contains('correct')) coreCorrect++; });
+  let total = coreCorrect + (challengeCorrect ? 1 : 0);
+  document.getElementById('score-display').textContent = total + ' / 11';
+  if (coreCorrect === 10 && challengeCorrect) showAchievement();
 }
 
-// ============ 答案检查 ============
 function checkAnswer(input) {
   const userAnswer = parseInt(input.value);
   const correctAnswer = parseInt(input.dataset.answer);
-  const card = input.closest('.question-card') || input.closest('div[style*="text-align"]');
+  const card = input.closest('.question-card');
   const fbSpan = card ? card.querySelector('.feedback') : null;
-
   if (isNaN(userAnswer) || input.value === '') {
     input.classList.remove('correct', 'wrong');
     if (card) card.classList.remove('correct', 'wrong');
     if (fbSpan) fbSpan.innerHTML = '';
-    updateScore();
-    return;
+    updateScore(); return;
   }
-
   if (userAnswer === correctAnswer) {
-    input.classList.remove('wrong');
-    input.classList.add('correct');
-    if (card) {
-      card.classList.remove('wrong');
-      card.classList.add('correct');
-    }
+    input.classList.remove('wrong'); input.classList.add('correct');
+    if (card) { card.classList.remove('wrong'); card.classList.add('correct'); }
     if (fbSpan) fbSpan.innerHTML = '<span style="color:#51cf66;">✅ 太棒了！</span>';
     playCorrectSound();
   } else {
-    input.classList.remove('correct');
-    input.classList.add('wrong');
-    if (card) {
-      card.classList.remove('correct');
-      card.classList.add('wrong');
-    }
+    input.classList.remove('correct'); input.classList.add('wrong');
+    if (card) { card.classList.remove('correct'); card.classList.add('wrong'); }
     if (fbSpan) fbSpan.innerHTML = '<span style="color:#ffa94d;">❌ 答案是 ' + correctAnswer + '</span>';
     playWrongSound();
   }
-
   updateScore();
 }
 
 function handleEnter(event, input) {
   if (event.key === 'Enter') {
-    event.preventDefault();
-    checkAnswer(input);
-    // 聚焦下一个输入框
+    event.preventDefault(); checkAnswer(input);
     const allInputs = Array.from(document.querySelectorAll('.answer-input'));
     const idx = allInputs.indexOf(input);
-    if (idx < allInputs.length - 1) {
-      allInputs[idx + 1].focus();
-    }
+    if (idx < allInputs.length - 1) allInputs[idx + 1].focus();
   }
 }
 
-// ============ 互动挑战 ============
 function selectChallenge(el, event) {
   event.stopPropagation();
-  const parent = el.closest('.challenge-question');
-  const options = parent.querySelectorAll('.challenge-option');
-
-  // 清除之前的选择
-  options.forEach(opt => {
-    opt.classList.remove('selected', 'correct-choice', 'wrong-choice');
-  });
-
-  const isCorrect = el.dataset.correct === 'true';
-
-  if (isCorrect) {
+  const options = document.querySelectorAll('.challenge-option[data-value]');
+  options.forEach(o => o.classList.remove('selected', 'correct-choice', 'wrong-choice'));
+  if (el.dataset.correct === 'true') {
     el.classList.add('correct-choice');
-    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#51cf66;">✅ 算对了！继续看下一题吧！</span>';
+    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#51cf66;">✅ 答对了！</span>';
     playCorrectSound();
   } else {
     el.classList.add('wrong-choice');
-    // 高亮正确答案
-    options.forEach(opt => {
-      if (opt.dataset.correct === 'true') {
-        opt.classList.add('correct-choice');
-      }
-    });
-    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#ffa94d;">❌ 不对哦，看看正确答案是哪个吧！</span>';
+    options.forEach(o => { if (o.dataset.correct === 'true') o.classList.add('correct-choice'); });
+    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#ffa94d;">❌ 看看正确答案吧！</span>';
     playWrongSound();
   }
 }
@@ -651,105 +381,56 @@ function selectFinalAnswer(el, event) {
   event.stopPropagation();
   const options = document.querySelectorAll('[data-challenge-final]');
   const selected = el.dataset.challengeFinal;
-
-  // 清除之前的选择
-  options.forEach(opt => {
-    opt.classList.remove('selected', 'correct-choice', 'wrong-choice');
-  });
-
-  // 狮子和熊猫都是16，都是最多的
-  if (selected === 'lion' || selected === 'panda') {
+  options.forEach(o => o.classList.remove('selected', 'correct-choice', 'wrong-choice'));
+  const vals = {'A': 19, 'B': 10, 'C': 11, 'D': 17};
+  const maxVal = 19;
+  const correctOnes = Object.keys(vals).filter(k => vals[k] === maxVal);
+  if (correctOnes.includes(selected)) {
     el.classList.add('correct-choice');
-    // 同时高亮另一个正确答案
-    options.forEach(opt => {
-      if (opt.dataset.challengeFinal === 'lion' || opt.dataset.challengeFinal === 'panda') {
-        opt.classList.add('correct-choice');
-      }
-    });
-    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#51cf66;">✅ 太聪明了！狮子和熊猫都是16，并列第一！</span>';
-    answeredCorrectly.add('challenge');
-    playCorrectSound();
+    options.forEach(o => { if (correctOnes.includes(o.dataset.challengeFinal)) o.classList.add('correct-choice'); });
+    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#51cf66;">✅ 太聪明了！A选项的19最大！</span>';
+    challengeCorrect = true; playCorrectSound();
   } else {
     el.classList.add('wrong-choice');
-    // 高亮正确答案
-    options.forEach(opt => {
-      if (opt.dataset.challengeFinal === 'lion' || opt.dataset.challengeFinal === 'panda') {
-        opt.classList.add('correct-choice');
-      }
-    });
-    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#ffa94d;">❌ 不对哦，狮子和熊猫都是16，它们并列最多！</span>';
-    answeredCorrectly.delete('challenge');
-    playWrongSound();
+    options.forEach(o => { if (correctOnes.includes(o.dataset.challengeFinal)) o.classList.add('correct-choice'); });
+    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#ffa94d;">❌ 再想想哦！A选项的19最大！</span>';
+    challengeCorrect = false; playWrongSound();
   }
-
   updateScore();
 }
 
-// ============ 成就 ============
 function showAchievement() {
   const ach = document.getElementById('achievement');
   if (ach.classList.contains('show')) return;
   ach.classList.add('show');
-  document.getElementById('achievement-detail').textContent = '你答对了全部动物园数学任务，真是动物饲养小能手！';
+  document.getElementById('achievement-detail').textContent = '你答对了全部11道题，真是数学小达人！';
   launchConfetti();
-
-  // 播放庆祝音效
   try {
     const ctx = getAudioCtx();
-    const melody = [523.25, 587.33, 659.25, 698.46, 783.99, 880, 987.77, 1046.5];
-    melody.forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.15, ctx.currentTime + i * 0.12);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.3);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime + i * 0.12);
-      osc.stop(ctx.currentTime + i * 0.12 + 0.3);
+    [523.25, 587.33, 659.25, 698.46, 783.99, 880, 987.77, 1046.5].forEach((f, i) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(0.15, ctx.currentTime + i * 0.12);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.3);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(ctx.currentTime + i * 0.12); o.stop(ctx.currentTime + i * 0.12 + 0.3);
     });
   } catch(e) {}
 }
 
-// ============ 再试一次 ============
 function retryAll() {
-  // 清空所有输入
-  document.querySelectorAll('.answer-input').forEach(input => {
-    input.value = '';
-    input.classList.remove('correct', 'wrong');
-  });
-
-  // 清空反馈
-  document.querySelectorAll('.feedback').forEach(fb => { fb.innerHTML = ''; });
-  document.querySelectorAll('.question-card').forEach(card => {
-    card.classList.remove('correct', 'wrong');
-  });
-
-  // 清空热身区样式
-  document.querySelectorAll('.section:nth-of-type(2) div[style*="text-align"]').forEach(div => {
-    div.classList.remove('correct', 'wrong');
-  });
-
-  // 清空挑战
-  document.querySelectorAll('.challenge-option, [data-challenge-final]').forEach(opt => {
-    opt.classList.remove('selected', 'correct-choice', 'wrong-choice');
-  });
+  document.querySelectorAll('.answer-input').forEach(i => { i.value = ''; i.classList.remove('correct', 'wrong'); });
+  document.querySelectorAll('.feedback').forEach(f => { f.innerHTML = ''; });
+  document.querySelectorAll('.question-card').forEach(c => { c.classList.remove('correct', 'wrong'); });
+  document.querySelectorAll('.section:nth-of-type(2) div[style*="text-align"]').forEach(d => { d.classList.remove('correct', 'wrong'); });
+  document.querySelectorAll('.challenge-option').forEach(o => { o.classList.remove('selected', 'correct-choice', 'wrong-choice'); });
   document.getElementById('challenge-feedback').innerHTML = '';
-
-  // 重置状态
-  answeredCorrectly.clear();
-  updateScore();
-
-  // 隐藏成就
+  challengeCorrect = false; answeredCorrectly.clear(); updateScore();
   document.getElementById('achievement').classList.remove('show');
-
-  // 聚焦第一个输入
-  const firstInput = document.querySelector('.answer-input');
-  if (firstInput) firstInput.focus();
+  const first = document.querySelector('.answer-input');
+  if (first) first.focus();
 }
 
-// 初始化
 updateScore();
 </script>
 </body>
