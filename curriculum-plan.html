@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧙 数学魔法师 - 1.5年学习计划</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Comic Sans MS", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #533483 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #fff;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  /* 标题 */
+  .header {
+    text-align: center;
+    padding: 30px 20px;
+    margin-bottom: 30px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 24px;
+    border: 2px solid rgba(255,255,255,0.2);
+  }
+
+  .header h1 {
+    font-size: 36px;
+    margin-bottom: 8px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .header .subtitle {
+    font-size: 18px;
+    opacity: 0.85;
+  }
+
+  /* 当前进度 */
+  .current-progress {
+    background: linear-gradient(135deg, rgba(81, 207, 102, 0.3), rgba(33, 150, 243, 0.3));
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 30px;
+    border: 2px solid rgba(81, 207, 102, 0.5);
+  }
+
+  .progress-bar-container {
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+    height: 30px;
+    margin: 16px 0;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #51cf66, #339af0);
+    border-radius: 12px;
+    transition: width 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    min-width: 40px;
+  }
+
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 16px;
+  }
+
+  /* 阶段卡片 */
+  .phase {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(6px);
+    border-radius: 20px;
+    margin-bottom: 20px;
+    border: 2px solid rgba(255,255,255,0.15);
+    overflow: hidden;
+  }
+
+  .phase-header {
+    padding: 20px 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.2s;
+    min-height: 60px;
+  }
+
+  .phase-header:hover {
+    background: rgba(255,255,255,0.1);
+  }
+
+  .phase-header h2 {
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .phase-header .toggle-icon {
+    font-size: 24px;
+    transition: transform 0.3s;
+  }
+
+  .phase-header.active .toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  .phase-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .phase-content.open {
+    max-height: 5000px;
+  }
+
+  .phase-body {
+    padding: 0 24px 24px;
+  }
+
+  /* 周卡片 */
+  .week-card {
+    background: rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    border-left: 4px solid #ffd166;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .week-card:hover {
+    background: rgba(255,255,255,0.12);
+    transform: translateX(5px);
+  }
+
+  .week-card.current {
+    background: rgba(255, 209, 102, 0.15);
+    border-left-color: #51cf66;
+    border: 2px solid rgba(81, 207, 102, 0.5);
+  }
+
+  .week-card.completed {
+    background: rgba(81, 207, 102, 0.1);
+    border-left-color: #51cf66;
+  }
+
+  .week-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .week-date {
+    font-size: 14px;
+    opacity: 0.7;
+    font-weight: normal;
+  }
+
+  .week-details {
+    display: none;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 8px;
+  }
+
+  .week-details.show {
+    display: block;
+  }
+
+  .week-details ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .week-details li {
+    padding: 6px 0;
+    font-size: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .week-details li::before {
+    content: '📌';
+    flex-shrink: 0;
+  }
+
+  .tag {
+    display: inline-block;
+    background: rgba(255,209,102,0.3);
+    color: #ffd166;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-left: 8px;
+  }
+
+  .tag.difficulty-easy { background: rgba(81,207,102,0.3); color: #51cf66; }
+  .tag.difficulty-medium { background: rgba(255,209,102,0.3); color: #ffd166; }
+  .tag.difficulty-hard { background: rgba(239,71,111,0.3); color: #ff6b6b; }
+
+  /* 主题轮换表 */
+  .theme-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 8px;
+    margin-top: 16px;
+  }
+
+  .theme-table th {
+    background: rgba(255,255,255,0.15);
+    padding: 12px 8px;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+
+  .theme-table td {
+    background: rgba(255,255,255,0.08);
+    padding: 16px 8px;
+    border-radius: 14px;
+    text-align: center;
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+
+  .theme-table td:hover {
+    transform: scale(1.05);
+    background: rgba(255,255,255,0.15);
+  }
+
+  /* 每日结构 */
+  .daily-structure {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .daily-item {
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .daily-item .emoji {
+    font-size: 36px;
+    margin-bottom: 8px;
+  }
+
+  .daily-item .label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  .daily-item .time {
+    font-size: 14px;
+    opacity: 0.7;
+  }
+
+  /* 统计面板 */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .stat-card {
+    background: rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-card .number {
+    font-size: 36px;
+    font-weight: bold;
+    color: #ffd166;
+  }
+
+  .stat-card .label {
+    font-size: 14px;
+    opacity: 0.7;
+    margin-top: 4px;
+  }
+
+  /* 阶段颜色 */
+  .phase-1 .phase-header { background: linear-gradient(90deg, rgba(81,207,102,0.2), transparent); }
+  .phase-2 .phase-header { background: linear-gradient(90deg, rgba(33,150,243,0.2), transparent); }
+  .phase-3 .phase-header { background: linear-gradient(90deg, rgba(156,39,176,0.2), transparent); }
+  .phase-4 .phase-header { background: linear-gradient(90deg, rgba(239,71,111,0.2), transparent); }
+
+  /* 响应式 */
+  @media (max-width: 599px) {
+    body { padding: 12px; }
+    .header h1 { font-size: 26px; }
+    .header .subtitle { font-size: 15px; }
+    .phase-header h2 { font-size: 18px; }
+    .week-title { font-size: 16px; }
+    .week-details li { font-size: 14px; }
+    .theme-table { font-size: 14px; }
+    .theme-table th, .theme-table td { padding: 10px 4px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- 标题 -->
+  <div class="header">
+    <h1>🧙 数学魔法师 📚</h1>
+    <p class="subtitle">1.5年学习计划 · 目标：上海实验小学自主招生</p>
+    <p style="font-size:14px; margin-top:8px; opacity:0.7;">开始日期：2026年4月14日 | 目标日期：2027年7月</p>
+  </div>
+
+  <!-- 当前进度 -->
+  <div class="current-progress">
+    <h2>📊 当前进度</h2>
+    <div class="progress-info">
+      <span>📅 第1周 · 动物园</span>
+      <span>🎯 10以内加减法</span>
+      <span id="days-elapsed"></span>
+    </div>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progress-bar" style="width: 5%;">
+        第3周
+      </div>
+    </div>
+    <div class="stats-grid" id="stats-grid"></div>
+  </div>
+
+  <!-- 第一阶段 -->
+  <div class="phase phase-1">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <h2>🟢 第一阶段：10-20加减法基础 <span class="tag difficulty-easy">入门</span></h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="phase-content">
+      <div class="phase-body">
+        <p style="margin-bottom:16px; opacity:0.8;">2026年4月 - 5月（约6周）</p>
+
+        <div class="week-card current" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>🔵 第1-2周：10以内加减法复习 + 凑十法初步 <span class="tag difficulty-easy">当前</span></span>
+            <span class="week-date">4月14日 - 4月26日</span>
+          </div>
+          <div class="week-details show">
+            <ul>
+              <li>10以内加减法巩固：6+4, 9-3, 7+2, 10-5</li>
+              <li>凑十法初步感知：9+2=10+1, 8+3=10+1</li>
+              <li>生活应用题：购物、分水果等场景</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第3-4周：10-20不进位加法</span>
+            <span class="week-date">4月27日 - 5月10日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>十几加一位（不进位）：12+3, 14+5, 11+7</li>
+              <li>十几加十几（不进位）：12+13, 14+11</li>
+              <li>应用题：用生活场景理解加法含义</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第5-6周：10-20不退位减法</span>
+            <span class="week-date">5月11日 - 5月24日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>十几减一位（不退位）：18-5, 16-3, 19-7</li>
+              <li>十几减十几（不退位）：18-12, 16-13</li>
+              <li>加减混合练习</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第7-8周：20以内进位加法 <span class="tag difficulty-medium">进阶</span></span>
+            <span class="week-date">5月25日 - 6月7日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>凑十法正式学习：9+4, 8+6, 7+5</li>
+              <li>拆小数凑大数</li>
+              <li>进位加法应用题</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第9-10周：20以内退位减法 <span class="tag difficulty-medium">进阶</span></span>
+            <span class="week-date">6月8日 - 6月21日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>破十法：13-7, 15-8, 12-9</li>
+              <li>想加法算减法</li>
+              <li>退位减法应用题</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第11-12周：20以内加减法综合</span>
+            <span class="week-date">6月22日 - 7月5日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>进位加法与退位减法混合练习</li>
+              <li>连加连减：3+5+4, 18-4-6</li>
+              <li>加减混合：7+5-3, 16-8+5</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第二阶段 -->
+  <div class="phase phase-2">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <h2>🔵 第二阶段：100以内数感与计算 <span class="tag difficulty-medium">进阶</span></h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="phase-content">
+      <div class="phase-body">
+        <p style="margin-bottom:16px; opacity:0.8;">2026年6月 - 9月（约16周）</p>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第13-14周：认识100以内的数</span>
+            <span class="week-date">7月6日 - 7月19日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>数数：1-100</li>
+              <li>数位概念：个位、十位</li>
+              <li>数的组成与分解：35=30+5</li>
+              <li>比大小、排序</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第15-16周：整十数加减法</span>
+            <span class="week-date">7月20日 - 8月2日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>整十数加整十数：30+40, 60-20</li>
+              <li>整十数加一位数：30+5, 48-8</li>
+              <li>两位数加/减整十数：35+20, 67-30</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第17-18周：两位数加减一位数</span>
+            <span class="week-date">8月3日 - 8月16日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>不进位：35+3, 48-6</li>
+              <li>进位：28+5, 36+7</li>
+              <li>不退位：48-6, 35-3</li>
+              <li>退位：42-7, 53-8</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第19-20周：两位数加减两位数</span>
+            <span class="week-date">8月17日 - 8月30日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>不进位/不退位：34+25, 68-23</li>
+              <li>竖式计算入门</li>
+              <li>进位/退位竖式</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第21-22周：100以内加减法综合</span>
+            <span class="week-date">8月31日 - 9月13日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>两步计算：35+20-8, 68-30+15</li>
+              <li>连加连减</li>
+              <li>简单应用题</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第23-24周：认识人民币</span>
+            <span class="week-date">9月14日 - 9月27日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>认识元、角、分</li>
+              <li>简单换算：1元=10角</li>
+              <li>模拟购物计算</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第25-26周：认识钟表</span>
+            <span class="week-date">9月28日 - 10月11日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>整时、半时</li>
+              <li>大约几时</li>
+              <li>简单时间计算</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 暑假巩固（第27-28周）</span>
+            <span class="week-date">8月-9月</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>每日综合练习</li>
+              <li>口算速度提升</li>
+              <li>生活数学应用</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第三阶段 -->
+  <div class="phase phase-3">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <h2>🟣 第三阶段：思维拓展与综合能力 <span class="tag difficulty-hard">拓展</span></h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="phase-content">
+      <div class="phase-body">
+        <p style="margin-bottom:16px; opacity:0.8;">2026年10月 - 2027年1月（约16周）</p>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第29-30周：找规律</span>
+            <span class="week-date">10月12日 - 10月25日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>数字规律：2, 4, 6, 8, ?</li>
+              <li>图形规律：△○□△○□?</li>
+              <li>递增/递减规律</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第31-32周：简单乘除法概念</span>
+            <span class="week-date">10月26日 - 11月8日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>相同数连加：3+3+3+3=4个3</li>
+              <li>平均分概念</li>
+              <li>乘号除号认识</li>
+              <li>2-5的乘法口诀启蒙</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第33-34周：图形与空间</span>
+            <span class="week-date">11月9日 - 11月22日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>平面图形：长方形、正方形、三角形、圆</li>
+              <li>图形拼接与分割</li>
+              <li>对称图形</li>
+              <li>简单立体图形</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第35-36周：简单统计</span>
+            <span class="week-date">11月23日 - 12月6日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>分类与整理</li>
+              <li>简单统计表</li>
+              <li>看图回答问题</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第37-38周：逻辑推理</span>
+            <span class="week-date">12月7日 - 12月20日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>简单推理题</li>
+              <li>排除法</li>
+              <li>比较推理</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第39-40周：两步应用题</span>
+            <span class="week-date">12月21日 - 1月3日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>先加后减 / 先减后加</li>
+              <li>求比一个数多/少几的数</li>
+              <li>求总数和部分数</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第41-42周：综合复习 + 期末模拟</span>
+            <span class="week-date">1月4日 - 1月17日</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>100以内加减法巩固</li>
+              <li>人民币与钟表综合</li>
+              <li>模拟测试</li>
+              <li>速度训练</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第四阶段 -->
+  <div class="phase phase-4">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <h2>🔴 第四阶段：入学冲刺 <span class="tag difficulty-hard">冲刺</span></h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="phase-content">
+      <div class="phase-body">
+        <p style="margin-bottom:16px; opacity:0.8;">2027年2月 - 6月（约20周）</p>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第43-46周：100以内计算速度提升</span>
+            <span class="week-date">2月 - 3月</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>口算达标：100以内加减法1分钟10题</li>
+              <li>竖式计算熟练</li>
+              <li>进位退位混合</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第47-50周：应用题专项</span>
+            <span class="week-date">3月 - 4月</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>多步应用题</li>
+              <li>图文应用题</li>
+              <li>开放性问题</li>
+              <li>逆向思维题</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第51-54周：奥数启蒙</span>
+            <span class="week-date">4月 - 5月</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>火柴棒问题</li>
+              <li>简单的数阵图</li>
+              <li>简单的等量代换</li>
+              <li>排队问题</li>
+              <li>年龄问题初步</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第55-58周：图形与空间进阶</span>
+            <span class="week-date">5月 - 6月</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>七巧板拼图</li>
+              <li>图形计数</li>
+              <li>折叠与展开</li>
+              <li>方位与方向</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="week-card" onclick="toggleWeek(this)">
+          <div class="week-title">
+            <span>⚪ 第59-66周：综合模拟 + 最后冲刺</span>
+            <span class="week-date">6月 - 7月</span>
+          </div>
+          <div class="week-details">
+            <ul>
+              <li>每周2-3套模拟卷</li>
+              <li>限时训练</li>
+              <li>高频考点集中训练</li>
+              <li>错题回顾与巩固</li>
+              <li>面试数学表达训练</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 每日学习结构 -->
+  <div class="phase">
+    <div class="phase-header active" onclick="togglePhase(this)">
+      <h2>📋 每日学习结构</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="phase-content open">
+      <div class="phase-body">
+        <div class="daily-structure">
+          <div class="daily-item">
+            <div class="emoji">🔥</div>
+            <div class="label">热身小游戏</div>
+            <div class="time">2分钟 · 身体互动</div>
+          </div>
+          <div class="daily-item">
+            <div class="emoji">⭐</div>
+            <div class="label">核心任务</div>
+            <div class="time">8分钟 · 10道题目</div>
+          </div>
+          <div class="daily-item">
+            <div class="emoji">🎮</div>
+            <div class="label">互动挑战</div>
+            <div class="time">3-5分钟 · 比较推理</div>
+          </div>
+          <div class="daily-item">
+            <div class="emoji">🏆</div>
+            <div class="label">今日成就</div>
+            <div class="time">鼓励与记录</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主题轮换 -->
+  <div class="phase">
+    <div class="phase-header active" onclick="togglePhase(this)">
+      <h2>🎨 每日主题轮换</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="phase-content open">
+      <div class="phase-body">
+        <table class="theme-table">
+          <tr>
+            <th>周一 🛒</th>
+            <th>周二 🚀</th>
+            <th>周三 🌊</th>
+            <th>周四 🦁</th>
+            <th>周五 🏰</th>
+          </tr>
+          <tr>
+            <td>超市购物</td>
+            <td>太空探险</td>
+            <td>海底世界</td>
+            <td>动物园</td>
+            <td>魔法城堡</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============ 阶段展开/收起 ============
+function togglePhase(header) {
+  header.classList.toggle('active');
+  const content = header.nextElementSibling;
+  content.classList.toggle('open');
+}
+
+// ============ 周详情展开/收起 ============
+function toggleWeek(card) {
+  const details = card.querySelector('.week-details');
+  details.classList.toggle('show');
+}
+
+// ============ 计算当前进度 ============
+function calculateProgress() {
+  const startDate = new Date('2026-04-14');
+  const endDate = new Date('2027-07-15');
+  const today = new Date();
+
+  const totalDays = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24));
+  const elapsedDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+  const remainingDays = totalDays - elapsedDays;
+
+  const currentWeek = Math.floor(elapsedDays / 7) + 1;
+  const percentage = Math.min(Math.max((elapsedDays / totalDays) * 100, 2), 100);
+
+  document.getElementById('days-elapsed').textContent = `已学习 ${elapsedDays} 天 · 还剩 ${remainingDays} 天`;
+
+  const progressBar = document.getElementById('progress-bar');
+  progressBar.style.width = percentage.toFixed(1) + '%';
+  progressBar.textContent = `第${currentWeek}周 ${percentage.toFixed(1)}%`;
+
+  // 统计面板
+  const totalWeeks = 66;
+  const completedWeeks = 0;
+  const statsGrid = document.getElementById('stats-grid');
+  statsGrid.innerHTML = `
+    <div class="stat-card">
+      <div class="number">${currentWeek}</div>
+      <div class="label">当前周</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">${completedWeeks}</div>
+      <div class="label">已完成周</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">${totalWeeks - currentWeek}</div>
+      <div class="label">剩余周</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">${Math.round(elapsedDays / 7 * 10)}%</div>
+      <div class="label">每日练习天数</div>
+    </div>
+  `;
+}
+
+calculateProgress();
+</script>
+</body>
+</html>
