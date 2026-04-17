@@ -204,7 +204,7 @@
   <!-- 标题 -->
   <div class="header">
     <h1>🏰 魔法城堡大冒险 🏰</h1>
-    <div class="subtitle">帮小魔法师米娅找到魔法书！每道数学题都是一把钥匙 🔑<br>在输入框里填写答案，最后点击提交按钮检查！</div>
+    <div class="subtitle">帮小魔法师米娅找到魔法书！每道数学题都是一把钥匙 🔑<br>填完每道题会自动检查，也可以点提交按钮统一检查！</div>
     <div class="date-badge">📅 2026年4月18日 · 星期六</div>
   </div>
 
@@ -227,15 +227,15 @@
   <!-- 核心任务 -->
   <div class="card">
     <h2><span class="icon">⭐</span> 核心任务：帮小魔法师米娅找魔法书钥匙</h2>
-    <div class="intro-text">🧙 <b>小魔法师米娅</b>听说藏着一本魔法书 📖<br>通往宝藏的路上有 <b>10 道门</b>，在输入框里写上答案，全部答对才能打开宝藏！</div>
+    <div class="intro-text">🧙 <b>小魔法师米娅</b>听说藏着一本魔法书 📖<br>通往宝藏的路上有 <b>10 道门</b>，在输入框里写上答案，答对就能打开宝藏！</div>
 
     <!-- Q1 -->
     <div class="quest-card" id="q1-card">
       <div class="quest-header"><span class="quest-num">1</span><span style="font-weight:700;">🚪 第一道门——魔法花园</span></div>
-      <div class="quest-scene">有 7 朵魔法糖果，又长了 1 朵，现在一共有多少朵？</div>
+      <div class="quest-scene">桌上有 7 块魔法宝石，妈妈又做了 1 块，一共几块？</div>
       <div class="quest-row">
         <span class="quest-math">7 ＋ 1 ＝</span>
-        <input type="number" class="answer-input" id="q1" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <input type="number" class="answer-input" id="q1" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q1-fb"></div>
     </div>
@@ -243,10 +243,10 @@
     <!-- Q2 -->
     <div class="quest-card" id="q2-card">
       <div class="quest-header"><span class="quest-num">2</span><span style="font-weight:700;">🚪 第二道门——药剂室</span></div>
-      <div class="quest-scene">先找到了 3 个魔法球，又发现了 7 个，一共多少个？</div>
+      <div class="quest-scene">桌上有 3 块魔法花，妈妈又做了 7 块，一共几块？</div>
       <div class="quest-row">
         <span class="quest-math">3 ＋ 7 ＝</span>
-        <input type="number" class="answer-input" id="q2" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <input type="number" class="answer-input" id="q2" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q2-fb"></div>
     </div>
@@ -254,10 +254,10 @@
     <!-- Q3 -->
     <div class="quest-card" id="q3-card">
       <div class="quest-header"><span class="quest-num">3</span><span style="font-weight:700;">🚪 第三道门——水晶洞穴</span></div>
-      <div class="quest-scene">有 8 个魔法药水，拿走了 3 个，还剩几个？</div>
+      <div class="quest-scene">有 8 颗水晶石，吃了 3 颗，还剩几颗？</div>
       <div class="quest-row">
         <span class="quest-math">8 － 3 ＝</span>
-        <input type="number" class="answer-input" id="q3" data-answer="5" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <input type="number" class="answer-input" id="q3" data-answer="5" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q3-fb"></div>
     </div>
@@ -265,10 +265,10 @@
     <!-- Q4 -->
     <div class="quest-card" id="q4-card">
       <div class="quest-header"><span class="quest-num">4</span><span style="font-weight:700;">🚪 第四道门——魔法厨房</span></div>
-      <div class="quest-scene">有 3 朵魔法球，又长了 2 朵，现在一共有多少朵？</div>
+      <div class="quest-scene">先找到了 3 个魔法羽毛，又发现了 2 个，一共多少个？</div>
       <div class="quest-row">
         <span class="quest-math">3 ＋ 2 ＝</span>
-        <input type="number" class="answer-input" id="q4" data-answer="5" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <input type="number" class="answer-input" id="q4" data-answer="5" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q4-fb"></div>
     </div>
@@ -276,10 +276,10 @@
     <!-- Q5 -->
     <div class="quest-card" id="q5-card">
       <div class="quest-header"><span class="quest-num">5</span><span style="font-weight:700;">🚪 第五道门——星星塔</span></div>
-      <div class="quest-scene">篮子里有 4 个魔法羽毛，又放进去 5 个，现在有几个？</div>
+      <div class="quest-scene">先找到了 4 个魔法药水，又发现了 5 个，一共多少个？</div>
       <div class="quest-row">
         <span class="quest-math">4 ＋ 5 ＝</span>
-        <input type="number" class="answer-input" id="q5" data-answer="9" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <input type="number" class="answer-input" id="q5" data-answer="9" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q5-fb"></div>
     </div>
@@ -287,10 +287,10 @@
     <!-- Q6 -->
     <div class="quest-card" id="q6-card">
       <div class="quest-header"><span class="quest-num">6</span><span style="font-weight:700;">🚪 第六道门——魔法图书馆</span></div>
-      <div class="quest-scene">盘子里有 10 个魔法宝石，分给小朋友 5 个，还剩几个？</div>
+      <div class="quest-scene">有 10 颗魔法花，吃了 5 颗，还剩几颗？</div>
       <div class="quest-row">
         <span class="quest-math">10 － 5 ＝</span>
-        <input type="number" class="answer-input" id="q6" data-answer="5" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <input type="number" class="answer-input" id="q6" data-answer="5" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q6-fb"></div>
     </div>
@@ -298,10 +298,10 @@
     <!-- Q7 -->
     <div class="quest-card" id="q7-card">
       <div class="quest-header"><span class="quest-num">7</span><span style="font-weight:700;">🚪 第七道门——巨龙考验</span></div>
-      <div class="quest-scene">有 3 朵魔法糖果，又长了 4 朵，现在一共有多少朵？</div>
+      <div class="quest-scene">篮子里有 3 个魔法球，又放进去 4 个，现在有几个？</div>
       <div class="quest-row">
         <span class="quest-math">3 ＋ 4 ＝</span>
-        <input type="number" class="answer-input" id="q7" data-answer="7" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <input type="number" class="answer-input" id="q7" data-answer="7" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q7-fb"></div>
     </div>
@@ -309,10 +309,10 @@
     <!-- Q8 -->
     <div class="quest-card" id="q8-card">
       <div class="quest-header"><span class="quest-num">8</span><span style="font-weight:700;">🚪 第八道门——魔法农场</span></div>
-      <div class="quest-scene">桌上有 5 块星星，妈妈又做了 1 块，一共几块？</div>
+      <div class="quest-scene">篮子里有 5 个星星，又放进去 1 个，现在有几个？</div>
       <div class="quest-row">
         <span class="quest-math">5 ＋ 1 ＝</span>
-        <input type="number" class="answer-input" id="q8" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <input type="number" class="answer-input" id="q8" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q8-fb"></div>
     </div>
@@ -320,10 +320,10 @@
     <!-- Q9 -->
     <div class="quest-card" id="q9-card">
       <div class="quest-header"><span class="quest-num">9</span><span style="font-weight:700;">🚪 第九道门——猫头鹰的考验</span></div>
-      <div class="quest-scene">有 10 颗星星，吃了 8 颗，还剩几颗？</div>
+      <div class="quest-scene">盘子里有 3 个星星，分给小朋友 2 个，还剩几个？</div>
       <div class="quest-row">
-        <span class="quest-math">10 － 8 ＝</span>
-        <input type="number" class="answer-input" id="q9" data-answer="2" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <span class="quest-math">3 － 2 ＝</span>
+        <input type="number" class="answer-input" id="q9" data-answer="1" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q9-fb"></div>
     </div>
@@ -333,22 +333,22 @@
       <div class="quest-header"><span class="quest-num">10</span><span style="font-weight:700;">🚪 最后一道门——宝藏大门 🏆</span></div>
       <div class="quest-scene">大门上有两把锁，都要解开！</div>
       <div class="quest-row">
-        <span class="quest-math">🔒 2 ＋ 8 ＝</span>
-        <input type="number" class="answer-input" id="q10a" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <span class="quest-math">🔒 第一把锁：10 － 3 ＝</span>
+        <input type="number" class="answer-input" id="q10a" data-answer="7" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="quest-row" style="margin-top:8px;">
-        <span class="quest-math">🔒 第二把锁</span>
-        <input type="number" class="answer-input" id="q10b" data-answer="0" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <span class="quest-math">🔒 第二把锁：2 ＋ 8 ＝</span>
+        <input type="number" class="answer-input" id="q10b" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q10-fb"></div>
     </div>
 
-    <div class="tip">💡 <b>提示：</b>如果算不出来，可以用手指头或小糖果帮忙哦！</div>
+    <div class="tip">💡 <b>提示：</b>如果算不出来，可以用手指头或小糖果帮忙哦！每道题填完会自动检查。</div>
   </div>
 
   <!-- 提交按钮 -->
   <div class="submit-area">
-    <button class="submit-btn" id="submitBtn" onclick="checkAnswers()">🔑 提交答案</button>
+    <button class="submit-btn" id="submitBtn" onclick="checkAnswers()">🔑 提交全部答案</button>
     <br>
     <button class="retry-btn" id="retryBtn" onclick="retry()">🔄 再试一次</button>
   </div>
@@ -370,8 +370,68 @@
 </div>
 
 <script>
-const totalQuestions = 12; // 10 questions, but Q10 has 2 answers
+const totalQuestions = 12;
 
+// 单题即时检查
+function checkSingle(input) {
+  const val = input.value.trim();
+  if (val === '') {
+    // 清空时恢复默认状态
+    input.className = 'answer-input';
+    const card = input.closest('.quest-card');
+    if (card) card.className = 'quest-card';
+    return;
+  }
+  const answer = parseInt(input.dataset.answer);
+  const userAnswer = parseInt(val);
+  if (isNaN(userAnswer)) return;
+
+  const card = input.closest('.quest-card');
+
+  if (userAnswer === answer) {
+    input.className = 'answer-input correct-input';
+    if (card) card.className = 'quest-card correct';
+    // Show brief feedback
+    const fb = card ? card.querySelector('.feedback') : null;
+    if (fb) {
+      fb.className = 'feedback show correct-fb';
+      fb.textContent = '✅ 答对了！太棒了！🌟';
+    }
+  } else {
+    input.className = 'answer-input wrong-input';
+    if (card) card.className = 'quest-card wrong';
+    const fb = card ? card.querySelector('.feedback') : null;
+    if (fb) {
+      fb.className = 'feedback show wrong-fb';
+      fb.textContent = '❌ 不对哦，再想想！正确答案是 ' + answer + '。';
+    }
+  }
+
+  // Update scoreboard live
+  updateScoreboard();
+}
+
+function updateScoreboard() {
+  let correct = 0;
+  let answered = 0;
+  document.querySelectorAll('.answer-input').forEach(input => {
+    if (input.value.trim() !== '') {
+      answered++;
+      const answer = parseInt(input.dataset.answer);
+      const userAnswer = parseInt(input.value);
+      if (userAnswer === answer) correct++;
+    }
+  });
+  document.getElementById('correctCount').textContent = correct;
+  const statusEl = document.getElementById('scoreStatus');
+  if (correct === totalQuestions) {
+    statusEl.textContent = '🎊 全部答对！太厉害了！';
+  } else if (answered > 0) {
+    statusEl.textContent = '已答 ' + answered + ' 题，对 ' + correct + ' 题';
+  }
+}
+
+// 提交按钮统一检查
 function checkAnswers() {
   let correct = 0;
   const questions = [
@@ -416,20 +476,16 @@ function checkAnswers() {
     }
   });
 
-  // 更新计分板
-  document.getElementById('correctCount').textContent = correct;
-  const statusEl = document.getElementById('scoreStatus');
+  updateScoreboard();
+
+  // Show achievement
   if (correct === totalQuestions) {
-    statusEl.textContent = '🎊 全部答对！太厉害了！';
     showAchievement('full', correct);
   } else if (correct >= 8) {
-    statusEl.textContent = '⭐ 太棒了！答对了 ' + correct + ' 题！';
     showAchievement('great', correct);
   } else if (correct >= 5) {
-    statusEl.textContent = '👍 不错！答对了 ' + correct + ' 题！';
     showAchievement('good', correct);
   } else {
-    statusEl.textContent = '💪 答对了 ' + correct + ' 题，再试一次吧！';
     showAchievement('try', correct);
   }
 
