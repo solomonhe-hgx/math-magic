@@ -3,963 +3,511 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏰 魔法城堡探险 - 数学魔法任务 2026-04-17</title>
+<title>🏰 魔法城堡大冒险 — 数学魔法任务</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: "Comic Sans MS", "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: linear-gradient(180deg, #2d1b69 0%, #5b2c8e 30%, #7c3aed 60%, #1e0a3c 100%);
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(180deg, #2d1b69 0%, #5b2c8e 20%, #7c3aed 40%, #a78bfa 60%, #c4b5fd 80%, #ddd6fe 100%);
     min-height: 100vh;
-    padding: 20px;
-    color: #fff;
+    padding: 24px 24px 60px;
+    color: #1a3a5c;
   }
 
-  .container {
-    max-width: 960px;
-    margin: 0 auto;
-  }
+  .container { max-width: 960px; margin: 0 auto; }
 
-  /* 顶部标题和计分板 */
-  .header {
-    text-align: center;
-    margin-bottom: 24px;
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(8px);
-    border-radius: 24px;
-    padding: 20px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  }
-
-  .header h1 {
-    font-size: 32px;
-    margin-bottom: 8px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-  }
-
+  /* 顶部计分板 */
   .scoreboard {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    font-size: 22px;
-    font-weight: bold;
-  }
-
-  .scoreboard .score {
-    background: #ffd166;
-    color: #1e0a3c;
-    padding: 8px 24px;
+    position: sticky; top: 12px; z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
     border-radius: 16px;
-    min-width: 120px;
-  }
-
-  .retry-btn {
-    background: #ef476f;
-    color: #fff;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 16px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  .retry-btn:hover { background: #d63a5e; transform: scale(1.05); }
-  .retry-btn:active { transform: scale(0.95); }
-
-  /* 各区域卡片 */
-  .section {
-    background: rgba(255,255,255,0.12);
-    backdrop-filter: blur(6px);
-    border-radius: 24px;
-    padding: 24px;
-    margin-bottom: 24px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-  }
-
-  .section-title {
-    font-size: 26px;
-    margin-bottom: 16px;
-    text-align: center;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-  }
-
-  /* 题目卡片 */
-  .question-card {
-    background: rgba(255,255,255,0.18);
-    border-radius: 16px;
-    padding: 16px 20px;
-    margin-bottom: 12px;
+    padding: 14px 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0,60,120,0.2);
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 12px;
-    transition: background 0.3s;
-  }
-
-  .question-card.correct { background: rgba(81, 207, 102, 0.35); }
-  .question-card.wrong { background: rgba(255, 183, 77, 0.35); }
-
-  .question-text {
-    font-size: 24px;
-    font-weight: bold;
-    flex: 1;
-    min-width: 200px;
-  }
-
-  .answer-area {
-    display: flex;
-    align-items: center;
     gap: 10px;
   }
+  .scoreboard .score {
+    font-size: 20px;
+    font-weight: 900;
+    color: #0d47a1;
+  }
+  .scoreboard .score .correct { color: #2e7d32; }
+  .scoreboard .score .wrong { color: #c62828; }
+  .scoreboard .status { font-size: 14px; color: #555; }
+
+  .header {
+    text-align: center;
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
+    border-radius: 24px;
+    padding: 28px 18px 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 30px rgba(124,58,237,0.35);
+  }
+  .header h1 { font-size: 28px; font-weight: 900; color: #fff; text-shadow: 2px 2px 6px rgba(0,0,0,0.2); margin-top: 20px; }
+  .header .subtitle { font-size: 15px; color: #ede9fe; margin-top: 8px; line-height: 1.6; }
+  .header .date-badge { display: inline-block; background: rgba(255,255,255,0.25); border-radius: 20px; padding: 4px 16px; font-size: 13px; color: #fff; margin-top: 10px; }
+
+  .card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    padding: 22px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 18px rgba(0,60,120,0.15);
+  }
+  .card h2 { font-size: 20px; font-weight: 900; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .card h2 .icon { font-size: 26px; }
+
+  .warmup-card { background: linear-gradient(135deg, #fff9e6, #fff3cc); border: 3px solid #ffc107; }
+  .warmup-card h2 { color: #e65100; }
+  .warmup-step { background: rgba(255,255,255,0.8); border-radius: 14px; padding: 14px; margin-bottom: 12px; border-left: 4px solid #ff9800; }
+  .warmup-step .step-title { font-size: 16px; font-weight: 700; color: #e65100; margin-bottom: 6px; }
+  .warmup-step .step-content { font-size: 15px; color: #4a3520; line-height: 1.8; }
+
+  /* 题目卡片 */
+  .quest-card {
+    background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+    border-radius: 18px;
+    padding: 18px 16px;
+    margin-bottom: 16px;
+    border-left: 5px solid #7c3aed;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .quest-card.correct { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-left-color: #43a047; }
+  .quest-card.wrong { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-left-color: #f57c00; }
+
+  .quest-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .quest-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #7c3aed; color: #fff; width: 36px; height: 36px;
+    border-radius: 50%; font-size: 16px; font-weight: 900; flex-shrink: 0;
+  }
+  .quest-card.correct .quest-num { background: #43a047; }
+  .quest-card.wrong .quest-num { background: #f57c00; }
+
+  .quest-scene { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 12px; padding-left: 46px; }
+
+  .quest-row {
+    display: flex; align-items: center; gap: 12px; padding-left: 46px; flex-wrap: wrap;
+  }
+  .quest-math { font-size: 24px; font-weight: 900; color: #4a148c; letter-spacing: 3px; }
+  .quest-card.correct .quest-math { color: #1b5e20; }
+  .quest-card.wrong .quest-math { color: #e65100; }
 
   .answer-input {
-    width: 80px;
-    height: 50px;
-    font-size: 26px;
-    text-align: center;
-    border: 3px solid #ffd166;
-    border-radius: 14px;
-    outline: none;
-    background: #fff;
-    color: #1e0a3c;
-    font-weight: bold;
-    transition: border-color 0.3s, background 0.3s;
-    -moz-appearance: textfield;
+    width: 80px; height: 48px;
+    border: 3px solid #c4b5fd; border-radius: 12px;
+    font-size: 22px; font-weight: 700; text-align: center;
+    color: #4a148c; background: rgba(255,255,255,0.8);
+    outline: none; transition: border-color 0.3s, background 0.3s;
+    -webkit-appearance: none; appearance: none;
   }
-
-  .answer-input::-webkit-outer-spin-button,
-  .answer-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  .answer-input.correct {
-    border-color: #51cf66;
-    background: #d3f9d8;
-  }
-
-  .answer-input.wrong {
-    border-color: #ffa94d;
-    background: #fff3e0;
-  }
+  .answer-input:focus { border-color: #7c3aed; background: #fff; }
+  .answer-input.correct-input { border-color: #43a047; background: #e8f5e9; color: #2e7d32; }
+  .answer-input.wrong-input { border-color: #f57c00; background: #fff3e0; color: #e65100; }
 
   .feedback {
-    font-size: 22px;
-    min-width: 80px;
-    min-height: 30px;
+    display: none; margin-top: 10px; padding-left: 46px;
+    font-size: 15px; font-weight: 600; line-height: 1.6;
   }
+  .feedback.show { display: block; }
+  .feedback.correct-fb { color: #2e7d32; }
+  .feedback.wrong-fb { color: #e65100; }
 
-  .correct-answer {
-    font-size: 18px;
-    color: #ffd166;
-    font-weight: bold;
+  /* 提交按钮 */
+  .submit-area { text-align: center; margin: 32px 0; }
+  .submit-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
+    color: #fff; border: none; border-radius: 20px;
+    padding: 16px 48px; font-size: 22px; font-weight: 900;
+    cursor: pointer; box-shadow: 0 6px 20px rgba(124,58,237,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-width: 200px; justify-content: center;
   }
+  .submit-btn:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(124,58,237,0.5); }
+  .submit-btn:active { transform: scale(0.97); }
 
-  /* 互动挑战区 - 拖拽/选择 */
-  .challenge-option {
-    display: inline-block;
-    background: rgba(255,255,255,0.25);
-    border: 3px solid #ffd166;
-    border-radius: 14px;
-    padding: 12px 20px;
-    margin: 6px;
-    font-size: 22px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s;
-    min-height: 44px;
-    min-width: 44px;
+  .retry-btn {
+    display: none; margin-top: 14px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff; border: none; border-radius: 16px;
+    padding: 12px 36px; font-size: 18px; font-weight: 700;
+    cursor: pointer; box-shadow: 0 4px 15px rgba(99,102,241,0.3);
+    transition: transform 0.2s;
   }
+  .retry-btn:hover { transform: scale(1.05); }
 
-  .challenge-option:hover { background: rgba(255,255,255,0.4); transform: scale(1.05); }
-  .challenge-option.selected { background: #ffd166; color: #1e0a3c; }
-  .challenge-option.correct-choice { background: #51cf66; border-color: #51cf66; color: #fff; }
-  .challenge-option.wrong-choice { background: #ef476f; border-color: #ef476f; color: #fff; }
-
-  /* 思维训练营 - 选项 */
-  .think-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
-    width: 100%;
+  /* 成就 */
+  .achievement-card {
+    background: linear-gradient(135deg, #fff8e1, #ffecb3);
+    border: 3px solid #ffc107; text-align: center; padding: 26px 18px;
   }
+  .medal { font-size: 64px; display: block; margin-bottom: 10px; animation: bounce 2s infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .achievement-card h2 { color: #e65100; justify-content: center; font-size: 22px; }
+  .achievement-card .cheer { font-size: 17px; color: #bf360c; line-height: 2; margin-top: 10px; }
+  .stars-row { font-size: 32px; letter-spacing: 8px; margin-top: 12px; }
 
-  .think-option {
-    flex: 1;
-    min-width: 80px;
-    background: rgba(255,255,255,0.2);
-    border: 3px solid #ffd166;
-    border-radius: 14px;
-    padding: 12px 16px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-    min-height: 44px;
-  }
+  .tip { background: #ede9fe; border-radius: 14px; padding: 12px 14px; margin-top: 12px; font-size: 14px; color: #5b21b6; line-height: 1.7; border-left: 4px solid #8b5cf6; }
+  .intro-text { font-size: 16px; color: #333; line-height: 2; margin-bottom: 10px; }
+  .divider { text-align: center; margin: 24px 0; font-size: 24px; letter-spacing: 12px; opacity: 0.6; }
 
-  .think-option:hover { background: rgba(255,255,255,0.4); transform: scale(1.03); }
-  .think-option.selected { background: #ffd166; color: #1e0a3c; }
-  .think-option.correct-choice { background: #51cf66; border-color: #51cf66; color: #fff; }
-  .think-option.wrong-choice { background: #ef476f; border-color: #ef476f; color: #fff; }
-
-  /* 场景框 */
-  .scene-box {
-    background: rgba(255, 209, 102, 0.15);
-    border-radius: 12px;
-    padding: 14px;
-    margin: 10px 0;
-    text-align: center;
-    font-size: 1.1em;
-    line-height: 1.8;
-    width: 100%;
-  }
-
-  /* 图形网格 */
-  .shape-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
-    max-width: 240px;
-    margin: 10px auto;
-  }
-
-  .shape-item {
-    font-size: 1.8em;
-    text-align: center;
-    padding: 4px;
-    border-radius: 8px;
-    background: rgba(255,255,255,0.1);
-  }
-
-  /* 成就区 */
-  .achievement {
-    text-align: center;
-    padding: 30px;
-    display: none;
-  }
-
-  .achievement.show { display: block; }
-
-  .achievement h2 {
-    font-size: 36px;
-    margin-bottom: 16px;
-    animation: bounce 0.6s ease infinite alternate;
-  }
-
-  .achievement .badge {
-    font-size: 64px;
-    margin: 16px 0;
-  }
-
-  .achievement p {
-    font-size: 22px;
-    margin-bottom: 8px;
-  }
-
-  @keyframes bounce {
-    from { transform: translateY(0); }
-    to { transform: translateY(-10px); }
-  }
-
-  /* 烟花/Confetti */
-  .confetti-container {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none;
-    z-index: 999;
-    overflow: hidden;
-  }
-
+  /* 庆祝动画 */
+  .confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; }
   .confetti {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-    animation: fall 2.5s ease-out forwards;
+    position: absolute; width: 10px; height: 10px;
+    top: -10px; opacity: 0;
+    animation: confetti-fall 3s ease-out forwards;
   }
-
-  @keyframes fall {
-    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-  }
-
-  /* 魔法星星装饰 */
-  .magic-star {
-    position: fixed;
-    border-radius: 50%;
-    background: rgba(255, 209, 102, 0.15);
-    animation: float-up 8s ease-in infinite;
-    pointer-events: none;
-  }
-
-  @keyframes float-up {
-    0% { transform: translateY(100vh) scale(0.5); opacity: 0.6; }
-    100% { transform: translateY(-100px) scale(1); opacity: 0; }
-  }
-
-  /* 分隔线 */
-  .divider {
-    text-align: center;
-    margin: 20px 0;
-    font-size: 22px;
-    letter-spacing: 10px;
-    opacity: 0.5;
+  @keyframes confetti-fall {
+    0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+    100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
   }
 
   /* 响应式 */
-  @media (max-width: 599px) {
-    body { padding: 12px; }
-    .header h1 { font-size: 24px; }
-    .scoreboard { font-size: 18px; gap: 10px; }
-    .scoreboard .score { padding: 6px 16px; min-width: 100px; }
-    .section { padding: 16px; border-radius: 18px; }
-    .section-title { font-size: 22px; }
-    .question-card { padding: 12px 14px; flex-direction: column; align-items: flex-start; }
-    .question-text { font-size: 20px; }
-    .answer-input { width: 70px; height: 46px; font-size: 22px; }
-    .feedback { font-size: 18px; }
-    .challenge-option, .think-option { font-size: 18px; padding: 10px 16px; }
-    .achievement h2 { font-size: 28px; }
-    .achievement .badge { font-size: 48px; }
-    .think-options { flex-direction: column; }
-    .think-option { min-width: 100%; }
-    .shape-grid { max-width: 200px; }
-    .shape-item { font-size: 1.5em; }
+  @media (max-width: 600px) {
+    body { padding: 12px 8px 40px; }
+    .container { max-width: 100%; }
+    .header { padding: 22px 14px 16px; }
+    .header h1 { font-size: 22px; }
+    .card { padding: 16px 12px; }
+    .quest-row { padding-left: 0; }
+    .quest-scene { padding-left: 0; }
+    .feedback { padding-left: 0; }
+    .quest-math { font-size: 20px; }
+    .answer-input { width: 70px; height: 44px; font-size: 20px; }
+    .submit-btn { padding: 14px 36px; font-size: 18px; }
   }
-
-  @media (min-width: 600px) and (max-width: 1023px) {
-    .container { max-width: 700px; }
-    .header h1 { font-size: 28px; }
-    .section-title { font-size: 24px; }
-    .question-text { font-size: 22px; }
-  }
-
-  @media (min-width: 1024px) {
-    .container { max-width: 960px; }
-  }
+  @media (min-width: 601px) and (max-width: 1024px) { .container { max-width: 760px; } }
+  @media (min-width: 1025px) { .container { max-width: 860px; } }
 </style>
 </head>
 <body>
-
-<!-- 魔法星星装饰 -->
-<div id="bubbles"></div>
-
-<!-- 烟花容器 -->
-<div class="confetti-container" id="confetti-container"></div>
-
 <div class="container">
-  <!-- 顶部 -->
+
+  <!-- 计分板 -->
+  <div class="scoreboard" id="scoreboard">
+    <div class="score">
+      <span class="correct" id="correctCount">0</span> / <span id="totalCount">12</span> 正确
+    </div>
+    <div class="status" id="scoreStatus">🏰 开始魔法冒险吧！加油 💪</div>
+  </div>
+
+  <!-- 标题 -->
   <div class="header">
-    <h1>🏰 魔法城堡探险 🧙</h1>
-    <p style="font-size:16px; margin-bottom:12px; opacity:0.85;">数学魔法任务 · 2026年4月17日</p>
-    <div class="scoreboard">
-      <span>答对：</span>
-      <span class="score" id="score-display">0 / 12</span>
-      <button class="retry-btn" id="retry-btn" onclick="retryAll()">🔄 再试一次</button>
+    <h1>🏰 魔法城堡大冒险 🧙</h1>
+    <div class="subtitle">帮小魔法师解开数学咒语！每道数学题都是一把钥匙 🔑<br>在输入框里填写答案，最后点击提交按钮检查！</div>
+    <div class="date-badge">📅 2026年4月17日 · 星期五</div>
+  </div>
+
+  <!-- 热身 -->
+  <div class="card warmup-card">
+    <h2><span class="icon">🔥</span> 热身小游戏：魔法药水倒数</h2>
+    <div class="intro-text">👋 小魔法师，准备好了吗？我们要念出咒语，把魔法药水变出来！</div>
+    <div class="warmup-step">
+      <div class="step-title">🧪 泡泡倒数</div>
+      <div class="step-content">从 <b>20</b> 倒数到 <b>1</b>，每数一个数就拍一下手 👏</div>
+    </div>
+    <div class="warmup-step">
+      <div class="step-title">✨ 魔法数字</div>
+      <div class="step-content">家长说数字，孩子用手比出来："魔法说——<b>13</b>！"</div>
     </div>
   </div>
 
-  <!-- 🔥 热身小游戏 -->
-  <div class="section">
-    <div class="section-title">🔥 热身小游戏：魔法药水配方（2分钟）</div>
-    <p style="text-align:center; font-size:18px; margin-bottom:16px;">帮魔法师找到加起来等于 <strong style="color:#ffd166; font-size:22px;">10</strong> 的魔法数字吧！</p>
+  <div class="divider">🏰🔮🗝️👑🧙</div>
 
-    <div class="question-card" id="warmup1">
-      <div class="question-text">🧪 7 + <input type="number" class="answer-input" data-answer="3" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"> = 10</div>
-      <div class="feedback" id="fb-warmup1"></div>
+  <!-- 核心任务 -->
+  <div class="card">
+    <h2><span class="icon">⭐</span> 核心任务：帮小魔法师找宝藏钥匙</h2>
+    <div class="intro-text">🧙 <b>小魔法师米娅</b>听说城堡深处藏着一本魔法书 📖<br>通往宝藏的路上有 <b>10 道门</b>，在输入框里写上答案，全部答对才能打开宝藏！</div>
+
+    <!-- Q1 -->
+    <div class="quest-card" id="q1-card">
+      <div class="quest-header"><span class="quest-num">1</span><span style="font-weight:700;">🚪 第一道门——魔法花园</span></div>
+      <div class="quest-scene">花园里有 <b>9</b> 朵魔法花🌺，又开了 <b>4</b> 朵，现在一共有多少朵？</div>
+      <div class="quest-row">
+        <span class="quest-math">9 ＋ 4 ＝</span>
+        <input type="number" class="answer-input" id="q1" data-answer="13" min="0" max="99" inputmode="numeric" autocomplete="off">
+      </div>
+      <div class="feedback" id="q1-fb"></div>
     </div>
 
-    <div class="question-card" id="warmup2">
-      <div class="question-text">🔮 <input type="number" class="answer-input" data-answer="4" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"> + 6 = 10</div>
-      <div class="feedback" id="fb-warmup2"></div>
+    <!-- Q2 -->
+    <div class="quest-card" id="q2-card">
+      <div class="quest-header"><span class="quest-num">2</span><span style="font-weight:700;">🚪 第二道门——药剂室</span></div>
+      <div class="quest-scene">药剂室有 <b>10</b> 瓶魔法药水🧪，用了 <b>3</b> 瓶，还剩几瓶？</div>
+      <div class="quest-row">
+        <span class="quest-math">10 － 3 ＝</span>
+        <input type="number" class="answer-input" id="q2" data-answer="7" min="0" max="99" inputmode="numeric" autocomplete="off">
+      </div>
+      <div class="feedback" id="q2-fb"></div>
     </div>
 
-    <div class="question-card" id="warmup3">
-      <div class="question-text">⚗️ <input type="number" class="answer-input" data-answer="2" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"> + 8 = 10</div>
-      <div class="feedback" id="fb-warmup3"></div>
+    <!-- Q3 -->
+    <div class="quest-card" id="q3-card">
+      <div class="quest-header"><span class="quest-num">3</span><span style="font-weight:700;">🚪 第三道门——水晶洞穴</span></div>
+      <div class="quest-scene">洞穴里有 <b>8</b> 颗水晶石💎，又找到了 <b>5</b> 颗，一共多少颗？</div>
+      <div class="quest-row">
+        <span class="quest-math">8 ＋ 5 ＝</span>
+        <input type="number" class="answer-input" id="q3" data-answer="13" min="0" max="99" inputmode="numeric" autocomplete="off">
+      </div>
+      <div class="feedback" id="q3-fb"></div>
     </div>
+
+    <!-- Q4 -->
+    <div class="quest-card" id="q4-card">
+      <div class="quest-header"><span class="quest-num">4</span><span style="font-weight:700;">🚪 第四道门——魔法厨房</span></div>
+      <div class="quest-scene">厨房有 <b>10</b> 个魔法蛋糕🍰，小魔法师吃了 <b>6</b> 个，还剩几个？</div>
+      <div class="quest-row">
+        <span class="quest-math">10 － 6 ＝</span>
+        <input type="number" class="answer-input" id="q4" data-answer="4" min="0" max="99" inputmode="numeric" autocomplete="off">
+      </div>
+      <div class="feedback" id="q4-fb"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quest-card" id="q5-card">
+      <div class="quest-header"><span class="quest-num">5</span><span style="font-weight:700;">🚪 第五道门——星星塔 🌟</span></div>
+      <div class="quest-scene">塔顶有 <b>7</b> 颗星星⭐，又飞来了 <b>6</b> 颗，现在有几颗？</div>
+      <div class="quest-row">
+        <span class="quest-math">7 ＋ 6 ＝</span>
+        <input type="number" class="answer-input" id="q5" data-answer="13" min="0" max="99" inputmode="numeric" autocomplete="off">
+      </div>
+      <div class="feedback" id="q5-fb"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quest-card" id="q6-card">
+      <div class="quest-header"><span class="quest-num">6</span><span style="font-weight:700;">🚪 第六道门——魔法图书馆</span></div>
+      <div class="quest-scene">图书馆有 <b>10</b> 本魔法书📚，借给小猫 <b>4</b> 本，还剩几本？</div>
+      <div class="quest-row">
+        <span class="quest-math">10 － 4 ＝</span>
+        <input type="number" class="answer-input" id="q6" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off">
+      </div>
+      <div class="feedback" id="q6-fb"></div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quest-card" id="q7-card">
+      <div class="quest-header"><span class="quest-num">7</span><span style="font-weight:700;">🚪 第七道门——巨龙考验 🐉</span></div>
+      <div class="quest-scene">巨龙说："我有 <b>9</b> 颗宝石💠，又给了我 <b>5</b> 颗，现在有几颗？"</div>
+      <div class="quest-row">
+        <span class="quest-math">9 ＋ 5 ＝</span>
+        <input type="number" class="answer-input" id="q7" data-answer="14" min="0" max="99" inputmode="numeric" autocomplete="off">
+      </div>
+      <div class="feedback" id="q7-fb"></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="quest-card" id="q8-card">
+      <div class="quest-header"><span class="quest-num">8</span><span style="font-weight:700;">🚪 第八道门——魔法农场</span></div>
+      <div class="quest-scene">农场有 <b>10</b> 只魔法兔🐰，跑掉了 <b>7</b> 只，还剩几只？</div>
+      <div class="quest-row">
+        <span class="quest-math">10 － 7 ＝</span>
+        <input type="number" class="answer-input" id="q8" data-answer="3" min="0" max="99" inputmode="numeric" autocomplete="off">
+      </div>
+      <div class="feedback" id="q8-fb"></div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="quest-card" id="q9-card">
+      <div class="quest-header"><span class="quest-num">9</span><span style="font-weight:700;">🚪 第九道门——猫头鹰的考验 🦉</span></div>
+      <div class="quest-scene">猫头鹰说："我有 <b>8</b> 根魔法羽毛🪶，又长了 <b>6</b> 根，一共有几根？"</div>
+      <div class="quest-row">
+        <span class="quest-math">8 ＋ 6 ＝</span>
+        <input type="number" class="answer-input" id="q9" data-answer="14" min="0" max="99" inputmode="numeric" autocomplete="off">
+      </div>
+      <div class="feedback" id="q9-fb"></div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="quest-card" id="q10-card">
+      <div class="quest-header"><span class="quest-num">10</span><span style="font-weight:700;">🚪 最后一道门——宝藏大门 🏆</span></div>
+      <div class="quest-scene">大门上有两把锁，都要解开！</div>
+      <div class="quest-row">
+        <span class="quest-math">🔒 10 － 2 ＝</span>
+        <input type="number" class="answer-input" id="q10a" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off">
+      </div>
+      <div class="quest-row" style="margin-top:8px;">
+        <span class="quest-math">🔒 9 ＋ 6 ＝</span>
+        <input type="number" class="answer-input" id="q10b" data-answer="15" min="0" max="99" inputmode="numeric" autocomplete="off">
+      </div>
+      <div class="feedback" id="q10-fb"></div>
+    </div>
+
+    <div class="tip">💡 <b>提示：</b>如果算不出来，可以用手指头或小糖果帮忙哦！</div>
   </div>
 
-  <div class="divider">🏰🧩🏰</div>
-
-  <!-- 🧩 思维训练营 -->
-  <div class="section">
-    <div class="section-title">🧩 思维训练营：每日冲刺（8分钟）</div>
-    <p style="text-align:center; font-size:18px; margin-bottom:16px;">今天小魔法师要挑战更难的思维题！</p>
-
-    <!-- 脑力热身 -->
-    <p style="font-size:20px; font-weight:bold; margin: 16px 0 10px; text-align:center; color:#ffd166;">⚡ 快速口算</p>
-
-    <div class="question-card" id="think1">
-      <div class="question-text">1️⃣ 8 + 3 = <input type="number" class="answer-input" data-answer="11" oninput="checkThink(this)" onblur="checkThink(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-think1"></div>
-    </div>
-
-    <div class="question-card" id="think2">
-      <div class="question-text">2️⃣ 15 - 5 = <input type="number" class="answer-input" data-answer="10" oninput="checkThink(this)" onblur="checkThink(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-think2"></div>
-    </div>
-
-    <div class="question-card" id="think3">
-      <div class="question-text" style="width:100%;">3️⃣ <strong>7 + 2</strong> 和 <strong>10</strong>，哪个大？</div>
-      <div class="think-options" id="think3-options" style="width:100%;">
-        <div class="think-option" data-answer="a" onclick="selectThink(this, 'think3', 'b')">7+2 大</div>
-        <div class="think-option" data-answer="b" onclick="selectThink(this, 'think3', 'b')">10 大</div>
-        <div class="think-option" data-answer="c" onclick="selectThink(this, 'think3', 'b')">一样大</div>
-      </div>
-      <div class="feedback" id="fb-think3"></div>
-    </div>
-
-    <!-- 逻辑推理 -->
-    <p style="font-size:20px; font-weight:bold; margin: 16px 0 10px; text-align:center; color:#ffd166;">🧩 逻辑推理</p>
-
-    <div class="question-card" id="think4">
-      <div class="question-text" style="width:100%;">4️⃣ <strong>找规律填数：</strong>2，4，7，11，下一个数是几？</div>
-      <div class="question-text">答案是：<input type="number" class="answer-input" data-answer="16" oninput="checkThink(this)" onblur="checkThink(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-think4"></div>
-    </div>
-
-    <div class="question-card" id="think5">
-      <div class="question-text" style="width:100%;">5️⃣ <strong>图形找规律：</strong>🔵 🔴 🔴 🔵 🔴 🔴 🔵 ❓ 接下来是什么颜色？</div>
-      <div class="think-options" id="think5-options" style="width:100%;">
-        <div class="think-option" data-answer="a" onclick="selectThink(this, 'think5', 'b')">🔵 蓝色</div>
-        <div class="think-option" data-answer="b" onclick="selectThink(this, 'think5', 'b')">🔴 红色</div>
-        <div class="think-option" data-answer="c" onclick="selectThink(this, 'think5', 'b')">🟢 绿色</div>
-      </div>
-      <div class="feedback" id="fb-think5"></div>
-    </div>
-
-    <div class="question-card" id="think6">
-      <div class="question-text" style="width:100%;">6️⃣ <strong>推理链：</strong>小猫说"我比小狗大"，小兔说"我比小猫大"，谁最大？</div>
-      <div class="think-options" id="think6-options" style="width:100%;">
-        <div class="think-option" data-answer="a" onclick="selectThink(this, 'think6', 'c')">🐱 小猫</div>
-        <div class="think-option" data-answer="b" onclick="selectThink(this, 'think6', 'c')">🐶 小狗</div>
-        <div class="think-option" data-answer="c" onclick="selectThink(this, 'think6', 'c')">🐰 小兔</div>
-      </div>
-      <div class="feedback" id="fb-think6"></div>
-    </div>
-
-    <!-- 数感计算 -->
-    <p style="font-size:20px; font-weight:bold; margin: 16px 0 10px; text-align:center; color:#ffd166;">🔢 数感与计算</p>
-
-    <div class="question-card" id="think7">
-      <div class="question-text" style="width:100%;">7️⃣ <strong>括号里填几：</strong>12 + （？）= 18</div>
-      <div class="question-text">答案是：<input type="number" class="answer-input" data-answer="6" oninput="checkThink(this)" onblur="checkThink(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-think7"></div>
-    </div>
-
-    <div class="question-card" id="think8">
-      <div class="question-text" style="width:100%;">8️⃣ 算一算，哪个算式的结果最大？</div>
-      <div class="think-options" id="think8-options" style="width:100%;">
-        <div class="think-option" data-answer="a" onclick="selectThink(this, 'think8', 'c')">6 + 7</div>
-        <div class="think-option" data-answer="b" onclick="selectThink(this, 'think8', 'c')">15 - 2</div>
-        <div class="think-option" data-answer="c" onclick="selectThink(this, 'think8', 'c')">8 + 6</div>
-      </div>
-      <div class="feedback" id="fb-think8"></div>
-    </div>
-
-    <div class="question-card" id="think9">
-      <div class="question-text" style="width:100%;">9️⃣ <strong>应用题：</strong></div>
-      <div class="scene-box">小明有 9 个 🍎<br>送给小红 4 个<br>妈妈又给了小明 3 个</div>
-      <div class="question-text">小明现在有几个苹果？<input type="number" class="answer-input" data-answer="8" oninput="checkThink(this)" onblur="checkThink(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-think9"></div>
-    </div>
-
-    <div class="question-card" id="think10">
-      <div class="question-text">🔟 5 + 4 - 3 + 2 = <input type="number" class="answer-input" data-answer="8" oninput="checkThink(this)" onblur="checkThink(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-think10"></div>
-    </div>
-
-    <!-- 空间观察 -->
-    <p style="font-size:20px; font-weight:bold; margin: 16px 0 10px; text-align:center; color:#ffd166;">👁️ 空间与观察</p>
-
-    <div class="question-card" id="think11">
-      <div class="question-text" style="width:100%;">1️⃣1️⃣ <strong>数图形：</strong>数一数，下面一共有多少个 ⭐ ？</div>
-      <div class="shape-grid">
-        <div class="shape-item">⭐</div><div class="shape-item">⭐</div>
-        <div class="shape-item">⭐</div><div class="shape-item">⭐</div>
-        <div class="shape-item">⭐</div><div class="shape-item">⭐</div>
-        <div class="shape-item">⭐</div><div class="shape-item">⭐</div>
-      </div>
-      <div class="think-options" id="think11-options" style="width:100%;">
-        <div class="think-option" data-answer="a" onclick="selectThink(this, 'think11', 'c')">6 个</div>
-        <div class="think-option" data-answer="b" onclick="selectThink(this, 'think11', 'c')">7 个</div>
-        <div class="think-option" data-answer="c" onclick="selectThink(this, 'think11', 'c')">8 个</div>
-        <div class="think-option" data-answer="d" onclick="selectThink(this, 'think11', 'c')">9 个</div>
-      </div>
-      <div class="feedback" id="fb-think11"></div>
-    </div>
-
-    <div class="question-card" id="think12">
-      <div class="question-text" style="width:100%;">1️⃣2️⃣ <strong>排队问题：</strong></div>
-      <div class="scene-box">小朋友们排队做操 🧒<br>小红前面有 3 个人<br>后面有 4 个人</div>
-      <div class="question-text">这一队一共有几个小朋友？<input type="number" class="answer-input" data-answer="8" oninput="checkThink(this)" onblur="checkThink(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-think12"></div>
-    </div>
+  <!-- 提交按钮 -->
+  <div class="submit-area">
+    <button class="submit-btn" id="submitBtn" onclick="checkAnswers()">🔑 提交答案</button>
+    <br>
+    <button class="retry-btn" id="retryBtn" onclick="retry()">🔄 再试一次</button>
   </div>
 
-  <div class="divider">🔢🧮🔢</div>
+  <div class="divider">🏆🏆🏆</div>
 
-  <!-- ⭐ 今日核心任务 -->
-  <div class="section">
-    <div class="section-title">⭐ 今日核心任务：城堡宝藏计算（8分钟）</div>
-    <p style="text-align:center; font-size:18px; margin-bottom:16px;">帮助小魔法师算出正确答案，打开城堡宝箱！</p>
-
-    <div class="question-card" id="core1">
-      <div class="question-text">🗝️ 9 + 4 = <input type="number" class="answer-input" data-answer="13" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-core1"></div>
-    </div>
-
-    <div class="question-card" id="core2">
-      <div class="question-text">💎 10 - 3 = <input type="number" class="answer-input" data-answer="7" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-core2"></div>
-    </div>
-
-    <div class="question-card" id="core3">
-      <div class="question-text">👑 8 + 5 = <input type="number" class="answer-input" data-answer="13" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-core3"></div>
-    </div>
-
-    <div class="question-card" id="core4">
-      <div class="question-text">🏆 10 - 6 = <input type="number" class="answer-input" data-answer="4" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-core4"></div>
-    </div>
-
-    <div class="question-card" id="core5">
-      <div class="question-text">🛡️ 7 + 6 = <input type="number" class="answer-input" data-answer="13" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-core5"></div>
-    </div>
-
-    <div class="question-card" id="core6">
-      <div class="question-text">🧙 10 - 4 = <input type="number" class="answer-input" data-answer="6" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-core6"></div>
-    </div>
-
-    <div class="question-card" id="core7">
-      <div class="question-text">⚔️ 9 + 5 = <input type="number" class="answer-input" data-answer="14" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-core7"></div>
-    </div>
-
-    <div class="question-card" id="core8">
-      <div class="question-text">🐉 10 - 7 = <input type="number" class="answer-input" data-answer="3" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-core8"></div>
-    </div>
-
-    <div class="question-card" id="core9">
-      <div class="question-text">🦉 8 + 6 = <input type="number" class="answer-input" data-answer="14" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-core9"></div>
-    </div>
-
-    <div class="question-card" id="core10">
-      <div class="question-text">🌟 10 - 2 = <input type="number" class="answer-input" data-answer="8" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
-      <div class="feedback" id="fb-core10"></div>
-    </div>
+  <!-- 成就 -->
+  <div class="card achievement-card" id="achievement" style="display:none;">
+    <span class="medal" id="medal">🏆</span>
+    <h2 id="achieveTitle">🎉 恭喜！🎉</h2>
+    <div class="cheer" id="achieveText"></div>
+    <div class="stars-row" id="starsRow"></div>
   </div>
 
-  <!-- 🎮 互动挑战 -->
-  <div class="section">
-    <div class="section-title">🎮 互动挑战：谁最大？（3-5分钟）</div>
-    <p style="text-align:center; font-size:18px; margin-bottom:16px;">点击选出计算结果最大的那一道题！</p>
-
-    <div style="text-align:center; margin-bottom:20px;">
-      <div class="challenge-option" data-value="12" onclick="selectChallenge(this, event)">A. 9 + 3</div>
-      <div class="challenge-option" data-value="13" onclick="selectChallenge(this, event)">B. 7 + 6</div>
-      <div class="challenge-option" data-value="15" onclick="selectChallenge(this, event)">C. 9 + 6</div>
-      <div class="challenge-option" data-value="14" onclick="selectChallenge(this, event)">D. 8 + 6</div>
-    </div>
-
-    <div id="challenge-feedback" style="text-align:center; font-size:20px; min-height:36px;"></div>
+  <div class="footer" style="text-align:center;font-size:13px;color:rgba(255,255,255,0.7);padding:16px 0;">
+    🏰 数学魔法师 · 魔法城堡篇 · 第 4 期 🧙
   </div>
 
-  <!-- 🏆 今日成就 -->
-  <div class="section achievement" id="achievement">
-    <h2>🎉 太棒了！</h2>
-    <div class="badge">🏆🧙🌟</div>
-    <p>你完成了所有魔法城堡数学任务！</p>
-    <p id="achievement-detail"></p>
-    <p style="font-size:18px; margin-top:12px; opacity:0.8;">明天继续来城堡探险吧！🏰</p>
-  </div>
 </div>
 
 <script>
-// ============ 音效系统 ============
-const AudioCtx = window.AudioContext || window.webkitAudioContext;
-let audioCtx = null;
+const totalQuestions = 12; // 10 questions, but Q10 has 2 answers
 
-function getAudioCtx() {
-  if (!audioCtx) {
-    audioCtx = new AudioCtx();
-  }
-  return audioCtx;
-}
+function checkAnswers() {
+  let correct = 0;
+  const questions = [
+    { id: 'q1', card: 'q1-card', fb: 'q1-fb' },
+    { id: 'q2', card: 'q2-card', fb: 'q2-fb' },
+    { id: 'q3', card: 'q3-card', fb: 'q3-fb' },
+    { id: 'q4', card: 'q4-card', fb: 'q4-fb' },
+    { id: 'q5', card: 'q5-card', fb: 'q5-fb' },
+    { id: 'q6', card: 'q6-card', fb: 'q6-fb' },
+    { id: 'q7', card: 'q7-card', fb: 'q7-fb' },
+    { id: 'q8', card: 'q8-card', fb: 'q8-fb' },
+    { id: 'q9', card: 'q9-card', fb: 'q9-fb' },
+    { id: 'q10a', card: 'q10-card', fb: 'q10-fb', label: '第一把锁' },
+    { id: 'q10b', card: 'q10-card', fb: 'q10-fb', label: '第二把锁' },
+  ];
 
-// 答对音效：C-E-G 升调和弦
-function playCorrectSound() {
-  try {
-    const ctx = getAudioCtx();
-    const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
-    notes.forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.2, ctx.currentTime + i * 0.1);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.4);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime + i * 0.1);
-      osc.stop(ctx.currentTime + i * 0.1 + 0.4);
-    });
-  } catch(e) {}
-}
+  const encouragements = [
+    '答对了！太棒了！🌟', '真聪明！🎉', '太厉害了！⭐', '好棒啊！👏',
+    '答对了！继续加油！💪', '正确！你是小天才！✨', '完美！🎊', '厉害！🏆',
+    '太对了！给你一个大大的赞！👍', '正确！门打开啦！🚪', '答对了！🌟'
+  ];
 
-// 答错音效：降调
-function playWrongSound() {
-  try {
-    const ctx = getAudioCtx();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(300, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.3);
-    gain.gain.setValueAtTime(0.2, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.3);
-  } catch(e) {}
-}
+  questions.forEach((q, i) => {
+    const input = document.getElementById(q.id);
+    const card = document.getElementById(q.card);
+    const fb = document.getElementById(q.fb);
+    const answer = parseInt(input.dataset.answer);
+    const userAnswer = parseInt(input.value);
 
-// ============ 烟花/Confetti ============
-function launchConfetti() {
-  const container = document.getElementById('confetti-container');
-  const colors = ['#ff6b6b', '#ffd166', '#51cf66', '#339af0', '#cc5de8', '#ff922b', '#20c997'];
-
-  for (let i = 0; i < 80; i++) {
-    const confetti = document.createElement('div');
-    confetti.className = 'confetti';
-    confetti.style.left = Math.random() * 100 + '%';
-    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    confetti.style.animationDelay = Math.random() * 1.5 + 's';
-    confetti.style.animationDuration = (2 + Math.random() * 1.5) + 's';
-    confetti.style.width = (6 + Math.random() * 8) + 'px';
-    confetti.style.height = (6 + Math.random() * 8) + 'px';
-    container.appendChild(confetti);
-  }
-
-  setTimeout(() => {
-    container.innerHTML = '';
-  }, 4000);
-}
-
-// ============ 气泡装饰 ============
-function createBubbles() {
-  const container = document.getElementById('bubbles');
-  for (let i = 0; i < 12; i++) {
-    const bubble = document.createElement('div');
-    bubble.className = 'magic-star';
-    const size = 20 + Math.random() * 40;
-    bubble.style.width = size + 'px';
-    bubble.style.height = size + 'px';
-    bubble.style.left = Math.random() * 100 + '%';
-    bubble.style.animationDelay = Math.random() * 8 + 's';
-    bubble.style.animationDuration = (6 + Math.random() * 6) + 's';
-    container.appendChild(bubble);
-  }
-}
-createBubbles();
-
-// ============ 计分系统 ============
-let totalQuestions = 12; // 10 core + 1 challenge + 1 (warmup counted but not required)
-let answeredCorrectly = new Set();
-
-// 跟踪所有题目ID
-const allQuestionIds = [];
-document.querySelectorAll('.answer-input[data-answer]').forEach((input, idx) => {
-  const id = 'q' + idx;
-  input.dataset.qid = id;
-  allQuestionIds.push(id);
-});
-
-function updateScore() {
-  const coreInputs = document.querySelectorAll('#core1 .answer-input, #core2 .answer-input, #core3 .answer-input, #core4 .answer-input, #core5 .answer-input, #core6 .answer-input, #core7 .answer-input, #core8 .answer-input, #core9 .answer-input, #core10 .answer-input');
-  const challengeDone = answeredCorrectly.has('challenge');
-  const warmupDone = answeredCorrectly.has('qw0') && answeredCorrectly.has('qw1') && answeredCorrectly.has('qw2');
-
-  let coreCorrect = 0;
-  coreInputs.forEach(input => {
-    if (input.classList.contains('correct')) coreCorrect++;
-  });
-
-  let total = coreCorrect + (challengeDone ? 1 : 0);
-  let max = 10 + 1;
-
-  document.getElementById('score-display').textContent = total + ' / ' + max;
-
-  // 检查是否全部完成
-  if (coreCorrect === 10 && challengeDone) {
-    showAchievement();
-  }
-}
-
-// ============ 答案检查 ============
-function checkAnswer(input) {
-  const userAnswer = parseInt(input.value);
-  const correctAnswer = parseInt(input.dataset.answer);
-  const qid = input.dataset.qid;
-  const card = input.closest('.question-card');
-  const fbSpan = card.querySelector('.feedback');
-
-  if (isNaN(userAnswer) || input.value === '') {
-    input.classList.remove('correct', 'wrong');
-    card.classList.remove('correct', 'wrong');
-    if (fbSpan) fbSpan.innerHTML = '';
-    if (qid) answeredCorrectly.delete(qid);
-    updateScore();
-    return;
-  }
-
-  if (userAnswer === correctAnswer) {
-    input.classList.remove('wrong');
-    input.classList.add('correct');
-    card.classList.remove('wrong');
-    card.classList.add('correct');
-    if (fbSpan) fbSpan.innerHTML = '<span style="color:#51cf66;">✅ 太棒了！</span>';
-    if (qid) answeredCorrectly.add(qid);
-    playCorrectSound();
-  } else {
-    input.classList.remove('correct');
-    input.classList.add('wrong');
-    card.classList.remove('correct');
-    card.classList.add('wrong');
-    if (fbSpan) fbSpan.innerHTML = '<span style="color:#ffa94d;">❌ 答案是 ' + correctAnswer + '</span>';
-    if (qid) answeredCorrectly.delete(qid);
-    playWrongSound();
-  }
-
-  updateScore();
-}
-
-function handleEnter(event, input) {
-  if (event.key === 'Enter') {
-    event.preventDefault();
-    // 根据输入框所在区域调用不同的检查函数
-    if (input.closest('.section') && input.closest('.section').querySelector('.section-title').textContent.includes('思维训练营')) {
-      checkThink(input);
+    if (userAnswer === answer) {
+      correct++;
+      input.className = 'answer-input correct-input';
+      card.className = 'quest-card correct';
+      fb.className = 'feedback show correct-fb';
+      fb.textContent = '✅ ' + encouragements[i];
     } else {
-      checkAnswer(input);
+      input.className = 'answer-input wrong-input';
+      card.className = 'quest-card wrong';
+      fb.className = 'feedback show wrong-fb';
+      const label = q.label ? q.label + '：' : '';
+      fb.textContent = '❌ ' + label + '正确答案是 ' + answer + '，下次一定能答对！加油 💪';
     }
-    // 聚焦下一个输入框
-    const allInputs = Array.from(document.querySelectorAll('.answer-input'));
-    const idx = allInputs.indexOf(input);
-    if (idx < allInputs.length - 1) {
-      allInputs[idx + 1].focus();
-    }
-  }
-}
-
-// ============ 思维训练营 - 填空题检查 ============
-const thinkAnswers = {
-  think1: '11', think2: '10', think3: 'b', think4: '16', think5: 'b', think6: 'c',
-  think7: '6', think8: 'c', think9: '8', think10: '8', think11: 'c', think12: '8'
-};
-
-const thinkExplanations = {
-  think1: { ok: '8+3=11，算得真快！🎉', fix: '8+3=11。可以用凑十法：8+2=10，再加1得11。' },
-  think2: { ok: '15-5=10，正确！🎉', fix: '15-5=10。15减掉5就剩1个十。' },
-  think3: { ok: '7+2=9，9比10小，所以10大！🎉', fix: '7+2=9，9<10，所以10更大。' },
-  think4: { ok: '16！规律是+2、+3、+4、+5，太厉害了！🎉', fix: '差值规律：+2→4，+3→7，+4→11，+5→16。每次加的数多1。' },
-  think5: { ok: '🔴红色！规律是"蓝红红"循环！🎉', fix: '🔵🔴🔴三个一组循环，蓝红红、蓝红红、蓝…下一个是🔴红色。' },
-  think6: { ok: '小兔最大！推理能力很强！🎉', fix: '小猫>小狗，小兔>小猫，所以小兔最大。' },
-  think7: { ok: '12+6=18，完全正确！🎉', fix: '12+(?)=18，用18-12=6，括号里填6。' },
-  think8: { ok: '8+6=14最大！计算准确！🎉', fix: '6+7=13，15-2=13，8+6=14，所以8+6最大。' },
-  think9: { ok: '9-4+3=8，应用题理解得很好！🎉', fix: '原来9个，送掉4个：9-4=5，又得到3个：5+3=8。' },
-  think10: { ok: '5+4-3+2=8，全部正确！🎉', fix: '从左到右：5+4=9，9-3=6，6+2=8。' },
-  think11: { ok: '8个星星，数得很准确！🎉', fix: '一个一个数：1、2、3、4、5、6、7、8，一共8个。' },
-  think12: { ok: '3+4+1=8，排队问题理解到位！🎉', fix: '前面3人+后面4人+小红自己1人=8人。' }
-};
-
-const thinkChecked = {};
-
-function checkThink(input) {
-  const qId = input.id || input.closest('.question-card').id;
-  if (thinkChecked[qId]) return;
-
-  const userAnswer = input.value.trim();
-  if (!userAnswer || isNaN(parseInt(userAnswer))) return;
-
-  thinkChecked[qId] = true;
-  const correctAnswer = thinkAnswers[qId];
-  const isCorrect = userAnswer === correctAnswer;
-  const card = input.closest('.question-card');
-  const fbSpan = card.querySelector('.feedback');
-  const data = thinkExplanations[qId];
-
-  if (isCorrect) {
-    input.classList.remove('wrong');
-    input.classList.add('correct');
-    card.classList.remove('wrong');
-    card.classList.add('correct');
-    if (fbSpan) fbSpan.innerHTML = '<span style="color:#51cf66;">✅ ' + data.ok + '</span>';
-    playCorrectSound();
-  } else {
-    input.classList.remove('correct');
-    input.classList.add('wrong');
-    card.classList.remove('correct');
-    card.classList.add('wrong');
-    if (fbSpan) fbSpan.innerHTML = '<span style="color:#ffa94d;">❌ ' + data.fix + '</span>';
-    playWrongSound();
-  }
-}
-
-function selectThink(el, qId, correctVal) {
-  if (thinkChecked[qId]) return;
-  thinkChecked[qId] = true;
-
-  const selectedVal = el.dataset.answer;
-  const isCorrect = selectedVal === correctVal;
-  const card = document.getElementById(qId);
-  const fbSpan = document.getElementById('fb-' + qId);
-  const options = card.querySelectorAll('.think-option');
-  const data = thinkExplanations[qId];
-
-  // 禁用所有选项
-  options.forEach(opt => {
-    opt.style.pointerEvents = 'none';
-    opt.style.opacity = '0.6';
   });
 
-  if (isCorrect) {
-    el.classList.add('correct-choice');
-    el.style.opacity = '1';
-    if (fbSpan) fbSpan.innerHTML = '<span style="color:#51cf66;">✅ ' + data.ok + '</span>';
-    playCorrectSound();
+  // 更新计分板
+  document.getElementById('correctCount').textContent = correct;
+  const statusEl = document.getElementById('scoreStatus');
+  if (correct === totalQuestions) {
+    statusEl.textContent = '🎊 全部答对！太厉害了！';
+    showAchievement('full', correct);
+  } else if (correct >= 8) {
+    statusEl.textContent = '⭐ 太棒了！答对了 ' + correct + ' 题！';
+    showAchievement('great', correct);
+  } else if (correct >= 5) {
+    statusEl.textContent = '👍 不错！答对了 ' + correct + ' 题！';
+    showAchievement('good', correct);
   } else {
-    el.classList.add('wrong-choice');
-    el.style.opacity = '1';
-    // 高亮正确答案
-    options.forEach(opt => {
-      if (opt.dataset.answer === correctVal) {
-        opt.classList.add('correct-choice');
-        opt.style.opacity = '1';
-      }
-    });
-    if (fbSpan) fbSpan.innerHTML = '<span style="color:#ffa94d;">❌ ' + data.fix + '</span>';
-    playWrongSound();
-  }
-}
-
-// ============ 互动挑战 ============
-function selectChallenge(el, event) {
-  event.stopPropagation();
-  const options = document.querySelectorAll('.challenge-option');
-  const selectedValue = parseInt(el.dataset.value);
-  const correctValue = 15; // C. 9 + 6 = 15 最大
-
-  // 清除之前的选择
-  options.forEach(opt => {
-    opt.classList.remove('selected', 'correct-choice', 'wrong-choice');
-  });
-
-  if (selectedValue === correctValue) {
-    el.classList.add('correct-choice');
-    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#51cf66;">✅ 答对了！C. 9+6=15 是最大的！</span>';
-    answeredCorrectly.add('challenge');
-    playCorrectSound();
-  } else {
-    el.classList.add('wrong-choice');
-    // 高亮正确答案
-    options.forEach(opt => {
-      if (parseInt(opt.dataset.value) === correctValue) {
-        opt.classList.add('correct-choice');
-      }
-    });
-    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#ffa94d;">❌ 不对哦，正确答案是 C. 9+6=15</span>';
-    answeredCorrectly.delete('challenge');
-    playWrongSound();
+    statusEl.textContent = '💪 答对了 ' + correct + ' 题，再试一次吧！';
+    showAchievement('try', correct);
   }
 
-  updateScore();
+  document.getElementById('submitBtn').style.display = 'none';
+  document.getElementById('retryBtn').style.display = 'inline-flex';
 }
 
-// ============ 成就 ============
-function showAchievement() {
+function showAchievement(level, correct) {
   const ach = document.getElementById('achievement');
-  if (ach.classList.contains('show')) return;
-  ach.classList.add('show');
-  document.getElementById('achievement-detail').textContent = '你答对了全部 11 道题，真是城堡魔法数学小达人！';
-  launchConfetti();
+  ach.style.display = 'block';
 
-  // 播放庆祝音效
-  try {
-    const ctx = getAudioCtx();
-    const melody = [523.25, 587.33, 659.25, 698.46, 783.99, 880, 987.77, 1046.5];
-    melody.forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.15, ctx.currentTime + i * 0.12);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.3);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime + i * 0.12);
-      osc.stop(ctx.currentTime + i * 0.12 + 0.3);
-    });
-  } catch(e) {}
+  let medal, title, text, stars;
+  if (level === 'full') {
+    medal = '👑'; title = '🎊 完美！宝藏找到了！🎊';
+    text = '小魔法师米娅说："谢谢你帮我找到了魔法书！你是最棒的魔法数学家！"🧙📖';
+    stars = '⭐⭐⭐⭐⭐';
+    launchConfetti();
+  } else if (level === 'great') {
+    medal = '🥇'; title = '🌟 太厉害了！🌟';
+    text = '答对了 ' + correct + ' 题！米娅说："你太聪明了，马上就能找到宝藏了！"';
+    stars = '⭐⭐⭐⭐';
+  } else if (level === 'good') {
+    medal = '🥈'; title = '👍 做得不错！👍';
+    text = '答对了 ' + correct + ' 题！再试一次，你会更棒的！';
+    stars = '⭐⭐⭐';
+  } else {
+    medal = '🥉'; title = '💪 继续加油！💪';
+    text = '答对了 ' + correct + ' 题，没关系，多练习就会越来越厉害的！';
+    stars = '⭐⭐';
+  }
+
+  document.getElementById('medal').textContent = medal;
+  document.getElementById('achieveTitle').textContent = title;
+  document.getElementById('achieveText').innerHTML = text;
+  document.getElementById('starsRow').textContent = stars;
+
+  ach.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-// ============ 再试一次 ============
-function retryAll() {
-  // 清空所有输入
+function retry() {
   document.querySelectorAll('.answer-input').forEach(input => {
     input.value = '';
-    input.classList.remove('correct', 'wrong');
+    input.className = 'answer-input';
   });
-
-  // 清空反馈
-  document.querySelectorAll('.feedback').forEach(fb => { fb.innerHTML = ''; });
-  document.querySelectorAll('.question-card').forEach(card => {
-    card.classList.remove('correct', 'wrong');
+  document.querySelectorAll('.quest-card').forEach(card => {
+    card.className = 'quest-card';
   });
-
-  // 清空挑战
-  document.querySelectorAll('.challenge-option').forEach(opt => {
-    opt.classList.remove('selected', 'correct-choice', 'wrong-choice');
+  document.querySelectorAll('.feedback').forEach(fb => {
+    fb.className = 'feedback';
+    fb.textContent = '';
   });
-  document.getElementById('challenge-feedback').innerHTML = '';
-
-  // 清空思维训练营选项
-  document.querySelectorAll('.think-option').forEach(opt => {
-    opt.classList.remove('selected', 'correct-choice', 'wrong-choice');
-    opt.style.pointerEvents = 'auto';
-    opt.style.opacity = '1';
-  });
-
-  // 重置状态
-  answeredCorrectly.clear();
-  for (const key in thinkChecked) { delete thinkChecked[key]; }
-  updateScore();
-
-  // 隐藏成就
-  document.getElementById('achievement').classList.remove('show');
-
-  // 聚焦第一个输入
-  const firstInput = document.querySelector('.answer-input');
-  if (firstInput) firstInput.focus();
+  document.getElementById('correctCount').textContent = '0';
+  document.getElementById('scoreStatus').textContent = '🏰 重新挑战吧！加油 💪';
+  document.getElementById('achievement').style.display = 'none';
+  document.getElementById('submitBtn').style.display = 'inline-flex';
+  document.getElementById('retryBtn').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// 初始化
-updateScore();
+function launchConfetti() {
+  const container = document.createElement('div');
+  container.className = 'confetti-container';
+  document.body.appendChild(container);
+  const colors = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff6bc6','#845ef7'];
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.animationDelay = Math.random() * 2 + 's';
+    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+    c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.width = (6 + Math.random() * 8) + 'px';
+    c.style.height = (6 + Math.random() * 8) + 'px';
+    container.appendChild(c);
+  }
+  setTimeout(() => container.remove(), 5000);
+}
 </script>
 </body>
 </html>
