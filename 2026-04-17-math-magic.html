@@ -9,7 +9,7 @@
 
   body {
     font-family: "Comic Sans MS", "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: linear-gradient(180deg, #2d1b4e 0%, #4a1c6b 30%, #6b2c91 60%, #8e44ad 100%);
+    background: linear-gradient(180deg, #2d1b69 0%, #5b2c8e 30%, #7c3aed 60%, #1e0a3c 100%);
     min-height: 100vh;
     padding: 20px;
     color: #fff;
@@ -48,7 +48,7 @@
 
   .scoreboard .score {
     background: #ffd166;
-    color: #4a1c6b;
+    color: #1e0a3c;
     padding: 8px 24px;
     border-radius: 16px;
     min-width: 120px;
@@ -126,7 +126,7 @@
     border-radius: 14px;
     outline: none;
     background: #fff;
-    color: #4a1c6b;
+    color: #1e0a3c;
     font-weight: bold;
     transition: border-color 0.3s, background 0.3s;
     -moz-appearance: textfield;
@@ -177,7 +177,7 @@
   }
 
   .challenge-option:hover { background: rgba(255,255,255,0.4); transform: scale(1.05); }
-  .challenge-option.selected { background: #ffd166; color: #4a1c6b; }
+  .challenge-option.selected { background: #ffd166; color: #1e0a3c; }
   .challenge-option.correct-choice { background: #51cf66; border-color: #51cf66; color: #fff; }
   .challenge-option.wrong-choice { background: #ef476f; border-color: #ef476f; color: #fff; }
 
@@ -236,16 +236,15 @@
   /* 魔法星星装饰 */
   .magic-star {
     position: fixed;
-    color: #ffd166;
-    font-size: 20px;
-    animation: twinkle 3s ease-in-out infinite;
+    border-radius: 50%;
+    background: rgba(255, 209, 102, 0.15);
+    animation: float-up 8s ease-in infinite;
     pointer-events: none;
-    text-shadow: 0 0 10px #ffd166;
   }
 
-  @keyframes twinkle {
-    0%, 100% { opacity: 0.3; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.2); }
+  @keyframes float-up {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 0.6; }
+    100% { transform: translateY(-100px) scale(1); opacity: 0; }
   }
 
   /* 响应式 */
@@ -280,7 +279,7 @@
 <body>
 
 <!-- 魔法星星装饰 -->
-<div id="magic-stars"></div>
+<div id="bubbles"></div>
 
 <!-- 烟花容器 -->
 <div class="confetti-container" id="confetti-container"></div>
@@ -288,11 +287,11 @@
 <div class="container">
   <!-- 顶部 -->
   <div class="header">
-    <h1>🏰 魔法城堡探险 🧙‍♂️</h1>
-    <p style="font-size:16px; margin-bottom:12px; opacity:0.85;">数学魔法任务 · 2026年4月17日 · 第1周第4天</p>
+    <h1>🏰 魔法城堡探险 🧙</h1>
+    <p style="font-size:16px; margin-bottom:12px; opacity:0.85;">数学魔法任务 · 2026年4月17日</p>
     <div class="scoreboard">
       <span>答对：</span>
-      <span class="score" id="score-display">0 / 11</span>
+      <span class="score" id="score-display">0 / 12</span>
       <button class="retry-btn" id="retry-btn" onclick="retryAll()">🔄 再试一次</button>
     </div>
   </div>
@@ -300,7 +299,7 @@
   <!-- 🔥 热身小游戏 -->
   <div class="section">
     <div class="section-title">🔥 热身小游戏：魔法药水配方（2分钟）</div>
-    <p style="text-align:center; font-size:18px; margin-bottom:16px;">帮魔法师找出加起来等于 <strong style="color:#ffd166; font-size:22px;">10</strong> 的魔法数字！</p>
+    <p style="text-align:center; font-size:18px; margin-bottom:16px;">帮魔法师找到加起来等于 <strong style="color:#ffd166; font-size:22px;">10</strong> 的魔法数字吧！</p>
 
     <div class="question-card" id="warmup1">
       <div class="question-text">🧪 7 + <input type="number" class="answer-input" data-answer="3" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"> = 10</div>
@@ -308,12 +307,12 @@
     </div>
 
     <div class="question-card" id="warmup2">
-      <div class="question-text">⚗️ <input type="number" class="answer-input" data-answer="4" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"> + 6 = 10</div>
+      <div class="question-text">🔮 <input type="number" class="answer-input" data-answer="4" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"> + 6 = 10</div>
       <div class="feedback" id="fb-warmup2"></div>
     </div>
 
     <div class="question-card" id="warmup3">
-      <div class="question-text">🔮 2 + <input type="number" class="answer-input" data-answer="8" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"> = 10</div>
+      <div class="question-text">⚗️ <input type="number" class="answer-input" data-answer="2" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"> + 8 = 10</div>
       <div class="feedback" id="fb-warmup3"></div>
     </div>
   </div>
@@ -329,61 +328,61 @@
     </div>
 
     <div class="question-card" id="core2">
-      <div class="question-text">💎 8 + 5 = <input type="number" class="answer-input" data-answer="13" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">💎 10 - 3 = <input type="number" class="answer-input" data-answer="7" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback" id="fb-core2"></div>
     </div>
 
     <div class="question-card" id="core3">
-      <div class="question-text">👑 7 + 6 = <input type="number" class="answer-input" data-answer="13" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">👑 8 + 5 = <input type="number" class="answer-input" data-answer="13" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback" id="fb-core3"></div>
     </div>
 
     <div class="question-card" id="core4">
-      <div class="question-text">🏆 9 + 5 = <input type="number" class="answer-input" data-answer="14" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🏆 10 - 6 = <input type="number" class="answer-input" data-answer="4" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback" id="fb-core4"></div>
     </div>
 
     <div class="question-card" id="core5">
-      <div class="question-text">🎁 8 + 6 = <input type="number" class="answer-input" data-answer="14" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🛡️ 7 + 6 = <input type="number" class="answer-input" data-answer="13" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback" id="fb-core5"></div>
     </div>
 
     <div class="question-card" id="core6">
-      <div class="question-text">💰 9 + 6 = <input type="number" class="answer-input" data-answer="15" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🧙 10 - 4 = <input type="number" class="answer-input" data-answer="6" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback" id="fb-core6"></div>
     </div>
 
     <div class="question-card" id="core7">
-      <div class="question-text">🛡️ 10 - 3 = <input type="number" class="answer-input" data-answer="7" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">⚔️ 9 + 5 = <input type="number" class="answer-input" data-answer="14" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback" id="fb-core7"></div>
     </div>
 
     <div class="question-card" id="core8">
-      <div class="question-text">⚔️ 10 - 6 = <input type="number" class="answer-input" data-answer="4" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🐉 10 - 7 = <input type="number" class="answer-input" data-answer="3" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback" id="fb-core8"></div>
     </div>
 
     <div class="question-card" id="core9">
-      <div class="question-text">🦉 10 - 4 = <input type="number" class="answer-input" data-answer="6" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🦉 8 + 6 = <input type="number" class="answer-input" data-answer="14" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback" id="fb-core9"></div>
     </div>
 
     <div class="question-card" id="core10">
-      <div class="question-text">🐉 10 - 7 = <input type="number" class="answer-input" data-answer="3" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
+      <div class="question-text">🌟 10 - 2 = <input type="number" class="answer-input" data-answer="8" oninput="checkAnswer(this)" onblur="checkAnswer(this)" onkeydown="handleEnter(event, this)"></div>
       <div class="feedback" id="fb-core10"></div>
     </div>
   </div>
 
   <!-- 🎮 互动挑战 -->
   <div class="section">
-    <div class="section-title">🎮 互动挑战：谁的魔法最强？（3-5分钟）</div>
-    <p style="text-align:center; font-size:18px; margin-bottom:16px;">点击选出计算结果最大的那一道魔法题！</p>
+    <div class="section-title">🎮 互动挑战：谁最大？（3-5分钟）</div>
+    <p style="text-align:center; font-size:18px; margin-bottom:16px;">点击选出计算结果最大的那一道题！</p>
 
     <div style="text-align:center; margin-bottom:20px;">
       <div class="challenge-option" data-value="12" onclick="selectChallenge(this, event)">A. 9 + 3</div>
-      <div class="challenge-option" data-value="14" onclick="selectChallenge(this, event)">B. 8 + 6</div>
-      <div class="challenge-option" data-value="13" onclick="selectChallenge(this, event)">C. 7 + 6</div>
-      <div class="challenge-option" data-value="11" onclick="selectChallenge(this, event)">D. 5 + 6</div>
+      <div class="challenge-option" data-value="13" onclick="selectChallenge(this, event)">B. 7 + 6</div>
+      <div class="challenge-option" data-value="15" onclick="selectChallenge(this, event)">C. 9 + 6</div>
+      <div class="challenge-option" data-value="14" onclick="selectChallenge(this, event)">D. 8 + 6</div>
     </div>
 
     <div id="challenge-feedback" style="text-align:center; font-size:20px; min-height:36px;"></div>
@@ -392,10 +391,10 @@
   <!-- 🏆 今日成就 -->
   <div class="section achievement" id="achievement">
     <h2>🎉 太棒了！</h2>
-    <div class="badge">🏆🧙‍♂️✨</div>
+    <div class="badge">🏆🧙🌟</div>
     <p>你完成了所有魔法城堡数学任务！</p>
     <p id="achievement-detail"></p>
-    <p style="font-size:18px; margin-top:12px; opacity:0.8;">明天继续来魔法城堡探险吧！🏰</p>
+    <p style="font-size:18px; margin-top:12px; opacity:0.8;">明天继续来城堡探险吧！🏰</p>
   </div>
 </div>
 
@@ -471,25 +470,25 @@ function launchConfetti() {
   }, 4000);
 }
 
-// ============ 魔法星星装饰 ============
-function createMagicStars() {
-  const container = document.getElementById('magic-stars');
-  for (let i = 0; i < 15; i++) {
-    const star = document.createElement('div');
-    star.className = 'magic-star';
-    star.innerHTML = '⭐';
-    star.style.left = Math.random() * 100 + '%';
-    star.style.top = Math.random() * 100 + '%';
-    star.style.fontSize = (15 + Math.random() * 20) + 'px';
-    star.style.animationDelay = Math.random() * 3 + 's';
-    star.style.animationDuration = (2 + Math.random() * 2) + 's';
-    container.appendChild(star);
+// ============ 气泡装饰 ============
+function createBubbles() {
+  const container = document.getElementById('bubbles');
+  for (let i = 0; i < 12; i++) {
+    const bubble = document.createElement('div');
+    bubble.className = 'magic-star';
+    const size = 20 + Math.random() * 40;
+    bubble.style.width = size + 'px';
+    bubble.style.height = size + 'px';
+    bubble.style.left = Math.random() * 100 + '%';
+    bubble.style.animationDelay = Math.random() * 8 + 's';
+    bubble.style.animationDuration = (6 + Math.random() * 6) + 's';
+    container.appendChild(bubble);
   }
 }
-createMagicStars();
+createBubbles();
 
 // ============ 计分系统 ============
-let totalQuestions = 11; // 10 core + 1 challenge
+let totalQuestions = 12; // 10 core + 1 challenge + 1 (warmup counted but not required)
 let answeredCorrectly = new Set();
 
 // 跟踪所有题目ID
@@ -503,6 +502,7 @@ document.querySelectorAll('.answer-input[data-answer]').forEach((input, idx) => 
 function updateScore() {
   const coreInputs = document.querySelectorAll('#core1 .answer-input, #core2 .answer-input, #core3 .answer-input, #core4 .answer-input, #core5 .answer-input, #core6 .answer-input, #core7 .answer-input, #core8 .answer-input, #core9 .answer-input, #core10 .answer-input');
   const challengeDone = answeredCorrectly.has('challenge');
+  const warmupDone = answeredCorrectly.has('qw0') && answeredCorrectly.has('qw1') && answeredCorrectly.has('qw2');
 
   let coreCorrect = 0;
   coreInputs.forEach(input => {
@@ -576,7 +576,7 @@ function selectChallenge(el, event) {
   event.stopPropagation();
   const options = document.querySelectorAll('.challenge-option');
   const selectedValue = parseInt(el.dataset.value);
-  const correctValue = 14; // B. 8 + 6 = 14 最大
+  const correctValue = 15; // C. 9 + 6 = 15 最大
 
   // 清除之前的选择
   options.forEach(opt => {
@@ -585,7 +585,7 @@ function selectChallenge(el, event) {
 
   if (selectedValue === correctValue) {
     el.classList.add('correct-choice');
-    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#51cf66;">✅ 答对了！B. 8+6=14 是最大的！</span>';
+    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#51cf66;">✅ 答对了！C. 9+6=15 是最大的！</span>';
     answeredCorrectly.add('challenge');
     playCorrectSound();
   } else {
@@ -596,7 +596,7 @@ function selectChallenge(el, event) {
         opt.classList.add('correct-choice');
       }
     });
-    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#ffa94d;">❌ 不对哦，正确答案是 B. 8+6=14</span>';
+    document.getElementById('challenge-feedback').innerHTML = '<span style="color:#ffa94d;">❌ 不对哦，正确答案是 C. 9+6=15</span>';
     answeredCorrectly.delete('challenge');
     playWrongSound();
   }
@@ -609,7 +609,7 @@ function showAchievement() {
   const ach = document.getElementById('achievement');
   if (ach.classList.contains('show')) return;
   ach.classList.add('show');
-  document.getElementById('achievement-detail').textContent = '你答对了全部 11 道题，真是魔法数学小达人！';
+  document.getElementById('achievement-detail').textContent = '你答对了全部 11 道题，真是城堡魔法数学小达人！';
   launchConfetti();
 
   // 播放庆祝音效
