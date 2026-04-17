@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌊 海底寻宝大冒险 — 数学魔法任务</title>
+<title>🏰 魔法城堡大冒险 — 数学魔法任务</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
 
@@ -11,7 +11,7 @@
 
   body {
     font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    background: linear-gradient(180deg, #0a4c7a 0%, #0d6ebd 20%, #1a8fc4 40%, #2db5d4 60%, #52d1e0 80%, #8ae0ee 100%);
+    background: linear-gradient(180deg, #2d1b69 0%, #5b2c8e 20%, #7c3aed 40%, #a78bfa 60%, #c4b5fd 80%, #ddd6fe 100%);
     min-height: 100vh;
     padding: 24px 24px 60px;
     color: #1a3a5c;
@@ -45,14 +45,14 @@
 
   .header {
     text-align: center;
-    background: linear-gradient(135deg, #0077b6, #00b4d8);
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
     border-radius: 24px;
     padding: 28px 18px 22px;
     margin-bottom: 20px;
-    box-shadow: 0 8px 30px rgba(0,100,180,0.35);
+    box-shadow: 0 8px 30px rgba(124,58,237,0.35);
   }
   .header h1 { font-size: 28px; font-weight: 900; color: #fff; text-shadow: 2px 2px 6px rgba(0,0,0,0.2); margin-top: 20px; }
-  .header .subtitle { font-size: 15px; color: #d0f0ff; margin-top: 8px; line-height: 1.6; }
+  .header .subtitle { font-size: 15px; color: #ede9fe; margin-top: 8px; line-height: 1.6; }
   .header .date-badge { display: inline-block; background: rgba(255,255,255,0.25); border-radius: 20px; padding: 4px 16px; font-size: 13px; color: #fff; margin-top: 10px; }
 
   .card {
@@ -73,11 +73,11 @@
 
   /* 题目卡片 */
   .quest-card {
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    background: linear-gradient(135deg, #ede9fe, #ddd6fe);
     border-radius: 18px;
     padding: 18px 16px;
     margin-bottom: 16px;
-    border-left: 5px solid #1976d2;
+    border-left: 5px solid #7c3aed;
     transition: border-color 0.3s, background 0.3s;
   }
   .quest-card.correct { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-left-color: #43a047; }
@@ -86,7 +86,7 @@
   .quest-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
   .quest-num {
     display: inline-flex; align-items: center; justify-content: center;
-    background: #1976d2; color: #fff; width: 36px; height: 36px;
+    background: #7c3aed; color: #fff; width: 36px; height: 36px;
     border-radius: 50%; font-size: 16px; font-weight: 900; flex-shrink: 0;
   }
   .quest-card.correct .quest-num { background: #43a047; }
@@ -97,19 +97,19 @@
   .quest-row {
     display: flex; align-items: center; gap: 12px; padding-left: 46px; flex-wrap: wrap;
   }
-  .quest-math { font-size: 24px; font-weight: 900; color: #0d47a1; letter-spacing: 3px; }
+  .quest-math { font-size: 24px; font-weight: 900; color: #4a148c; letter-spacing: 3px; }
   .quest-card.correct .quest-math { color: #1b5e20; }
   .quest-card.wrong .quest-math { color: #e65100; }
 
   .answer-input {
     width: 80px; height: 48px;
-    border: 3px solid #90caf9; border-radius: 12px;
+    border: 3px solid #c4b5fd; border-radius: 12px;
     font-size: 22px; font-weight: 700; text-align: center;
-    color: #0d47a1; background: rgba(255,255,255,0.8);
+    color: #4a148c; background: rgba(255,255,255,0.8);
     outline: none; transition: border-color 0.3s, background 0.3s;
     -webkit-appearance: none; appearance: none;
   }
-  .answer-input:focus { border-color: #1976d2; background: #fff; }
+  .answer-input:focus { border-color: #7c3aed; background: #fff; }
   .answer-input.correct-input { border-color: #43a047; background: #e8f5e9; color: #2e7d32; }
   .answer-input.wrong-input { border-color: #f57c00; background: #fff3e0; color: #e65100; }
 
@@ -125,14 +125,14 @@
   .submit-area { text-align: center; margin: 32px 0; }
   .submit-btn {
     display: inline-flex; align-items: center; gap: 10px;
-    background: linear-gradient(135deg, #ff6f00, #ff8f00);
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
     color: #fff; border: none; border-radius: 20px;
     padding: 16px 48px; font-size: 22px; font-weight: 900;
-    cursor: pointer; box-shadow: 0 6px 20px rgba(255,111,0,0.4);
+    cursor: pointer; box-shadow: 0 6px 20px rgba(124,58,237,0.4);
     transition: transform 0.2s, box-shadow 0.2s;
     min-width: 200px; justify-content: center;
   }
-  .submit-btn:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(255,111,0,0.5); }
+  .submit-btn:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(124,58,237,0.4); }
   .submit-btn:active { transform: scale(0.97); }
 
   .retry-btn {
@@ -156,7 +156,7 @@
   .achievement-card .cheer { font-size: 17px; color: #bf360c; line-height: 2; margin-top: 10px; }
   .stars-row { font-size: 32px; letter-spacing: 8px; margin-top: 12px; }
 
-  .tip { background: #e3f2fd; border-radius: 14px; padding: 12px 14px; margin-top: 12px; font-size: 14px; color: #1565c0; line-height: 1.7; border-left: 4px solid #42a5f5; }
+  .tip { background: #ede9fe; border-radius: 14px; padding: 12px 14px; margin-top: 12px; font-size: 14px; color: #5b21b6; line-height: 1.7; border-left: 4px solid #8b5cf6; }
   .intro-text { font-size: 16px; color: #333; line-height: 2; margin-bottom: 10px; }
   .divider { text-align: center; margin: 24px 0; font-size: 24px; letter-spacing: 12px; opacity: 0.6; }
 
@@ -196,134 +196,134 @@
   <!-- 计分板 -->
   <div class="scoreboard" id="scoreboard">
     <div class="score">
-      <span class="correct" id="correctCount">0</span> / <span id="totalCount">10</span> 正确
+      <span class="correct" id="correctCount">0</span> / <span id="totalCount">12</span> 正确
     </div>
-    <div class="status" id="scoreStatus">🌊 开始海底寻宝吧！加油 💪</div>
+    <div class="status" id="scoreStatus">🏰 开始魔法城堡大冒险吧！加油 💪</div>
   </div>
 
   <!-- 标题 -->
   <div class="header">
-    <h1>🌊 海底寻宝大冒险 🐚</h1>
-    <div class="subtitle">帮小螃蟹卡卡找到宝藏！每道数学题都是一把钥匙 🔑<br>在输入框里填写答案，最后点击提交按钮检查！</div>
-    <div class="date-badge">📅 2026年4月14日 · 星期二</div>
+    <h1>🏰 魔法城堡大冒险 🏰</h1>
+    <div class="subtitle">帮小魔法师米娅找到魔法书！每道数学题都是一把钥匙 🔑<br>填完每道题会自动检查，也可以点提交按钮统一检查！</div>
+    <div class="date-badge">📅 2026年4月18日 · 星期六</div>
   </div>
 
   <!-- 热身 -->
   <div class="card warmup-card">
-    <h2><span class="icon">🔥</span> 热身小游戏：小鱼倒数潜水</h2>
-    <div class="intro-text">👋 小宝贝，准备好了吗？我们要变成小鱼，从海面慢慢潜到海底！</div>
+    <h2><span class="icon">🔥</span> 热身小游戏：魔法城堡热身操</h2>
+    <div class="intro-text">👋 小宝贝，准备好了吗？我们一起活动活动身体！</div>
     <div class="warmup-step">
-      <div class="step-title">🫧 泡泡倒数</div>
+      <div class="step-title">🫧 倒数热身</div>
       <div class="step-content">从 <b>20</b> 倒数到 <b>1</b>，每数一个数就拍一下手 👏</div>
     </div>
     <div class="warmup-step">
-      <div class="step-title">🐟 小鱼游游游</div>
-      <div class="step-content">家长说数字，孩子用手比出来："小鱼说——<b>13</b>！"</div>
+      <div class="step-title">🏰 数字游戏</div>
+      <div class="step-content">家长说数字，孩子用手比出来："🏰说——<b>17</b>！"</div>
     </div>
   </div>
 
-  <div class="divider">🐠🐡🐙🦀🐚</div>
+  <div class="divider">🏰🔮🗝️👑🧙</div>
 
   <!-- 核心任务 -->
   <div class="card">
-    <h2><span class="icon">⭐</span> 核心任务：帮小螃蟹找宝藏钥匙</h2>
-    <div class="intro-text">🦀 <b>小螃蟹卡卡</b>听说海底藏着一颗闪闪发光的珍珠 💎<br>通往宝藏的路上有 <b>10 道门</b>，在输入框里写上答案，全部答对才能打开宝藏！</div>
+    <h2><span class="icon">⭐</span> 核心任务：帮小魔法师米娅找魔法书钥匙</h2>
+    <div class="intro-text">🧙 <b>小魔法师米娅</b>听说藏着一本魔法书 📖<br>通往宝藏的路上有 <b>10 道门</b>，在输入框里写上答案，答对就能打开宝藏！</div>
 
     <!-- Q1 -->
     <div class="quest-card" id="q1-card">
-      <div class="quest-header"><span class="quest-num">1</span><span style="font-weight:700;">🚪 第一道门——浅海珊瑚礁</span></div>
-      <div class="quest-scene">卡卡遇到了 <b>12</b> 只小水母，又游来了 <b>3</b> 只，现在一共有多少只？</div>
+      <div class="quest-header"><span class="quest-num">1</span><span style="font-weight:700;">🚪 第一道门——魔法花园</span></div>
+      <div class="quest-scene">桌上有 7 块魔法宝石，妈妈又做了 1 块，一共几块？</div>
       <div class="quest-row">
-        <span class="quest-math">12 ＋ 3 ＝</span>
-        <input type="number" class="answer-input" id="q1" data-answer="15" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <span class="quest-math">7 ＋ 1 ＝</span>
+        <input type="number" class="answer-input" id="q1" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q1-fb"></div>
     </div>
 
     <!-- Q2 -->
     <div class="quest-card" id="q2-card">
-      <div class="quest-header"><span class="quest-num">2</span><span style="font-weight:700;">🚪 第二道门——海草迷宫</span></div>
-      <div class="quest-scene">迷宫里有 <b>15</b> 条小鱼，游走了 <b>4</b> 条，还剩几条？</div>
+      <div class="quest-header"><span class="quest-num">2</span><span style="font-weight:700;">🚪 第二道门——药剂室</span></div>
+      <div class="quest-scene">桌上有 3 块魔法花，妈妈又做了 7 块，一共几块？</div>
       <div class="quest-row">
-        <span class="quest-math">15 － 4 ＝</span>
-        <input type="number" class="answer-input" id="q2" data-answer="11" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <span class="quest-math">3 ＋ 7 ＝</span>
+        <input type="number" class="answer-input" id="q2" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q2-fb"></div>
     </div>
 
     <!-- Q3 -->
     <div class="quest-card" id="q3-card">
-      <div class="quest-header"><span class="quest-num">3</span><span style="font-weight:700;">🚪 第三道门——贝壳沙滩</span></div>
-      <div class="quest-scene">沙滩上有 <b>11</b> 个贝壳，卡卡又找到了 <b>5</b> 个，一共多少个？</div>
+      <div class="quest-header"><span class="quest-num">3</span><span style="font-weight:700;">🚪 第三道门——水晶洞穴</span></div>
+      <div class="quest-scene">有 8 颗水晶石，吃了 3 颗，还剩几颗？</div>
       <div class="quest-row">
-        <span class="quest-math">11 ＋ 5 ＝</span>
-        <input type="number" class="answer-input" id="q3" data-answer="16" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <span class="quest-math">8 － 3 ＝</span>
+        <input type="number" class="answer-input" id="q3" data-answer="5" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q3-fb"></div>
     </div>
 
     <!-- Q4 -->
     <div class="quest-card" id="q4-card">
-      <div class="quest-header"><span class="quest-num">4</span><span style="font-weight:700;">🚪 第四道门——沉船洞口</span></div>
-      <div class="quest-scene">沉船里有 <b>18</b> 颗金币🪙，小螃蟹拿走了 <b>6</b> 颗，还剩几颗？</div>
+      <div class="quest-header"><span class="quest-num">4</span><span style="font-weight:700;">🚪 第四道门——魔法厨房</span></div>
+      <div class="quest-scene">先找到了 3 个魔法羽毛，又发现了 2 个，一共多少个？</div>
       <div class="quest-row">
-        <span class="quest-math">18 － 6 ＝</span>
-        <input type="number" class="answer-input" id="q4" data-answer="12" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <span class="quest-math">3 ＋ 2 ＝</span>
+        <input type="number" class="answer-input" id="q4" data-answer="5" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q4-fb"></div>
     </div>
 
     <!-- Q5 -->
     <div class="quest-card" id="q5-card">
-      <div class="quest-header"><span class="quest-num">5</span><span style="font-weight:700;">🚪 第五道门——海星花园 🌟</span></div>
-      <div class="quest-scene">花园里有 <b>10</b> 朵海葵花，又开了 <b>4</b> 朵，现在有几朵？</div>
+      <div class="quest-header"><span class="quest-num">5</span><span style="font-weight:700;">🚪 第五道门——星星塔</span></div>
+      <div class="quest-scene">先找到了 4 个魔法药水，又发现了 5 个，一共多少个？</div>
       <div class="quest-row">
-        <span class="quest-math">10 ＋ 4 ＝</span>
-        <input type="number" class="answer-input" id="q5" data-answer="14" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <span class="quest-math">4 ＋ 5 ＝</span>
+        <input type="number" class="answer-input" id="q5" data-answer="9" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q5-fb"></div>
     </div>
 
     <!-- Q6 -->
     <div class="quest-card" id="q6-card">
-      <div class="quest-header"><span class="quest-num">6</span><span style="font-weight:700;">🚪 第六道门——海螺隧道</span></div>
-      <div class="quest-scene">隧道里有 <b>17</b> 颗夜明珠🔮，被小海马拿走了 <b>5</b> 颗，还剩几颗？</div>
+      <div class="quest-header"><span class="quest-num">6</span><span style="font-weight:700;">🚪 第六道门——魔法图书馆</span></div>
+      <div class="quest-scene">有 10 颗魔法花，吃了 5 颗，还剩几颗？</div>
       <div class="quest-row">
-        <span class="quest-math">17 － 5 ＝</span>
-        <input type="number" class="answer-input" id="q6" data-answer="12" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <span class="quest-math">10 － 5 ＝</span>
+        <input type="number" class="answer-input" id="q6" data-answer="5" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q6-fb"></div>
     </div>
 
     <!-- Q7 -->
     <div class="quest-card" id="q7-card">
-      <div class="quest-header"><span class="quest-num">7</span><span style="font-weight:700;">🚪 第七道门——章鱼老先生的考验 🐙</span></div>
-      <div class="quest-scene">章鱼先生说："我有 <b>14</b> 只脚，其中 <b>3</b> 只在跳舞💃，没跳舞的有几只？"</div>
+      <div class="quest-header"><span class="quest-num">7</span><span style="font-weight:700;">🚪 第七道门——巨龙考验</span></div>
+      <div class="quest-scene">篮子里有 3 个魔法球，又放进去 4 个，现在有几个？</div>
       <div class="quest-row">
-        <span class="quest-math">14 － 3 ＝</span>
-        <input type="number" class="answer-input" id="q7" data-answer="11" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <span class="quest-math">3 ＋ 4 ＝</span>
+        <input type="number" class="answer-input" id="q7" data-answer="7" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q7-fb"></div>
     </div>
 
     <!-- Q8 -->
     <div class="quest-card" id="q8-card">
-      <div class="quest-header"><span class="quest-num">8</span><span style="font-weight:700;">🚪 第八道门——珍珠养殖场</span></div>
-      <div class="quest-scene">珍珠养殖场有 <b>13</b> 颗珍珠，今天又产出了 <b>6</b> 颗，一共有几颗？</div>
+      <div class="quest-header"><span class="quest-num">8</span><span style="font-weight:700;">🚪 第八道门——魔法农场</span></div>
+      <div class="quest-scene">篮子里有 5 个星星，又放进去 1 个，现在有几个？</div>
       <div class="quest-row">
-        <span class="quest-math">13 ＋ 6 ＝</span>
-        <input type="number" class="answer-input" id="q8" data-answer="19" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <span class="quest-math">5 ＋ 1 ＝</span>
+        <input type="number" class="answer-input" id="q8" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q8-fb"></div>
     </div>
 
     <!-- Q9 -->
     <div class="quest-card" id="q9-card">
-      <div class="quest-header"><span class="quest-num">9</span><span style="font-weight:700;">🚪 第九道门——大鲨鱼拦路 🦈</span></div>
-      <div class="quest-scene">大鲨鱼说："我有 <b>16</b> 颗牙齿🦷，掉了 <b>4</b> 颗，还剩几颗？"</div>
+      <div class="quest-header"><span class="quest-num">9</span><span style="font-weight:700;">🚪 第九道门——猫头鹰的考验</span></div>
+      <div class="quest-scene">盘子里有 3 个星星，分给小朋友 2 个，还剩几个？</div>
       <div class="quest-row">
-        <span class="quest-math">16 － 4 ＝</span>
-        <input type="number" class="answer-input" id="q9" data-answer="12" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <span class="quest-math">3 － 2 ＝</span>
+        <input type="number" class="answer-input" id="q9" data-answer="1" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q9-fb"></div>
     </div>
@@ -333,22 +333,22 @@
       <div class="quest-header"><span class="quest-num">10</span><span style="font-weight:700;">🚪 最后一道门——宝藏大门 🏆</span></div>
       <div class="quest-scene">大门上有两把锁，都要解开！</div>
       <div class="quest-row">
-        <span class="quest-math">🔒 10 ＋ 7 ＝</span>
-        <input type="number" class="answer-input" id="q10a" data-answer="17" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <span class="quest-math">🔒 第一把锁：10 － 3 ＝</span>
+        <input type="number" class="answer-input" id="q10a" data-answer="7" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="quest-row" style="margin-top:8px;">
-        <span class="quest-math">🔒 19 － 8 ＝</span>
-        <input type="number" class="answer-input" id="q10b" data-answer="11" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <span class="quest-math">🔒 第二把锁：2 ＋ 8 ＝</span>
+        <input type="number" class="answer-input" id="q10b" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q10-fb"></div>
     </div>
 
-    <div class="tip">💡 <b>提示：</b>如果算不出来，可以用手指头或小糖果帮忙哦！</div>
+    <div class="tip">💡 <b>提示：</b>如果算不出来，可以用手指头或小糖果帮忙哦！每道题填完会自动检查。</div>
   </div>
 
   <!-- 提交按钮 -->
   <div class="submit-area">
-    <button class="submit-btn" id="submitBtn" onclick="checkAnswers()">🔑 提交答案</button>
+    <button class="submit-btn" id="submitBtn" onclick="checkAnswers()">🔑 提交全部答案</button>
     <br>
     <button class="retry-btn" id="retryBtn" onclick="retry()">🔄 再试一次</button>
   </div>
@@ -364,14 +364,74 @@
   </div>
 
   <div class="footer" style="text-align:center;font-size:13px;color:rgba(255,255,255,0.7);padding:16px 0;">
-    🌊 数学魔法师 · 海底寻宝篇 · 第 1 期 🐚
+    🏰 数学魔法师 · 魔法城堡篇 · 第 1 期 🏰
   </div>
 
 </div>
 
 <script>
-const totalQuestions = 12; // 10 questions, but Q10 has 2 answers
+const totalQuestions = 12;
 
+// 单题即时检查
+function checkSingle(input) {
+  const val = input.value.trim();
+  if (val === '') {
+    // 清空时恢复默认状态
+    input.className = 'answer-input';
+    const card = input.closest('.quest-card');
+    if (card) card.className = 'quest-card';
+    return;
+  }
+  const answer = parseInt(input.dataset.answer);
+  const userAnswer = parseInt(val);
+  if (isNaN(userAnswer)) return;
+
+  const card = input.closest('.quest-card');
+
+  if (userAnswer === answer) {
+    input.className = 'answer-input correct-input';
+    if (card) card.className = 'quest-card correct';
+    // Show brief feedback
+    const fb = card ? card.querySelector('.feedback') : null;
+    if (fb) {
+      fb.className = 'feedback show correct-fb';
+      fb.textContent = '✅ 答对了！太棒了！🌟';
+    }
+  } else {
+    input.className = 'answer-input wrong-input';
+    if (card) card.className = 'quest-card wrong';
+    const fb = card ? card.querySelector('.feedback') : null;
+    if (fb) {
+      fb.className = 'feedback show wrong-fb';
+      fb.textContent = '❌ 不对哦，再想想！正确答案是 ' + answer + '。';
+    }
+  }
+
+  // Update scoreboard live
+  updateScoreboard();
+}
+
+function updateScoreboard() {
+  let correct = 0;
+  let answered = 0;
+  document.querySelectorAll('.answer-input').forEach(input => {
+    if (input.value.trim() !== '') {
+      answered++;
+      const answer = parseInt(input.dataset.answer);
+      const userAnswer = parseInt(input.value);
+      if (userAnswer === answer) correct++;
+    }
+  });
+  document.getElementById('correctCount').textContent = correct;
+  const statusEl = document.getElementById('scoreStatus');
+  if (correct === totalQuestions) {
+    statusEl.textContent = '🎊 全部答对！太厉害了！';
+  } else if (answered > 0) {
+    statusEl.textContent = '已答 ' + answered + ' 题，对 ' + correct + ' 题';
+  }
+}
+
+// 提交按钮统一检查
 function checkAnswers() {
   let correct = 0;
   const questions = [
@@ -391,7 +451,7 @@ function checkAnswers() {
   const encouragements = [
     '答对了！太棒了！🌟', '真聪明！🎉', '太厉害了！⭐', '好棒啊！👏',
     '答对了！继续加油！💪', '正确！你是小天才！✨', '完美！🎊', '厉害！🏆',
-    '太对了！给你一个大大的赞！👍', '正确！门打开啦！🚪', '答对了！🌟', '太棒了！💎'
+    '太对了！给你一个大大的赞！👍', '正确！门打开啦！🚪', '答对了！🌟'
   ];
 
   questions.forEach((q, i) => {
@@ -416,20 +476,16 @@ function checkAnswers() {
     }
   });
 
-  // 更新计分板
-  document.getElementById('correctCount').textContent = correct;
-  const statusEl = document.getElementById('scoreStatus');
+  updateScoreboard();
+
+  // Show achievement
   if (correct === totalQuestions) {
-    statusEl.textContent = '🎊 全部答对！太厉害了！';
     showAchievement('full', correct);
   } else if (correct >= 8) {
-    statusEl.textContent = '⭐ 太棒了！答对了 ' + correct + ' 题！';
     showAchievement('great', correct);
   } else if (correct >= 5) {
-    statusEl.textContent = '👍 不错！答对了 ' + correct + ' 题！';
     showAchievement('good', correct);
   } else {
-    statusEl.textContent = '💪 答对了 ' + correct + ' 题，再试一次吧！';
     showAchievement('try', correct);
   }
 
@@ -443,13 +499,13 @@ function showAchievement(level, correct) {
 
   let medal, title, text, stars;
   if (level === 'full') {
-    medal = '🏆'; title = '🎊 完美！宝藏找到了！🎊';
-    text = '小螃蟹卡卡说："谢谢你帮我找到了珍珠！你是最棒的海底数学家！"🦀💎';
+    medal = '👑'; title = '🎊 完美！宝藏找到了！🎊';
+    text = '小魔法师米娅说："谢谢你帮我找到了魔法书！你是最棒的数学魔法师！"🧙📖';
     stars = '⭐⭐⭐⭐⭐';
     launchConfetti();
   } else if (level === 'great') {
     medal = '🥇'; title = '🌟 太厉害了！🌟';
-    text = '答对了 ' + correct + ' 题！卡卡说："你太聪明了，马上就能找到宝藏了！"';
+    text = '答对了 ' + correct + ' 题！小魔法师米娅说："你太聪明了，马上就能找到宝藏了！"';
     stars = '⭐⭐⭐⭐';
   } else if (level === 'good') {
     medal = '🥈'; title = '👍 做得不错！👍';
@@ -482,7 +538,7 @@ function retry() {
     fb.textContent = '';
   });
   document.getElementById('correctCount').textContent = '0';
-  document.getElementById('scoreStatus').textContent = '🌊 重新挑战吧！加油 💪';
+  document.getElementById('scoreStatus').textContent = '🏰 重新挑战吧！加油 💪';
   document.getElementById('achievement').style.display = 'none';
   document.getElementById('submitBtn').style.display = 'inline-flex';
   document.getElementById('retryBtn').style.display = 'none';
