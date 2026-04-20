@@ -11,7 +11,7 @@
 
   body {
     font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    background: linear-gradient(180deg, #1a5c2e 0%, #2d8a4e 20%, #4caf50 40%, #81c784 60%, #a5d6a7 80%, #c8e6c9 100%);
+    background: linear-gradient(180deg, #0d47a1 0%, #1565c0 20%, #1976d2 40%, #42a5f5 60%, #90caf9 80%, #bbdefb 100%);
     min-height: 100vh;
     padding: 24px 24px 60px;
     color: #1a3a5c;
@@ -19,7 +19,6 @@
 
   .container { max-width: 960px; margin: 0 auto; }
 
-  /* 顶部计分板 */
   .scoreboard {
     position: sticky; top: 12px; z-index: 100;
     background: rgba(255,255,255,0.95);
@@ -45,14 +44,14 @@
 
   .header {
     text-align: center;
-    background: linear-gradient(135deg, #2e7d32, #4caf50);
+    background: linear-gradient(135deg, #1976d2, #42a5f5);
     border-radius: 24px;
     padding: 28px 18px 22px;
     margin-bottom: 20px;
-    box-shadow: 0 8px 30px rgba(0,100,0,0.35);
+    box-shadow: 0 8px 30px rgba(25,118,210,0.35);
   }
   .header h1 { font-size: 28px; font-weight: 900; color: #fff; text-shadow: 2px 2px 6px rgba(0,0,0,0.2); margin-top: 20px; }
-  .header .subtitle { font-size: 15px; color: #ede9fe; margin-top: 8px; line-height: 1.6; }
+  .header .subtitle { font-size: 15px; color: #e3f2fd; margin-top: 8px; line-height: 1.6; }
   .header .date-badge { display: inline-block; background: rgba(255,255,255,0.25); border-radius: 20px; padding: 4px 16px; font-size: 13px; color: #fff; margin-top: 10px; }
 
   .card {
@@ -71,13 +70,12 @@
   .warmup-step .step-title { font-size: 16px; font-weight: 700; color: #e65100; margin-bottom: 6px; }
   .warmup-step .step-content { font-size: 15px; color: #4a3520; line-height: 1.8; }
 
-  /* 题目卡片 */
   .quest-card {
-    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
     border-radius: 18px;
     padding: 18px 16px;
     margin-bottom: 16px;
-    border-left: 5px solid #4caf50;
+    border-left: 5px solid #1976d2;
     transition: border-color 0.3s, background 0.3s;
   }
   .quest-card.correct { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-left-color: #43a047; }
@@ -86,7 +84,7 @@
   .quest-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
   .quest-num {
     display: inline-flex; align-items: center; justify-content: center;
-    background: #4caf50; color: #fff; width: 36px; height: 36px;
+    background: #1976d2; color: #fff; width: 36px; height: 36px;
     border-radius: 50%; font-size: 16px; font-weight: 900; flex-shrink: 0;
   }
   .quest-card.correct .quest-num { background: #43a047; }
@@ -97,19 +95,19 @@
   .quest-row {
     display: flex; align-items: center; gap: 12px; padding-left: 46px; flex-wrap: wrap;
   }
-  .quest-math { font-size: 24px; font-weight: 900; color: #1b5e20; letter-spacing: 3px; }
+  .quest-math { font-size: 24px; font-weight: 900; color: #0d47a1; letter-spacing: 3px; }
   .quest-card.correct .quest-math { color: #1b5e20; }
   .quest-card.wrong .quest-math { color: #e65100; }
 
   .answer-input {
     width: 80px; height: 48px;
-    border: 3px solid #a5d6a7; border-radius: 12px;
+    border: 3px solid #90caf9; border-radius: 12px;
     font-size: 22px; font-weight: 700; text-align: center;
-    color: #1b5e20; background: rgba(255,255,255,0.8);
+    color: #0d47a1; background: rgba(255,255,255,0.8);
     outline: none; transition: border-color 0.3s, background 0.3s;
     -webkit-appearance: none; appearance: none;
   }
-  .answer-input:focus { border-color: #4caf50; background: #fff; }
+  .answer-input:focus { border-color: #1976d2; background: #fff; }
   .answer-input.correct-input { border-color: #43a047; background: #e8f5e9; color: #2e7d32; }
   .answer-input.wrong-input { border-color: #f57c00; background: #fff3e0; color: #e65100; }
 
@@ -121,31 +119,47 @@
   .feedback.correct-fb { color: #2e7d32; }
   .feedback.wrong-fb { color: #e65100; }
 
-  /* 提交按钮 */
+  .challenge-option {
+    background: rgba(255,255,255,0.9);
+    border: 3px solid #90caf9;
+    border-radius: 16px;
+    padding: 18px 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 18px;
+    font-weight: 700;
+    color: #0d47a1;
+  }
+  .challenge-option:hover { border-color: #1976d2; background: #e3f2fd; transform: translateY(-2px); }
+  .challenge-option.selected-correct { border-color: #43a047; background: #e8f5e9; color: #2e7d32; }
+  .challenge-option.selected-wrong { border-color: #f57c00; background: #fff3e0; color: #e65100; }
+  .challenge-option.show-answer { border-color: #43a047; background: #e8f5e9; }
+  .challenge-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 14px; }
+
   .submit-area { text-align: center; margin: 32px 0; }
   .submit-btn {
     display: inline-flex; align-items: center; gap: 10px;
-    background: linear-gradient(135deg, #2e7d32, #4caf50);
+    background: linear-gradient(135deg, #1976d2, #42a5f5);
     color: #fff; border: none; border-radius: 20px;
     padding: 16px 48px; font-size: 22px; font-weight: 900;
-    cursor: pointer; box-shadow: 0 6px 20px rgba(46,125,50,0.4);
+    cursor: pointer; box-shadow: 0 6px 20px rgba(25,118,210,0.4);
     transition: transform 0.2s, box-shadow 0.2s;
     min-width: 200px; justify-content: center;
   }
-  .submit-btn:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(46,125,50,0.4); }
+  .submit-btn:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(25,118,210,0.4); }
   .submit-btn:active { transform: scale(0.97); }
 
   .retry-btn {
     display: none; margin-top: 14px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background: linear-gradient(135deg, #1565c0, #1976d2);
     color: #fff; border: none; border-radius: 16px;
     padding: 12px 36px; font-size: 18px; font-weight: 700;
-    cursor: pointer; box-shadow: 0 4px 15px rgba(99,102,241,0.3);
+    cursor: pointer; box-shadow: 0 4px 15px rgba(21,101,192,0.3);
     transition: transform 0.2s;
   }
   .retry-btn:hover { transform: scale(1.05); }
 
-  /* 成就 */
   .achievement-card {
     background: linear-gradient(135deg, #fff8e1, #ffecb3);
     border: 3px solid #ffc107; text-align: center; padding: 26px 18px;
@@ -156,11 +170,10 @@
   .achievement-card .cheer { font-size: 17px; color: #bf360c; line-height: 2; margin-top: 10px; }
   .stars-row { font-size: 32px; letter-spacing: 8px; margin-top: 12px; }
 
-  .tip { background: #e8f5e9; border-radius: 14px; padding: 12px 14px; margin-top: 12px; font-size: 14px; color: #2e7d32; line-height: 1.7; border-left: 4px solid #66bb6a; }
+  .tip { background: #e3f2fd; border-radius: 14px; padding: 12px 14px; margin-top: 12px; font-size: 14px; color: #1565c0; line-height: 1.7; border-left: 4px solid #42a5f5; }
   .intro-text { font-size: 16px; color: #333; line-height: 2; margin-bottom: 10px; }
   .divider { text-align: center; margin: 24px 0; font-size: 24px; letter-spacing: 12px; opacity: 0.6; }
 
-  /* 庆祝动画 */
   .confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; }
   .confetti {
     position: absolute; width: 10px; height: 10px;
@@ -172,7 +185,6 @@
     100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
   }
 
-  /* 响应式 */
   @media (max-width: 600px) {
     body { padding: 12px 8px 40px; }
     .container { max-width: 100%; }
@@ -185,6 +197,7 @@
     .quest-math { font-size: 20px; }
     .answer-input { width: 70px; height: 44px; font-size: 20px; }
     .submit-btn { padding: 14px 36px; font-size: 18px; }
+    .challenge-grid { grid-template-columns: 1fr; }
   }
   @media (min-width: 601px) and (max-width: 1024px) { .container { max-width: 760px; } }
   @media (min-width: 1025px) { .container { max-width: 860px; } }
@@ -193,152 +206,152 @@
 <body>
 <div class="container">
 
-  <!-- 计分板 -->
   <div class="scoreboard" id="scoreboard">
     <div class="score">
-      <span class="correct" id="correctCount">0</span> / <span id="totalCount">12</span> 正确
+      <span class="correct" id="correctCount">0</span> / <span id="totalCount">14</span> 正确
     </div>
     <div class="status" id="scoreStatus">🛒 开始超市购物大冒险吧！加油 💪</div>
   </div>
 
-  <!-- 标题 -->
   <div class="header">
     <h1>🛒 超市购物大冒险 🛒</h1>
-    <div class="subtitle">帮小兔子找到胡萝卜金币！每道数学题都是一把钥匙 🔑<br>填完每道题会自动检查，也可以点提交按钮统一检查！</div>
+    <div class="subtitle">陪妈妈去超市买东西啦！每件商品的价格都要算清楚 💰<br>填完每道题会自动检查，也可以点提交按钮统一检查！</div>
     <div class="date-badge">📅 2026年4月20日 · 星期一</div>
   </div>
 
-  <!-- 热身 -->
   <div class="card warmup-card">
-    <h2><span class="icon">🔥</span> 热身小游戏：超市购物热身操</h2>
-    <div class="intro-text">👋 小宝贝，准备好了吗？我们一起活动活动身体！</div>
+    <h2><span class="icon">🔥</span> 热身小游戏：超市凑十大作战</h2>
+    <div class="intro-text">👋 小宝贝，去超市前先热热身！我们要凑够10元买糖果！</div>
     <div class="warmup-step">
-      <div class="step-title">🫧 倒数热身</div>
-      <div class="step-content">从 <b>20</b> 倒数到 <b>1</b>，每数一个数就拍一下手 👏</div>
+      <div class="step-title">🛒 凑十买东西</div>
+      <div class="step-content">每样东西都要凑成 <b>10元</b>，在输入框里填上还需要多少钱！</div>
     </div>
     <div class="warmup-step">
-      <div class="step-title">🛒 数字游戏</div>
-      <div class="step-content">家长说数字，孩子用手比出来："🛒说——<b>14</b>！"</div>
+      <div class="step-title">✏️ 填一填</div>
+      <div class="step-content" style="font-size:22px; font-weight:700; color:#e65100;">
+        <div style="margin-bottom:8px;">🍬 糖果 9 元，还需要 <input type="number" class="answer-input" id="warm1" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkWarmup(this)" onblur="checkWarmup(this)" style="width:70px; height:44px; font-size:20px;"> 元 ＝ 10元</div>
+        <div style="margin-bottom:8px;">🍪 饼干 6 元，还需要 <input type="number" class="answer-input" id="warm2" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkWarmup(this)" onblur="checkWarmup(this)" style="width:70px; height:44px; font-size:20px;"> 元 ＝ 10元</div>
+        <div>🧃 果汁 7 元，还需要 <input type="number" class="answer-input" id="warm3" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkWarmup(this)" onblur="checkWarmup(this)" style="width:70px; height:44px; font-size:20px;"> 元 ＝ 10元</div>
+      </div>
     </div>
   </div>
 
-  <div class="divider">🛒🧺🥕🍎🛍️</div>
+  <div class="divider">🛒🧾💰🛍️🏪</div>
 
-  <!-- 核心任务 -->
   <div class="card">
-    <h2><span class="icon">⭐</span> 核心任务：帮小兔子找胡萝卜金币钥匙</h2>
-    <div class="intro-text">🐰 <b>小兔子</b>听说藏着一本胡萝卜金币 🥕<br>通往宝藏的路上有 <b>10 道门</b>，在输入框里写上答案，答对就能打开宝藏！</div>
+    <h2><span class="icon">⭐</span> 核心任务：帮妈妈算账买商品</h2>
+    <div class="intro-text">👩 <b>妈妈带你去超市</b>，要买好多东西 🛒<br>购物车里有 <b>10 件商品</b>，算对价格就能帮妈妈省钱！</div>
 
     <!-- Q1 -->
     <div class="quest-card" id="q1-card">
-      <div class="quest-header"><span class="quest-num">1</span><span style="font-weight:700;">🚪 第一道门——魔法花园</span></div>
-      <div class="quest-scene">篮子里有 1 个魔法宝石，又放进去 5 个，现在有几个？</div>
+      <div class="quest-header"><span class="quest-num">1</span><span style="font-weight:700;">🧾 第一件——水果区</span></div>
+      <div class="quest-scene">妈妈拿了 5 个苹果，又拿了 3 个苹果，一共几个？</div>
       <div class="quest-row">
-        <span class="quest-math">1 ＋ 5 ＝</span>
-        <input type="number" class="answer-input" id="q1" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <span class="quest-math">5 ＋ 3 ＝ </span>
+        <input type="number" class="answer-input" id="q1" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q1-fb"></div>
     </div>
 
     <!-- Q2 -->
     <div class="quest-card" id="q2-card">
-      <div class="quest-header"><span class="quest-num">2</span><span style="font-weight:700;">🚪 第二道门——药剂室</span></div>
-      <div class="quest-scene">盘子里有 10 个魔法糖果，分给小朋友 8 个，还剩几个？</div>
+      <div class="quest-header"><span class="quest-num">2</span><span style="font-weight:700;">🧾 第二件——零食区</span></div>
+      <div class="quest-scene">架上有 8 包薯片，妈妈又放了 1 包进去，一共几包？</div>
       <div class="quest-row">
-        <span class="quest-math">10 － 8 ＝</span>
-        <input type="number" class="answer-input" id="q2" data-answer="2" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <span class="quest-math">8 ＋ 1 ＝ </span>
+        <input type="number" class="answer-input" id="q2" data-answer="9" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q2-fb"></div>
     </div>
 
     <!-- Q3 -->
     <div class="quest-card" id="q3-card">
-      <div class="quest-header"><span class="quest-num">3</span><span style="font-weight:700;">🚪 第三道门——水晶洞穴</span></div>
-      <div class="quest-scene">本来有 6 只魔法宝石，走了 2 只，还剩几只？</div>
+      <div class="quest-header"><span class="quest-num">3</span><span style="font-weight:700;">🧾 第三件——饮料区</span></div>
+      <div class="quest-scene">购物车里有 6 瓶牛奶，又加了 1 瓶，现在有几瓶？</div>
       <div class="quest-row">
-        <span class="quest-math">6 － 2 ＝</span>
-        <input type="number" class="answer-input" id="q3" data-answer="4" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <span class="quest-math">6 ＋ 1 ＝ </span>
+        <input type="number" class="answer-input" id="q3" data-answer="7" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q3-fb"></div>
     </div>
 
     <!-- Q4 -->
     <div class="quest-card" id="q4-card">
-      <div class="quest-header"><span class="quest-num">4</span><span style="font-weight:700;">🚪 第四道门——魔法厨房</span></div>
-      <div class="quest-scene">有 2 个魔法宝石，拿走了 1 个，还剩几个？</div>
+      <div class="quest-header"><span class="quest-num">4</span><span style="font-weight:700;">🧾 第四件——面包区</span></div>
+      <div class="quest-scene">先拿了 2 个面包，又拿了 5 个，一共几个？</div>
       <div class="quest-row">
-        <span class="quest-math">2 － 1 ＝</span>
-        <input type="number" class="answer-input" id="q4" data-answer="1" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <span class="quest-math">2 ＋ 5 ＝ </span>
+        <input type="number" class="answer-input" id="q4" data-answer="7" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q4-fb"></div>
     </div>
 
     <!-- Q5 -->
     <div class="quest-card" id="q5-card">
-      <div class="quest-header"><span class="quest-num">5</span><span style="font-weight:700;">🚪 第五道门——星星塔</span></div>
-      <div class="quest-scene">本来有 5 只魔法花，走了 1 只，还剩几只？</div>
+      <div class="quest-header"><span class="quest-num">5</span><span style="font-weight:700;">🧾 第五件——糖果区</span></div>
+      <div class="quest-scene">篮子里有 1 颗糖，又放了 2 颗，现在有几颗？</div>
       <div class="quest-row">
-        <span class="quest-math">5 － 1 ＝</span>
-        <input type="number" class="answer-input" id="q5" data-answer="4" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <span class="quest-math">1 ＋ 2 ＝ </span>
+        <input type="number" class="answer-input" id="q5" data-answer="3" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q5-fb"></div>
     </div>
 
     <!-- Q6 -->
     <div class="quest-card" id="q6-card">
-      <div class="quest-header"><span class="quest-num">6</span><span style="font-weight:700;">🚪 第六道门——魔法图书馆</span></div>
-      <div class="quest-scene">篮子里有 7 个魔法宝石，又放进去 1 个，现在有几个？</div>
+      <div class="quest-header"><span class="quest-num">6</span><span style="font-weight:700;">🧾 第六件——蔬菜区</span></div>
+      <div class="quest-scene">买了 9 根胡萝卜，吃了 5 根，还剩几根？</div>
       <div class="quest-row">
-        <span class="quest-math">7 ＋ 1 ＝</span>
-        <input type="number" class="answer-input" id="q6" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <span class="quest-math">9 － 5 ＝ </span>
+        <input type="number" class="answer-input" id="q6" data-answer="4" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q6-fb"></div>
     </div>
 
     <!-- Q7 -->
     <div class="quest-card" id="q7-card">
-      <div class="quest-header"><span class="quest-num">7</span><span style="font-weight:700;">🚪 第七道门——巨龙考验</span></div>
-      <div class="quest-scene">本来有 5 只魔法宝石，走了 2 只，还剩几只？</div>
+      <div class="quest-header"><span class="quest-num">7</span><span style="font-weight:700;">🧾 第七件——冷冻区</span></div>
+      <div class="quest-scene">冰柜里有 10 个冰淇淋，妈妈拿了 9 个，还剩几个？</div>
       <div class="quest-row">
-        <span class="quest-math">5 － 2 ＝</span>
-        <input type="number" class="answer-input" id="q7" data-answer="3" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <span class="quest-math">10 － 9 ＝ </span>
+        <input type="number" class="answer-input" id="q7" data-answer="1" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q7-fb"></div>
     </div>
 
     <!-- Q8 -->
     <div class="quest-card" id="q8-card">
-      <div class="quest-header"><span class="quest-num">8</span><span style="font-weight:700;">🚪 第八道门——魔法农场</span></div>
-      <div class="quest-scene">有 4 颗魔法球，吃了 2 颗，还剩几颗？</div>
+      <div class="quest-header"><span class="quest-num">8</span><span style="font-weight:700;">🧾 第八件——日用品区</span></div>
+      <div class="quest-scene">货架上有 7 盒纸巾，妈妈买了 4 盒，还剩几盒？</div>
       <div class="quest-row">
-        <span class="quest-math">4 － 2 ＝</span>
-        <input type="number" class="answer-input" id="q8" data-answer="2" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <span class="quest-math">7 － 4 ＝ </span>
+        <input type="number" class="answer-input" id="q8" data-answer="3" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q8-fb"></div>
     </div>
 
     <!-- Q9 -->
     <div class="quest-card" id="q9-card">
-      <div class="quest-header"><span class="quest-num">9</span><span style="font-weight:700;">🚪 第九道门——猫头鹰的考验</span></div>
-      <div class="quest-scene">桌上有 5 块星星，妈妈又做了 1 块，一共几块？</div>
+      <div class="quest-header"><span class="quest-num">9</span><span style="font-weight:700;">🧾 第九件——收银台考验</span></div>
+      <div class="quest-scene">付了 3 元，找回 1 元，实际花了多少元？</div>
       <div class="quest-row">
-        <span class="quest-math">5 ＋ 1 ＝</span>
-        <input type="number" class="answer-input" id="q9" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <span class="quest-math">3 － 1 ＝ </span>
+        <input type="number" class="answer-input" id="q9" data-answer="2" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q9-fb"></div>
     </div>
 
     <!-- Q10 -->
     <div class="quest-card" id="q10-card">
-      <div class="quest-header"><span class="quest-num">10</span><span style="font-weight:700;">🚪 最后一道门——宝藏大门 🏆</span></div>
-      <div class="quest-scene">大门上有两把锁，都要解开！</div>
+      <div class="quest-header"><span class="quest-num">10</span><span style="font-weight:700;">🧾 最后一关——结账大门 🏆</span></div>
+      <div class="quest-scene">收银台有两张小票，都要算对！</div>
       <div class="quest-row">
-        <span class="quest-math">🔒 第一把锁：10 － 2 ＝</span>
-        <input type="number" class="answer-input" id="q10a" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <span class="quest-math">🧾 第一张：1 ＋ 4 ＝ </span>
+        <input type="number" class="answer-input" id="q10a" data-answer="5" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="quest-row" style="margin-top:8px;">
-        <span class="quest-math">🔒 第二把锁：1 ＋ 9 ＝</span>
-        <input type="number" class="answer-input" id="q10b" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <span class="quest-math">🧾 第二张：4 － 1 ＝ </span>
+        <input type="number" class="answer-input" id="q10b" data-answer="3" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q10-fb"></div>
     </div>
@@ -346,16 +359,26 @@
     <div class="tip">💡 <b>提示：</b>如果算不出来，可以用手指头或小糖果帮忙哦！每道题填完会自动检查。</div>
   </div>
 
-  <!-- 提交按钮 -->
-  <div class="submit-area">
-    <button class="submit-btn" id="submitBtn" onclick="checkAnswers()">🔑 提交全部答案</button>
-    <br>
-    <button class="retry-btn" id="retryBtn" onclick="retry()">🔄 再试一次</button>
+  <div class="card">
+    <h2><span class="icon">🎮</span> 互动挑战：哪个商品最贵？</h2>
+    <div class="intro-text">🛒 超市里有四件商品，每件商品的价格都不同。<br>请你点一点，<b>哪个算出来的价格最大（最贵）</b>？</div>
+    <div class="challenge-grid">
+      <div class="challenge-option" data-value="5" onclick="checkChallenge(this)">1 ＋ 4</div>
+      <div class="challenge-option" data-value="8" onclick="checkChallenge(this)">3 ＋ 5</div>
+      <div class="challenge-option" data-value="6" onclick="checkChallenge(this)">10 － 4</div>
+      <div class="challenge-option" data-value="4" onclick="checkChallenge(this)">7 － 3</div>
+    </div>
+    <div class="feedback" id="challenge-fb"></div>
   </div>
 
   <div class="divider">🏆🏆🏆</div>
 
-  <!-- 成就 -->
+  <div class="submit-area">
+    <button class="submit-btn" id="submitBtn" onclick="checkAnswers()">🧾 提交全部答案</button>
+    <br>
+    <button class="retry-btn" id="retryBtn" onclick="retry()">🔄 再试一次</button>
+  </div>
+
   <div class="card achievement-card" id="achievement" style="display:none;">
     <span class="medal" id="medal">🏆</span>
     <h2 id="achieveTitle">🎉 恭喜！🎉</h2>
@@ -370,13 +393,64 @@
 </div>
 
 <script>
-const totalQuestions = 12;
+const totalQuestions = 14;
 
-// 单题即时检查
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playCorrectSound() {
+  const notes = [523.25, 659.25, 783.99];
+  notes.forEach((freq, i) => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime + i * 0.12);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + i * 0.12 + 0.3);
+    osc.start(audioCtx.currentTime + i * 0.12);
+    osc.stop(audioCtx.currentTime + i * 0.12 + 0.3);
+  });
+}
+
+function playWrongSound() {
+  const notes = [392, 349.23];
+  notes.forEach((freq, i) => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime + i * 0.15);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + i * 0.15 + 0.35);
+    osc.start(audioCtx.currentTime + i * 0.15);
+    osc.stop(audioCtx.currentTime + i * 0.15 + 0.35);
+  });
+}
+
+function checkWarmup(input) {
+  const val = input.value.trim();
+  if (val === '') {
+    input.className = 'answer-input';
+    return;
+  }
+  const answer = parseInt(input.dataset.answer);
+  const userAnswer = parseInt(val);
+  if (isNaN(userAnswer)) return;
+
+  if (userAnswer === answer) {
+    input.className = 'answer-input correct-input';
+    playCorrectSound();
+  } else {
+    input.className = 'answer-input wrong-input';
+    playWrongSound();
+  }
+}
+
 function checkSingle(input) {
   const val = input.value.trim();
   if (val === '') {
-    // 清空时恢复默认状态
     input.className = 'answer-input';
     const card = input.closest('.quest-card');
     if (card) card.className = 'quest-card';
@@ -391,12 +465,12 @@ function checkSingle(input) {
   if (userAnswer === answer) {
     input.className = 'answer-input correct-input';
     if (card) card.className = 'quest-card correct';
-    // Show brief feedback
     const fb = card ? card.querySelector('.feedback') : null;
     if (fb) {
       fb.className = 'feedback show correct-fb';
       fb.textContent = '✅ 答对了！太棒了！🌟';
     }
+    playCorrectSound();
   } else {
     input.className = 'answer-input wrong-input';
     if (card) card.className = 'quest-card wrong';
@@ -405,9 +479,9 @@ function checkSingle(input) {
       fb.className = 'feedback show wrong-fb';
       fb.textContent = '❌ 不对哦，再想想！正确答案是 ' + answer + '。';
     }
+    playWrongSound();
   }
 
-  // Update scoreboard live
   updateScoreboard();
 }
 
@@ -431,7 +505,36 @@ function updateScoreboard() {
   }
 }
 
-// 提交按钮统一检查
+function checkChallenge(el) {
+  if (el.classList.contains('selected-correct') || el.classList.contains('selected-wrong')) return;
+
+  const value = parseInt(el.dataset.value);
+  const maxVal = 8;
+  const fb = document.getElementById('challenge-fb');
+
+  if (value === maxVal) {
+    el.classList.add('selected-correct');
+    fb.className = 'feedback show correct-fb';
+    fb.textContent = '✅ 答对了！这件商品最贵！你帮妈妈选了最划算的！🎁';
+    playCorrectSound();
+  } else {
+    el.classList.add('selected-wrong');
+    fb.className = 'feedback show wrong-fb';
+    fb.textContent = '❌ 再想想！还有更贵的哦，再试一次吧 💪';
+    playWrongSound();
+  }
+
+  if (value !== maxVal) {
+    document.querySelectorAll('.challenge-option').forEach(opt => {
+      if (parseInt(opt.dataset.value) === maxVal) {
+        opt.classList.add('show-answer');
+      }
+    });
+  }
+
+  updateScoreboard();
+}
+
 function checkAnswers() {
   let correct = 0;
   const questions = [
@@ -444,14 +547,14 @@ function checkAnswers() {
     { id: 'q7', card: 'q7-card', fb: 'q7-fb' },
     { id: 'q8', card: 'q8-card', fb: 'q8-fb' },
     { id: 'q9', card: 'q9-card', fb: 'q9-fb' },
-    { id: 'q10a', card: 'q10-card', fb: 'q10-fb', label: '第一把锁' },
-    { id: 'q10b', card: 'q10-card', fb: 'q10-fb', label: '第二把锁' },
+    { id: 'q10a', card: 'q10-card', fb: 'q10-fb', label: '第一张' },
+    { id: 'q10b', card: 'q10-card', fb: 'q10-fb', label: '第二张' },
   ];
 
   const encouragements = [
     '答对了！太棒了！🌟', '真聪明！🎉', '太厉害了！⭐', '好棒啊！👏',
     '答对了！继续加油！💪', '正确！你是小天才！✨', '完美！🎊', '厉害！🏆',
-    '太对了！给你一个大大的赞！👍', '正确！门打开啦！🚪', '答对了！🌟'
+    '太对了！给你一个大大的赞！👍', '正确！账单算对啦！🧾', '答对了！🌟'
   ];
 
   questions.forEach((q, i) => {
@@ -478,7 +581,6 @@ function checkAnswers() {
 
   updateScoreboard();
 
-  // Show achievement
   if (correct === totalQuestions) {
     showAchievement('full', correct);
   } else if (correct >= 8) {
@@ -499,13 +601,13 @@ function showAchievement(level, correct) {
 
   let medal, title, text, stars;
   if (level === 'full') {
-    medal = '👑'; title = '🎊 完美！宝藏找到了！🎊';
-    text = '小兔子说："谢谢你帮我找到了胡萝卜金币！你是最棒的数学魔法师！"🐰🥕';
+    medal = '👑'; title = '🎊 完美！购物任务完成！🎊';
+    text = '妈妈说："谢谢你帮我算账！你是最棒的数学小助手！"🛒💰';
     stars = '⭐⭐⭐⭐⭐';
     launchConfetti();
   } else if (level === 'great') {
     medal = '🥇'; title = '🌟 太厉害了！🌟';
-    text = '答对了 ' + correct + ' 题！小兔子说："你太聪明了，马上就能找到宝藏了！"';
+    text = '答对了 ' + correct + ' 题！妈妈说："你太聪明了，马上就能当小会计了！"';
     stars = '⭐⭐⭐⭐';
   } else if (level === 'good') {
     medal = '🥈'; title = '👍 做得不错！👍';
@@ -536,6 +638,9 @@ function retry() {
   document.querySelectorAll('.feedback').forEach(fb => {
     fb.className = 'feedback';
     fb.textContent = '';
+  });
+  document.querySelectorAll('.challenge-option').forEach(opt => {
+    opt.className = 'challenge-option';
   });
   document.getElementById('correctCount').textContent = '0';
   document.getElementById('scoreStatus').textContent = '🛒 重新挑战吧！加油 💪';
