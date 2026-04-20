@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日数学练习 - Math Magic</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .container {
+    max-width: 800px;
+    width: 100%;
+    background: rgba(255,255,255,0.95);
+    border-radius: 24px;
+    padding: 40px 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .subtitle {
+    text-align: center;
+    color: #888;
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+  .week-group {
+    margin-bottom: 24px;
+  }
+  .week-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #555;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #eee;
+  }
+  .day-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    margin-bottom: 8px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    transition: all 0.2s;
+  }
+  .day-link:hover {
+    background: #e9ecef;
+    transform: translateX(4px);
+  }
+  .day-link .theme {
+    color: #888;
+    font-size: 14px;
+  }
+  .day-link .badges {
+    display: flex;
+    gap: 6px;
+  }
+  .badge {
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  .badge-math { background: #e3f2fd; color: #1976d2; }
+  .badge-thinking { background: #fce4ec; color: #c62828; }
+  .badge-today {
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-weight: 700;
+  }
+  .curriculum-link {
+    display: block;
+    text-align: center;
+    margin-top: 24px;
+    padding: 14px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: opacity 0.2s;
+  }
+  .curriculum-link:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>每日数学练习</h1>
+  <p class="subtitle">Math Magic - 5岁小朋友的数学冒险</p>
+
+  <div class="week-group">
+    <div class="week-title">本周练习</div>
+    <a href="2026-04-20-math-magic.html" class="day-link">
+      <span>4月20日 <span class="theme">超市购物</span></span>
+      <span class="badges">
+        <span class="badge badge-today">今天</span>
+        <span class="badge badge-math">计算</span>
+        <span class="badge badge-thinking">思维</span>
+      </span>
+    </a>
+    <a href="2026-04-19-math-magic.html" class="day-link">
+      <span>4月19日 <span class="theme">魔法城堡</span></span>
+      <span class="badges">
+        <span class="badge badge-math">计算</span>
+        <span class="badge badge-thinking">思维</span>
+      </span>
+    </a>
+    <a href="2026-04-18-math-magic.html" class="day-link">
+      <span>4月18日 <span class="theme">魔法城堡</span></span>
+      <span class="badges">
+        <span class="badge badge-math">计算</span>
+        <span class="badge badge-thinking">思维</span>
+      </span>
+    </a>
+  </div>
+
+  <div class="week-group">
+    <div class="week-title">上周练习</div>
+    <a href="2026-04-17-math-magic.html" class="day-link">
+      <span>4月17日</span>
+      <span class="badges">
+        <span class="badge badge-math">计算</span>
+        <span class="badge badge-thinking">思维</span>
+      </span>
+    </a>
+    <a href="2026-04-16-math-magic.html" class="day-link">
+      <span>4月16日</span>
+      <span class="badges">
+        <span class="badge badge-math">计算</span>
+        <span class="badge badge-thinking">思维</span>
+      </span>
+    </a>
+    <a href="2026-04-15-math-magic.html" class="day-link">
+      <span>4月15日</span>
+      <span class="badges">
+        <span class="badge badge-math">计算</span>
+        <span class="badge badge-thinking">思维</span>
+      </span>
+    </a>
+    <a href="2026-04-14-math-magic.html" class="day-link">
+      <span>4月14日</span>
+      <span class="badges">
+        <span class="badge badge-math">计算</span>
+        <span class="badge badge-thinking">思维</span>
+      </span>
+    </a>
+  </div>
+
+  <a href="curriculum-plan.html" class="curriculum-link">查看完整课程计划</a>
+</div>
+</body>
+</html>
