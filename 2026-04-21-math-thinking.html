@@ -214,7 +214,7 @@
       </div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q1" data-answer="11" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <input type="number" class="answer-input" id="q1" data-answer="11" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q1-fb"></div>
     </div>
@@ -227,7 +227,7 @@
       </div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q2" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <input type="number" class="answer-input" id="q2" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q2-fb"></div>
     </div>
@@ -257,7 +257,7 @@
 <div class="quest-scene">4，6，9，13，下一个数是几？</div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q4" data-answer="18" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <input type="number" class="answer-input" id="q4" data-answer="18" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q4-fb"></div>
     </div>
@@ -297,11 +297,11 @@
     <div class="quest-card" id="q7-card">
       <div class="quest-header"><span class="quest-num">7</span><span style="font-weight:700;">括号里填几</span></div>
 <div class="quest-row">
-        <span class="quest-math"> ，括号里应该填几？</span>
+        <span class="quest-math">12 + ( ? ) = 18，括号里应该填几？</span>
       </div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q7" data-answer="0" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <input type="number" class="answer-input" id="q7" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q7-fb"></div>
     </div>
@@ -324,7 +324,7 @@
 <div class="quest-scene">冰箱里有 8 瓶可乐 🥤<br>喝了 1 瓶<br>妈妈又买了 3 瓶</div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q9" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <input type="number" class="answer-input" id="q9" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q9-fb"></div>
     </div>
@@ -337,7 +337,7 @@
       </div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q10" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <input type="number" class="answer-input" id="q10" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q10-fb"></div>
     </div>
@@ -372,7 +372,7 @@
       <div class="quest-scene">排队的一共有几个人？</div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q12" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off">
+        <input type="number" class="answer-input" id="q12" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q12-fb"></div>
     </div>
@@ -443,14 +443,60 @@ function playWrong() {
   } catch(e) {}
 }
 
+// 单题即时检查（输入框专用）
+function checkSingle(input) {
+  const val = input.value.trim();
+  if (val === '') {
+    input.className = 'answer-input';
+    const card = input.closest('.quest-card');
+    if (card) {
+      card.className = 'quest-card';
+      const fb = card.querySelector('.feedback');
+      if (fb) { fb.className = 'feedback'; fb.textContent = ''; }
+    }
+    return;
+  }
+  const qId = input.id;
+  const expected = answers[qId];
+  const userAnswer = parseInt(val);
+  if (isNaN(userAnswer)) return;
+
+  const card = input.closest('.quest-card');
+  const fb = card ? card.querySelector('.feedback') : null;
+
+  if (String(userAnswer) === String(expected)) {
+    input.className = 'answer-input correct-input';
+    if (card) card.className = 'quest-card correct';
+    if (fb) {
+      fb.className = 'feedback show correct-fb';
+      const data = explanations[qId];
+      fb.textContent = '✅ ' + (data ? data.ok : '答对了！太棒了！🌟');
+    }
+    playCorrect();
+  } else {
+    input.className = 'answer-input wrong-input';
+    if (card) card.className = 'quest-card wrong';
+    if (fb) {
+      fb.className = 'feedback show wrong-fb';
+      const data = explanations[qId];
+      fb.innerHTML = '❌ 不对哦<br>💡 正确答案：' + (data ? data.fix : expected);
+    }
+    playWrong();
+  }
+
+  // Update scoreboard
+  document.getElementById('correctCount').textContent =
+    Array.from(document.querySelectorAll('.answer-input.correct-input')).length;
+}
+
 // ===== 答案 =====
 const TOTAL = 12;
 let correctCount = 0;
 const checked = new Set();
 
-const answers = {"q1": "11", "q2": "10", "q3": "a", "q4": "18", "q5": "a", "q6": "c", "q7": "0", "q8": "b", "q9": "10", "q10": "6", "q11": "c", "q12": "8"};
+const answers = {"q1": "11", "q2": "10", "q3": "a", "q4": "18", "q5": "a", "q6": "c", "q7": "6", "q8": "b", "q9": "10", "q10": "6", "q11": "c", "q12": "8"};
 
-const explanations = {"q1": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是11。"}, "q2": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是10。"}, "q3": {"ok": "选择正确！6 + 7 大🎉", "fix": "正确答案是：6 + 7 大"}, "q4": {"ok": "18！规律找得很准！🎉", "fix": "仔细观察数列的规律，下一个数是18。"}, "q5": {"ok": "选择正确！🍊 橘子🎉", "fix": "正确答案是：🍊 橘子"}, "q6": {"ok": "选择正确！小红最高🎉", "fix": "正确答案是：小红最高"}, "q7": {"ok": "括号里填0，完全正确！🎉", "fix": "用逆运算： ，括号里应该填几？，答案是0。"}, "q8": {"ok": "选择正确！🎉", "fix": "正确答案是："}, "q9": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是10。"}, "q10": {"ok": "6，从左到右计算正确！🎉", "fix": "从左到右一步步算，答案是6。"}, "q11": {"ok": "选择正确！🎉", "fix": "正确答案是："}, "q12": {"ok": "8人，排队问题理解到位！🎉", "fix": "前面的人 + 后面的人 + 自己 = 总人数，答案是8。"}};
+const explanations = {"q1": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是11。"}, "q2": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是10。"}, "q3": {"ok": "选择正确！6 + 7 大🎉", "fix": "正确答案是：6 + 7 大"}, "q4": {"ok": "18！规律找得很准！🎉", "fix": "仔细观察数列的规律，下一个数是18。"}, "q5": {"ok": "选择正确！🍊 橘子🎉", "fix": "正确答案是：🍊 橘子"}, "q6": {"ok": "选择正确！小红最高🎉", "fix": "正确答案是：小红最高"}, "q7": {"ok": "括号里填6，完全正确！🎉", "fix": "用逆运算：12 + ( ? ) = 18，括号里应该填几？，答案是6。"}, "q8": {"ok": "选择正确！🎉", "fix": "正确答案是："}, "q9": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是10。"}, "q10": {"ok": "6，从左到右计算正确！🎉", "fix": "从左到右一步步算，答案是6。"}, "q11": {"ok": "选择正确！🎉", "fix": "正确答案是："}, "q12": {"ok": "8人，排队问题理解到位！🎉", "fix": "前面的人 + 后面的人 + 自己 = 总人数，答案是8。"}};
 
 function getInputValue(qId) {
   const input = document.getElementById(qId);
