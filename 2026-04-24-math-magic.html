@@ -3,920 +3,566 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏰 数学魔法城堡 - 2026年4月24日</title>
+<title>🏰 魔法城堡大冒险 — 数学魔法任务</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  :root {
-    --primary: #7c3aed;
-    --primary-light: #a78bfa;
-    --gold: #f59e0b;
-    --gold-light: #fbbf24;
-    --success: #10b981;
-    --success-bg: #d1fae5;
-    --error: #f97316;
-    --error-bg: #ffedd5;
-    --bg: #faf5ff;
-    --card-bg: #ffffff;
-    --text: #1e1b4b;
-    --text-light: #6b7280;
-  }
-
   body {
-    font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(180deg, #2d1b69 0%, #5b2c8e 20%, #7c3aed 40%, #a78bfa 60%, #c4b5fd 80%, #ddd6fe 100%);
     min-height: 100vh;
-    overflow-x: hidden;
+    padding: 24px 24px 60px;
+    color: #1a3a5c;
   }
 
-  /* Floating stars background */
-  .stars-container {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
+  .container { max-width: 960px; margin: 0 auto; }
+
+  /* 顶部计分板 */
+  .scoreboard {
+    position: sticky; top: 12px; z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 14px 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0,60,120,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
   }
-  .star {
-    position: absolute;
-    animation: twinkle 2s ease-in-out infinite alternate;
+  .scoreboard .score {
     font-size: 20px;
-    opacity: 0.3;
+    font-weight: 900;
+    color: #0d47a1;
   }
-  @keyframes twinkle {
-    0% { opacity: 0.2; transform: scale(0.8) rotate(0deg); }
-    100% { opacity: 0.6; transform: scale(1.2) rotate(20deg); }
-  }
+  .scoreboard .score .correct { color: #2e7d32; }
+  .scoreboard .score .wrong { color: #c62828; }
+  .scoreboard .status { font-size: 14px; color: #555; }
 
-  .wrapper {
-    position: relative;
-    z-index: 1;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 16px;
-  }
-
-  /* Header */
   .header {
     text-align: center;
-    padding: 20px 16px;
-    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%);
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
     border-radius: 24px;
-    margin-bottom: 16px;
-    color: white;
-    box-shadow: 0 8px 32px rgba(124, 58, 237, 0.3);
-    position: relative;
-    overflow: hidden;
+    padding: 28px 18px 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 30px rgba(124,58,237,0.35);
   }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-    animation: shimmer 4s ease-in-out infinite;
-  }
-  @keyframes shimmer {
-    0%, 100% { transform: translate(-30%, -30%); }
-    50% { transform: translate(30%, 30%); }
-  }
-  .header h1 { font-size: 28px; margin-bottom: 4px; position: relative; }
-  .header .date { font-size: 14px; opacity: 0.9; position: relative; }
-  .header .week-plan {
-    display: inline-block;
-    margin-top: 8px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 12px;
-    padding: 6px 16px;
-    font-size: 13px;
-    position: relative;
-  }
+  .header h1 { font-size: 28px; font-weight: 900; color: #fff; text-shadow: 2px 2px 6px rgba(0,0,0,0.2); margin-top: 20px; }
+  .header .subtitle { font-size: 15px; color: #ede9fe; margin-top: 8px; line-height: 1.6; }
+  .header .date-badge { display: inline-block; background: rgba(255,255,255,0.25); border-radius: 20px; padding: 4px 16px; font-size: 13px; color: #fff; margin-top: 10px; }
 
-  /* Scoreboard */
-  .scoreboard {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    background: var(--card-bg);
-    border-radius: 16px;
-    padding: 12px 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    font-size: 18px;
-    flex-wrap: wrap;
-  }
-  .scoreboard .score { font-size: 24px; font-weight: bold; color: var(--primary); }
-  .scoreboard .progress-bar {
-    width: 120px; height: 10px;
-    background: #e5e7eb;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-  .scoreboard .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary), var(--gold));
-    border-radius: 5px;
-    transition: width 0.5s ease;
-    width: 0%;
-  }
-
-  /* Sections */
-  .section {
-    background: var(--card-bg);
+  .card {
+    background: rgba(255,255,255,0.95);
     border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    border: 2px solid transparent;
-    transition: border-color 0.3s;
+    padding: 22px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 18px rgba(0,60,120,0.15);
   }
-  .section-title {
-    font-size: 22px;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .section-title .icon { font-size: 28px; }
+  .card h2 { font-size: 20px; font-weight: 900; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .card h2 .icon { font-size: 26px; }
 
-  /* Warm-up */
-  .warmup-area {
-    text-align: center;
-    padding: 20px;
-    background: linear-gradient(135deg, #ede9fe, #fae8ff);
-    border-radius: 16px;
-    min-height: 180px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-  }
-  .warmup-area .instruction {
-    font-size: 18px;
-    line-height: 1.6;
-    color: var(--text);
-  }
-  .warmup-btn {
-    background: linear-gradient(135deg, var(--primary), #a855f7);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 14px 36px;
-    font-size: 18px;
-    cursor: pointer;
-    min-width: 44px;
-    min-height: 44px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
-  }
-  .warmup-btn:active { transform: scale(0.95); }
-  .warmup-emoji {
-    font-size: 64px;
-    animation: bounce 0.6s ease infinite alternate;
-  }
-  @keyframes bounce {
-    from { transform: translateY(0); }
-    to { transform: translateY(-15px); }
-  }
-  .warmup-countdown {
-    font-size: 48px;
-    font-weight: bold;
-    color: var(--primary);
-    animation: pulse 0.5s ease;
-  }
-  @keyframes pulse {
-    0% { transform: scale(1.5); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-  }
+  .warmup-card { background: linear-gradient(135deg, #fff9e6, #fff3cc); border: 3px solid #ffc107; }
+  .warmup-card h2 { color: #e65100; }
+  .warmup-step { background: rgba(255,255,255,0.8); border-radius: 14px; padding: 14px; margin-bottom: 12px; border-left: 4px solid #ff9800; }
+  .warmup-step .step-title { font-size: 16px; font-weight: 700; color: #e65100; margin-bottom: 6px; }
+  .warmup-step .step-content { font-size: 15px; color: #4a3520; line-height: 1.8; }
 
-  /* Core problems */
-  .problems-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  .problem-card {
-    background: linear-gradient(135deg, #f5f3ff, #faf5ff);
-    border: 2px solid #e9d5ff;
-    border-radius: 16px;
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transition: all 0.3s;
-    flex-wrap: wrap;
-  }
-  .problem-card.correct {
-    border-color: var(--success);
-    background: var(--success-bg);
-  }
-  .problem-card.wrong {
-    border-color: var(--error);
-    background: var(--error-bg);
-  }
-  .problem-number {
-    width: 32px; height: 32px;
-    background: var(--primary);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 14px;
-    flex-shrink: 0;
-  }
-  .problem-text {
-    font-size: 22px;
-    font-weight: bold;
-    flex: 1;
-    min-width: 120px;
-  }
-  .problem-input {
-    width: 80px;
-    height: 48px;
-    border: 2px solid #d1d5db;
-    border-radius: 12px;
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-    outline: none;
-    transition: all 0.3s;
-    min-width: 44px;
-  }
-  .problem-input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
-  }
-  .problem-input.correct {
-    border-color: var(--success);
-    background: #ecfdf5;
-    color: var(--success);
-  }
-  .problem-input.wrong {
-    border-color: var(--error);
-    background: #fff7ed;
-    color: var(--error);
-  }
-  .problem-feedback {
-    font-size: 16px;
-    min-width: 80px;
-    text-align: center;
-    font-weight: bold;
-  }
-  .problem-feedback.correct { color: var(--success); }
-  .problem-feedback.wrong { color: var(--error); }
-  .correct-answer {
-    font-size: 14px;
-    color: var(--text-light);
-    margin-top: 4px;
-  }
-
-  /* Challenge section */
-  .challenge-area {
-    text-align: center;
-    padding: 20px;
-    background: linear-gradient(135deg, #fef3c7, #fde68a);
-    border-radius: 16px;
-  }
-  .challenge-question {
-    font-size: 20px;
-    margin-bottom: 16px;
-    line-height: 1.6;
-  }
-  .challenge-options {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  .challenge-option {
-    background: white;
-    border: 2px solid #fbbf24;
-    border-radius: 16px;
-    padding: 14px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    min-height: 44px;
-    transition: all 0.2s;
-  }
-  .challenge-option:hover { transform: scale(1.05); }
-  .challenge-option:active { transform: scale(0.95); }
-  .challenge-option.selected-correct {
-    background: var(--success-bg);
-    border-color: var(--success);
-    color: var(--success);
-  }
-  .challenge-option.selected-wrong {
-    background: var(--error-bg);
-    border-color: var(--error);
-    color: var(--error);
-  }
-  .challenge-option:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
-
-  /* Achievement */
-  .achievement-area {
-    text-align: center;
-    padding: 24px;
-    border-radius: 20px;
-    display: none;
-  }
-  .achievement-area.show { display: block; }
-  .achievement-area.perfect {
-    background: linear-gradient(135deg, #fef3c7, #fde68a, #fbbf24);
-  }
-  .achievement-area.good {
-    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-  }
-  .achievement-area.try-again {
+  /* 题目卡片 */
+  .quest-card {
     background: linear-gradient(135deg, #ede9fe, #ddd6fe);
-  }
-  .achievement-badge {
-    font-size: 72px;
-    margin-bottom: 12px;
-    animation: badgePop 0.6s ease;
-  }
-  @keyframes badgePop {
-    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
-    60% { transform: scale(1.3) rotate(10deg); }
-    100% { transform: scale(1) rotate(0deg); opacity: 1; }
-  }
-  .achievement-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 8px;
-  }
-  .achievement-desc {
-    font-size: 16px;
-    color: var(--text-light);
+    border-radius: 18px;
+    padding: 18px 16px;
     margin-bottom: 16px;
+    border-left: 5px solid #7c3aed;
+    transition: border-color 0.3s, background 0.3s;
   }
+  .quest-card.correct { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-left-color: #43a047; }
+  .quest-card.wrong { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-left-color: #f57c00; }
+
+  .quest-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .quest-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #7c3aed; color: #fff; width: 36px; height: 36px;
+    border-radius: 50%; font-size: 16px; font-weight: 900; flex-shrink: 0;
+  }
+  .quest-card.correct .quest-num { background: #43a047; }
+  .quest-card.wrong .quest-num { background: #f57c00; }
+
+  .quest-scene { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 12px; padding-left: 46px; }
+
+  .quest-row {
+    display: flex; align-items: center; gap: 12px; padding-left: 46px; flex-wrap: wrap;
+  }
+  .quest-math { font-size: 24px; font-weight: 900; color: #4a148c; letter-spacing: 3px; }
+  .quest-card.correct .quest-math { color: #1b5e20; }
+  .quest-card.wrong .quest-math { color: #e65100; }
+
+  .answer-input {
+    width: 80px; height: 48px;
+    border: 3px solid #c4b5fd; border-radius: 12px;
+    font-size: 22px; font-weight: 700; text-align: center;
+    color: #4a148c; background: rgba(255,255,255,0.8);
+    outline: none; transition: border-color 0.3s, background 0.3s;
+    -webkit-appearance: none; appearance: none;
+  }
+  .answer-input:focus { border-color: #7c3aed; background: #fff; }
+  .answer-input.correct-input { border-color: #43a047; background: #e8f5e9; color: #2e7d32; }
+  .answer-input.wrong-input { border-color: #f57c00; background: #fff3e0; color: #e65100; }
+
+  .feedback {
+    display: none; margin-top: 10px; padding-left: 46px;
+    font-size: 15px; font-weight: 600; line-height: 1.6;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct-fb { color: #2e7d32; }
+  .feedback.wrong-fb { color: #e65100; }
+
+  /* 提交按钮 */
+  .submit-area { text-align: center; margin: 32px 0; }
+  .submit-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
+    color: #fff; border: none; border-radius: 20px;
+    padding: 16px 48px; font-size: 22px; font-weight: 900;
+    cursor: pointer; box-shadow: 0 6px 20px rgba(124,58,237,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-width: 200px; justify-content: center;
+  }
+  .submit-btn:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(124,58,237,0.4); }
+  .submit-btn:active { transform: scale(0.97); }
+
   .retry-btn {
-    background: linear-gradient(135deg, #f59e0b, #f97316);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 14px 36px;
-    font-size: 18px;
-    cursor: pointer;
-    min-width: 44px;
-    min-height: 44px;
-    box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+    display: none; margin-top: 14px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff; border: none; border-radius: 16px;
+    padding: 12px 36px; font-size: 18px; font-weight: 700;
+    cursor: pointer; box-shadow: 0 4px 15px rgba(99,102,241,0.3);
     transition: transform 0.2s;
   }
-  .retry-btn:active { transform: scale(0.95); }
+  .retry-btn:hover { transform: scale(1.05); }
 
-  /* Confetti */
-  .confetti-container {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 100;
-    overflow: hidden;
+  /* 成就 */
+  .achievement-card {
+    background: linear-gradient(135deg, #fff8e1, #ffecb3);
+    border: 3px solid #ffc107; text-align: center; padding: 26px 18px;
   }
+  .medal { font-size: 64px; display: block; margin-bottom: 10px; animation: bounce 2s infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .achievement-card h2 { color: #e65100; justify-content: center; font-size: 22px; }
+  .achievement-card .cheer { font-size: 17px; color: #bf360c; line-height: 2; margin-top: 10px; }
+  .stars-row { font-size: 32px; letter-spacing: 8px; margin-top: 12px; }
+
+  .tip { background: #ede9fe; border-radius: 14px; padding: 12px 14px; margin-top: 12px; font-size: 14px; color: #5b21b6; line-height: 1.7; border-left: 4px solid #8b5cf6; }
+  .intro-text { font-size: 16px; color: #333; line-height: 2; margin-bottom: 10px; }
+  .divider { text-align: center; margin: 24px 0; font-size: 24px; letter-spacing: 12px; opacity: 0.6; }
+
+  /* 庆祝动画 */
+  .confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; }
   .confetti {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-    animation: confettiFall linear forwards;
+    position: absolute; width: 10px; height: 10px;
+    top: -10px; opacity: 0;
+    animation: confetti-fall 3s ease-out forwards;
   }
-  @keyframes confettiFall {
-    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  @keyframes confetti-fall {
+    0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+    100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
   }
 
-  /* Responsive */
-  @media (max-width: 599px) {
-    .wrapper { padding: 10px; }
+  /* 响应式 */
+  @media (max-width: 600px) {
+    body { padding: 12px 8px 40px; }
+    .container { max-width: 100%; }
+    .header { padding: 22px 14px 16px; }
     .header h1 { font-size: 22px; }
-    .section { padding: 14px; border-radius: 16px; }
-    .problem-text { font-size: 20px; }
-    .problem-input { width: 70px; height: 44px; font-size: 20px; }
-    .challenge-options { grid-template-columns: repeat(2, 1fr); }
-    .section-title { font-size: 18px; }
-    .warmup-emoji { font-size: 48px; }
-    .achievement-badge { font-size: 56px; }
+    .card { padding: 16px 12px; }
+    .quest-row { padding-left: 0; }
+    .quest-scene { padding-left: 0; }
+    .feedback { padding-left: 0; }
+    .quest-math { font-size: 20px; }
+    .answer-input { width: 70px; height: 44px; font-size: 20px; }
+    .submit-btn { padding: 14px 36px; font-size: 18px; }
   }
-  @media (min-width: 600px) and (max-width: 1023px) {
-    .wrapper { max-width: 720px; }
-    .problems-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (min-width: 1024px) {
-    .wrapper { max-width: 1000px; padding: 24px; }
-    .problems-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  /* Section transitions */
-  .section.completed {
-    border-color: var(--gold);
-  }
-
-  /* Hidden utility */
-  .hidden { display: none !important; }
+  @media (min-width: 601px) and (max-width: 1024px) { .container { max-width: 760px; } }
+  @media (min-width: 1025px) { .container { max-width: 860px; } }
 </style>
 </head>
 <body>
+<div class="container">
 
-<div class="stars-container" id="starsContainer"></div>
-
-<div class="wrapper">
-  <!-- Header -->
-  <div class="header">
-    <h1>🏰 数学魔法城堡 🏰</h1>
-    <div class="date">📅 2026年4月24日 · 星期五</div>
-    <div class="week-plan">📚 第12周：10-20不进位加减法 · 第5天（周五）</div>
-  </div>
-
-  <!-- Scoreboard -->
+  <!-- 计分板 -->
   <div class="scoreboard" id="scoreboard">
-    <span>⭐ 得分：</span>
-    <span class="score" id="scoreDisplay">0 / 0</span>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
+    <div class="score">
+      <span class="correct" id="correctCount">0</span> / <span id="totalCount">11</span> 正确
     </div>
-    <span id="progressText">0%</span>
+    <div class="status" id="scoreStatus">🏰 开始魔法城堡大冒险吧！加油 💪</div>
   </div>
 
-  <!-- Section 1: Warm-up -->
-  <div class="section" id="warmupSection">
-    <div class="section-title">
-      <span class="icon">🔥</span>
-      <span>热身小游戏：魔法数字蹦蹦跳</span>
+  <!-- 标题 -->
+  <div class="header">
+    <h1>🏰 魔法城堡大冒险 🏰</h1>
+    <div class="subtitle">帮小魔法师米娅找到魔法书！每道数学题都是一把钥匙 🔑<br>填完每道题会自动检查，也可以点提交按钮统一检查！</div>
+    <div class="date-badge">📅 2026年4月24日 · 星期五</div>
+  </div>
+
+  <!-- 热身 -->
+  <div class="card warmup-card">
+    <h2><span class="icon">🔥</span> 热身小游戏：魔法城堡热身操</h2>
+    <div class="intro-text">👋 小宝贝，准备好了吗？我们一起活动活动身体！</div>
+    <div class="warmup-step">
+      <div class="step-title">🫧 倒数热身</div>
+      <div class="step-content">从 <b>20</b> 倒数到 <b>1</b>，每数一个数就拍一下手 👏</div>
     </div>
-    <div class="warmup-area" id="warmupArea">
-      <div class="warmup-emoji">🏰</div>
-      <div class="instruction">
-        🧙‍♂️ 小魔法师！城堡大门需要你的能量！<br>
-        站起来，跟着数字做动作吧！
+    <div class="warmup-step">
+      <div class="step-title">🏰 数字游戏</div>
+      <div class="step-content">家长说数字，孩子用手比出来："🏰说——<b>13</b>！"</div>
+    </div>
+  </div>
+
+  <div class="divider">🏰🔮🗝️👑🧙</div>
+
+  <!-- 核心任务 -->
+  <div class="card">
+    <h2><span class="icon">⭐</span> 核心任务：帮小魔法师米娅找魔法书钥匙</h2>
+    <div class="intro-text">🧙 <b>小魔法师米娅</b>听说藏着一本魔法书 📖<br>通往宝藏的路上有 <b>10 道门</b>，在输入框里写上答案，答对就能打开宝藏！</div>
+
+    <!-- Q1 -->
+    <div class="quest-card" id="q1-card">
+      <div class="quest-header"><span class="quest-num">1</span><span style="font-weight:700;">🚪 第一道门——卫星发射场</span></div>
+      <div class="quest-scene">空间站里有 6 朵太空珊瑚，消耗了 2 朵，还剩几朵？</div>
+      <div class="quest-row">
+        <span class="quest-math">6 － 2 ＝</span>
+        <input type="number" class="answer-input" id="q1" data-answer="4" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
-      <button class="warmup-btn" id="warmupBtn" onclick="startWarmup()">✨ 开始魔法热身！</button>
+      <div class="feedback" id="q1-fb"></div>
     </div>
+
+    <!-- Q2 -->
+    <div class="quest-card" id="q2-card">
+      <div class="quest-header"><span class="quest-num">2</span><span style="font-weight:700;">🚪 第二道门——外星生物馆</span></div>
+      <div class="quest-scene">宇航员收集了 3 只星星虫，又找到 5 只，一共几只？</div>
+      <div class="quest-row">
+        <span class="quest-math">3 ＋ 5 ＝</span>
+        <input type="number" class="answer-input" id="q2" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q2-fb"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quest-card" id="q3-card">
+      <div class="quest-header"><span class="quest-num">3</span><span style="font-weight:700;">🚪 第三道门——彗星研究中心</span></div>
+      <div class="quest-scene">月球基地有 3 颗太空种子，地球又送来 6 颗，现在有几颗？</div>
+      <div class="quest-row">
+        <span class="quest-math">3 ＋ 6 ＝</span>
+        <input type="number" class="answer-input" id="q3" data-answer="9" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q3-fb"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quest-card" id="q4-card">
+      <div class="quest-header"><span class="quest-num">4</span><span style="font-weight:700;">🚪 第四道门——太空植物园</span></div>
+      <div class="quest-scene">空间站里有 1 颗太空种子，又运来 7 颗，现在有几颗？</div>
+      <div class="quest-row">
+        <span class="quest-math">1 ＋ 7 ＝</span>
+        <input type="number" class="answer-input" id="q4" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q4-fb"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quest-card" id="q5-card">
+      <div class="quest-header"><span class="quest-num">5</span><span style="font-weight:700;">🚪 第五道门——宇航训练中心</span></div>
+      <div class="quest-scene">宇航员收集了 3 块月光石，又找到 6 块，一共几块？</div>
+      <div class="quest-row">
+        <span class="quest-math">3 ＋ 6 ＝</span>
+        <input type="number" class="answer-input" id="q5" data-answer="9" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q5-fb"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quest-card" id="q6-card">
+      <div class="quest-header"><span class="quest-num">6</span><span style="font-weight:700;">🚪 第六道门——太阳能电站</span></div>
+      <div class="quest-scene">太空温室里种了 4 朵太空珊瑚，又种了 2 朵，现在有几朵？</div>
+      <div class="quest-row">
+        <span class="quest-math">4 ＋ 2 ＝</span>
+        <input type="number" class="answer-input" id="q6" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q6-fb"></div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quest-card" id="q7-card">
+      <div class="quest-header"><span class="quest-num">7</span><span style="font-weight:700;">🚪 第七道门——太空博物馆</span></div>
+      <div class="quest-scene">空间站里有 4 株彗星草，消耗了 2 株，还剩几株？</div>
+      <div class="quest-row">
+        <span class="quest-math">4 － 2 ＝</span>
+        <input type="number" class="answer-input" id="q7" data-answer="2" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q7-fb"></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="quest-card" id="q8-card">
+      <div class="quest-header"><span class="quest-num">8</span><span style="font-weight:700;">🚪 第八道门——星际导航塔</span></div>
+      <div class="quest-scene">太空温室里有 7 朵太空珊瑚，送给外星人 1 朵，还剩几朵？</div>
+      <div class="quest-row">
+        <span class="quest-math">7 － 1 ＝</span>
+        <input type="number" class="answer-input" id="q8" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q8-fb"></div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="quest-card" id="q9-card">
+      <div class="quest-header"><span class="quest-num">9</span><span style="font-weight:700;">🚪 第九道门——太阳能电站</span></div>
+      <div class="quest-scene">太空温室里有 9 朵太空花，送给外星人 1 朵，还剩几朵？</div>
+      <div class="quest-row">
+        <span class="quest-math">9 － 1 ＝</span>
+        <input type="number" class="answer-input" id="q9" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q9-fb"></div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="quest-card" id="q10-card">
+      <div class="quest-header"><span class="quest-num">10</span><span style="font-weight:700;">🚪 最后一道门——宝藏大门 🏆</span></div>
+      <div class="quest-scene">大门上有两把锁，都要解开！</div>
+      <div class="quest-row">
+        <span class="quest-math">🔒 第一把锁：10 － 8 ＝</span>
+        <input type="number" class="answer-input" id="q10a" data-answer="2" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="quest-row" style="margin-top:8px;">
+        <span class="quest-math">🔒 第二把锁：6 ＋ 4 ＝</span>
+        <input type="number" class="answer-input" id="q10b" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q10-fb"></div>
+    </div>
+
+    <div class="tip">💡 <b>提示：</b>如果算不出来，可以用手指头或小糖果帮忙哦！每道题填完会自动检查。</div>
   </div>
 
-  <!-- Section 2: Core Problems -->
-  <div class="section" id="coreSection">
-    <div class="section-title">
-      <span class="icon">⭐</span>
-      <span>核心任务：解开城堡的数学咒语</span>
-    </div>
-    <p style="margin-bottom:14px; color:var(--text-light); font-size:15px;">
-      🧙‍♂️ 每解开一道题，城堡就会亮起一盏魔法灯哦！填完答案按 <kbd style="background:#e5e7eb;padding:2px 8px;border-radius:4px;font-size:13px;">回车</kbd> 或点其他地方自动检查。
-    </p>
-    <div class="problems-grid" id="problemsGrid"></div>
+  <!-- 提交按钮 -->
+  <div class="submit-area">
+    <button class="submit-btn" id="submitBtn" onclick="checkAnswers()">🔑 提交全部答案</button>
+    <br>
+    <button class="retry-btn" id="retryBtn" onclick="retry()">🔄 再试一次</button>
   </div>
 
-  <!-- Section 3: Challenge -->
-  <div class="section" id="challengeSection">
-    <div class="section-title">
-      <span class="icon">🎮</span>
-      <span>互动挑战：魔法城堡大冒险</span>
-    </div>
-    <div class="challenge-area" id="challengeArea"></div>
+  <div class="divider">🏆🏆🏆</div>
+
+  <!-- 成就 -->
+  <div class="card achievement-card" id="achievement" style="display:none;">
+    <span class="medal" id="medal">🏆</span>
+    <h2 id="achieveTitle">🎉 恭喜！🎉</h2>
+    <div class="cheer" id="achieveText"></div>
+    <div class="stars-row" id="starsRow"></div>
   </div>
 
-  <!-- Section 4: Achievement -->
-  <div class="section achievement-area" id="achievementArea">
-    <div class="achievement-badge" id="achievementBadge"></div>
-    <div class="achievement-title" id="achievementTitle"></div>
-    <div class="achievement-desc" id="achievementDesc"></div>
-    <button class="retry-btn" onclick="retryAll()">🔄 再试一次</button>
+  <div class="footer" style="text-align:center;font-size:13px;color:rgba(255,255,255,0.7);padding:16px 0;">
+    🏰 数学魔法师 · 魔法城堡篇 · 第 2 期 🏰
   </div>
+
 </div>
 
-<!-- Confetti container -->
-<div class="confetti-container" id="confettiContainer"></div>
-
 <script>
-// ============ Audio Context ============
-let audioCtx = null;
-function getAudioCtx() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  return audioCtx;
-}
+const totalQuestions = 11;
 
-function playSound(freqs, type = 'sine', duration = 0.15) {
-  try {
-    const ctx = getAudioCtx();
-    freqs.forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = type;
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.3, ctx.currentTime + i * duration);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * duration + duration * 0.9);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime + i * duration);
-      osc.stop(ctx.currentTime + i * duration + duration);
-    });
-  } catch(e) {}
-}
-
-function playCorrectSound() {
-  playSound([523.25, 659.25, 783.99], 'sine', 0.12);
-}
-
-function playWrongSound() {
-  playSound([392, 349.23], 'triangle', 0.2);
-}
-
-function playCelebrationSound() {
-  playSound([523.25, 587.33, 659.25, 783.99, 880, 1046.5], 'sine', 0.15);
-}
-
-// ============ Stars Background ============
-function createStars() {
-  const container = document.getElementById('starsContainer');
-  const emojis = ['⭐', '✨', '🌟', '💫', '🔮'];
-  for (let i = 0; i < 15; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    star.style.left = Math.random() * 100 + '%';
-    star.style.top = Math.random() * 100 + '%';
-    star.style.animationDelay = Math.random() * 3 + 's';
-    star.style.animationDuration = (2 + Math.random() * 2) + 's';
-    star.style.fontSize = (14 + Math.random() * 16) + 'px';
-    container.appendChild(star);
+// 单题即时检查
+function checkSingle(input) {
+  const val = input.value.trim();
+  if (val === '') {
+    // 清空时恢复默认状态
+    input.className = 'answer-input';
+    const card = input.closest('.quest-card');
+    if (card) card.className = 'quest-card';
+    return;
   }
-}
-createStars();
+  const answer = parseInt(input.dataset.answer);
+  const userAnswer = parseInt(val);
+  if (isNaN(userAnswer)) return;
 
-// ============ State ============
-let score = 0;
-let totalAnswered = 0;
-let totalProblems = 0;
-let challengeAnswered = 0;
-let challengeTotal = 0;
-let coreAnswered = 0;
-let coreCorrect = 0;
-let challengeCorrect = 0;
+  const card = input.closest('.quest-card');
 
-function updateScoreboard() {
-  const total = totalProblems + challengeTotal;
-  const answered = coreAnswered + challengeAnswered;
-  const correct = coreCorrect + challengeCorrect;
-  document.getElementById('scoreDisplay').textContent = correct + ' / ' + answered;
-  const pct = answered > 0 ? Math.round(correct / answered * 100) : 0;
-  document.getElementById('progressFill').style.width = (answered > 0 ? (answered / total * 100) : 0) + '%';
-  document.getElementById('progressText').textContent = pct + '%';
-
-  // Check if all done
-  if (answered === total && total > 0) {
-    showAchievement();
-  }
-}
-
-// ============ Core Problems ============
-const problems = [
-  // 10以内加减法（复习巩固）- 2题
-  { text: '3 + 4 = ?', answer: 7, type: 'core', hint: '🍎 你有3个苹果，又拿到4个，一共有几个？' },
-  { text: '9 - 5 = ?', answer: 4, type: 'core', hint: '🐦 树上有9只小鸟，飞走了5只，还剩几只？' },
-
-  // 10-20不进位加法 - 3题
-  { text: '12 + 3 = ?', answer: 15, type: 'core', hint: '🏰 城堡里有12面旗子，又挂上3面，共几面？' },
-  { text: '14 + 2 = ?', answer: 16, type: 'core', hint: '📖 书架上14本书，又放上去2本，共几本？' },
-  { text: '11 + 5 = ?', answer: 16, type: 'core', hint: '🌸 花园里有11朵花，又开了5朵，共几朵？' },
-
-  // 10-20不退位减法 - 3题
-  { text: '17 - 4 = ?', answer: 13, type: 'core', hint: '🧙‍♂️ 城堡有17个魔法师，4个出去了，剩几个？' },
-  { text: '16 - 3 = ?', answer: 13, type: 'core', hint: '💎 宝箱里16颗宝石，拿出3颗，剩几颗？' },
-  { text: '18 - 6 = ?', answer: 12, type: 'core', hint: '🕯️ 城堡18根蜡烛，吹灭6根，还有几根亮着？' },
-
-  // 10以内加减法（熟练）- 2题
-  { text: '6 + 2 = ?', answer: 8, type: 'core', hint: '🐉 6条小龙又来了2条，一共几条？' },
-  { text: '10 - 3 = ?', answer: 7, type: 'core', hint: '🗝️ 城堡有10把钥匙，用了3把，还剩几把？' },
-];
-
-totalProblems = problems.length;
-
-function renderProblems() {
-  const grid = document.getElementById('problemsGrid');
-  grid.innerHTML = '';
-  problems.forEach((p, i) => {
-    const card = document.createElement('div');
-    card.className = 'problem-card';
-    card.id = 'card-' + i;
-    card.innerHTML = `
-      <div class="problem-number">${i + 1}</div>
-      <div>
-        <div class="problem-text">${p.text}</div>
-        <div style="font-size:13px;color:var(--text-light);margin-top:4px;">${p.hint}</div>
-      </div>
-      <input class="problem-input" id="input-${i}" type="number" inputmode="numeric"
-             onkeydown="handleEnter(event, ${i})" onblur="checkAnswer(${i})"
-             aria-label="第${i+1}题答案" autocomplete="off">
-      <div class="problem-feedback" id="feedback-${i}"></div>
-    `;
-    grid.appendChild(card);
-  });
-}
-
-function handleEnter(event, index) {
-  if (event.key === 'Enter') {
-    event.target.blur();
-  }
-}
-
-function checkAnswer(index) {
-  const input = document.getElementById('input-' + index);
-  const feedback = document.getElementById('feedback-' + index);
-  const card = document.getElementById('card-' + index);
-  const val = parseInt(input.value);
-
-  if (input.dataset.checked) return; // already checked
-
-  if (isNaN(val) || input.value.trim() === '') return; // skip empty
-
-  input.dataset.checked = 'true';
-  totalAnswered++;
-  coreAnswered++;
-
-  if (val === problems[index].answer) {
-    input.classList.add('correct');
-    card.classList.add('correct');
-    feedback.classList.add('correct');
-    feedback.innerHTML = '✅ 太棒了！';
-    coreCorrect++;
-    playCorrectSound();
+  if (userAnswer === answer) {
+    input.className = 'answer-input correct-input';
+    if (card) card.className = 'quest-card correct';
+    // Show brief feedback
+    const fb = card ? card.querySelector('.feedback') : null;
+    if (fb) {
+      fb.className = 'feedback show correct-fb';
+      fb.textContent = '✅ 答对了！太棒了！🌟';
+    }
   } else {
-    input.classList.add('wrong');
-    card.classList.add('wrong');
-    feedback.classList.add('wrong');
-    feedback.innerHTML = `❌ 正确答案是 ${problems[index].answer}`;
-    playWrongSound();
+    input.className = 'answer-input wrong-input';
+    if (card) card.className = 'quest-card wrong';
+    const fb = card ? card.querySelector('.feedback') : null;
+    if (fb) {
+      fb.className = 'feedback show wrong-fb';
+      fb.textContent = '❌ 不对哦，再想想！正确答案是 ' + answer + '。';
+    }
   }
 
-  input.disabled = true;
+  // Update scoreboard live
   updateScoreboard();
 }
 
-renderProblems();
-
-// ============ Warm-up Game ============
-const warmupActions = [
-  { emoji: '🏃', text: '原地跳 3 下！' },
-  { emoji: '🙆', text: '双手举高，比一个大大的 10！' },
-  { emoji: '🦩', text: '单脚站立，数到 5！' },
-  { emoji: '🤸', text: '转个圈，大声喊出 7 + 2 = ？（答案是9！）' },
-  { emoji: '👏', text: '拍 8 下手！' },
-];
-
-let warmupIndex = 0;
-
-function startWarmup() {
-  warmupIndex = 0;
-  showWarmupStep();
-}
-
-function showWarmupStep() {
-  const area = document.getElementById('warmupArea');
-  if (warmupIndex >= warmupActions.length) {
-    area.innerHTML = `
-      <div class="warmup-emoji">🎉</div>
-      <div class="instruction">
-        🧙‍♂️ 热身完成！你的魔法能量充满啦！<br>
-        准备好解开城堡咒语了吗？
-      </div>
-    `;
-    playCelebrationSound();
-    document.getElementById('warmupSection').classList.add('completed');
-    return;
-  }
-
-  const action = warmupActions[warmupIndex];
-  area.innerHTML = `
-    <div class="warmup-emoji">${action.emoji}</div>
-    <div class="instruction" style="font-size:20px; font-weight:bold;">
-      ${action.text}
-    </div>
-    <div class="warmup-countdown" id="warmupCountdown">5</div>
-    <button class="warmup-btn" onclick="nextWarmupStep()">✅ 我做完啦！下一题</button>
-  `;
-
-  // Countdown
-  let count = 5;
-  const countdownEl = document.getElementById('warmupCountdown');
-  const timer = setInterval(() => {
-    count--;
-    if (count > 0) {
-      countdownEl.textContent = count;
-      countdownEl.style.animation = 'none';
-      void countdownEl.offsetWidth;
-      countdownEl.style.animation = 'pulse 0.5s ease';
-    } else {
-      clearInterval(timer);
-      countdownEl.textContent = '👍';
+function updateScoreboard() {
+  let correct = 0;
+  let answered = 0;
+  document.querySelectorAll('.answer-input').forEach(input => {
+    if (input.value.trim() !== '') {
+      answered++;
+      const answer = parseInt(input.dataset.answer);
+      const userAnswer = parseInt(input.value);
+      if (userAnswer === answer) correct++;
     }
-  }, 1000);
-}
-
-function nextWarmupStep() {
-  warmupIndex++;
-  showWarmupStep();
-}
-
-// ============ Challenge Section ============
-const challenges = [
-  {
-    question: '🏰 城堡里有 <b>12</b> 位魔法师，又来了 <b>5</b> 位。<br>现在一共有几位魔法师？',
-    options: ['15', '16', '17', '18'],
-    correct: 2
-  },
-  {
-    question: '🔮 魔法球里有 <b>18</b> 颗魔法石，用掉了 <b>4</b> 颗。<br>还剩几颗？',
-    options: ['12', '14', '13', '15'],
-    correct: 1
-  },
-  {
-    question: '🗝️ 城堡大门密码是：<br><b>10 + 6 - 3 = ?</b><br>密码是多少？',
-    options: ['11', '12', '13', '14'],
-    correct: 2
-  },
-  {
-    question: '🐉 小龙有 <b>11</b> 颗宝石，又找到 <b>4</b> 颗，送出去 <b>2</b> 颗。<br>现在有几颗？',
-    options: ['12', '13', '14', '15'],
-    correct: 1
+  });
+  document.getElementById('correctCount').textContent = correct;
+  const statusEl = document.getElementById('scoreStatus');
+  if (correct === totalQuestions) {
+    statusEl.textContent = '🎊 全部答对！太厉害了！';
+  } else if (answered > 0) {
+    statusEl.textContent = '已答 ' + answered + ' 题，对 ' + correct + ' 题';
   }
-];
-
-challengeTotal = challenges.length;
-let challengeIndex = 0;
-
-function renderChallenge() {
-  const area = document.getElementById('challengeArea');
-  if (challengeIndex >= challenges.length) {
-    area.innerHTML = `
-      <div style="font-size:48px;">🎊</div>
-      <div class="challenge-question">太厉害了！所有挑战都完成啦！</div>
-    `;
-    document.getElementById('challengeSection').classList.add('completed');
-    return;
-  }
-
-  const c = challenges[challengeIndex];
-  area.innerHTML = `
-    <div class="challenge-question">${c.question}</div>
-    <div class="challenge-options" id="challengeOptions">
-      ${c.options.map((opt, i) => `
-        <button class="challenge-option" onclick="checkChallenge(${i}, ${c.correct})" id="copt-${i}">
-          ${opt}
-        </button>
-      `).join('')}
-    </div>
-    <div id="challengeFeedback" style="margin-top:12px; font-size:16px; min-height:24px;"></div>
-  `;
 }
 
-function checkChallenge(selected, correct) {
-  if (challengeAnswered > challengeIndex) return; // already answered
+// 提交按钮统一检查
+function checkAnswers() {
+  let correct = 0;
+  const questions = [
+    { id: 'q1', card: 'q1-card', fb: 'q1-fb' },
+    { id: 'q2', card: 'q2-card', fb: 'q2-fb' },
+    { id: 'q3', card: 'q3-card', fb: 'q3-fb' },
+    { id: 'q4', card: 'q4-card', fb: 'q4-fb' },
+    { id: 'q5', card: 'q5-card', fb: 'q5-fb' },
+    { id: 'q6', card: 'q6-card', fb: 'q6-fb' },
+    { id: 'q7', card: 'q7-card', fb: 'q7-fb' },
+    { id: 'q8', card: 'q8-card', fb: 'q8-fb' },
+    { id: 'q9', card: 'q9-card', fb: 'q9-fb' },
+    { id: 'q10a', card: 'q10-card', fb: 'q10-fb', label: '第一把锁' },
+    { id: 'q10b', card: 'q10-card', fb: 'q10-fb', label: '第二把锁' },
+  ];
 
-  challengeAnswered++;
-  const feedback = document.getElementById('challengeFeedback');
+  const encouragements = [
+    '答对了！太棒了！🌟', '真聪明！🎉', '太厉害了！⭐', '好棒啊！👏',
+    '答对了！继续加油！💪', '正确！你是小天才！✨', '完美！🎊', '厉害！🏆',
+    '太对了！给你一个大大的赞！👍', '正确！门打开啦！🚪', '答对了！🌟'
+  ];
 
-  // Disable all buttons
-  const options = document.querySelectorAll('.challenge-option');
-  options.forEach((opt, i) => {
-    opt.disabled = true;
-    if (i === correct) opt.classList.add('selected-correct');
+  questions.forEach((q, i) => {
+    const input = document.getElementById(q.id);
+    const card = document.getElementById(q.card);
+    const fb = document.getElementById(q.fb);
+    const answer = parseInt(input.dataset.answer);
+    const userAnswer = parseInt(input.value);
+
+    if (userAnswer === answer) {
+      correct++;
+      input.className = 'answer-input correct-input';
+      card.className = 'quest-card correct';
+      fb.className = 'feedback show correct-fb';
+      fb.textContent = '✅ ' + encouragements[i];
+    } else {
+      input.className = 'answer-input wrong-input';
+      card.className = 'quest-card wrong';
+      fb.className = 'feedback show wrong-fb';
+      const label = q.label ? q.label + '：' : '';
+      fb.textContent = '❌ ' + label + '正确答案是 ' + answer + '，下次一定能答对！加油 💪';
+    }
   });
 
-  if (selected === correct) {
-    document.getElementById('copt-' + selected).classList.add('selected-correct');
-    feedback.innerHTML = '✅ 正确！你好厉害！🌟';
-    feedback.style.color = 'var(--success)';
-    challengeCorrect++;
-    playCorrectSound();
+  updateScoreboard();
+
+  // Show achievement
+  if (correct === totalQuestions) {
+    showAchievement('full', correct);
+  } else if (correct >= 8) {
+    showAchievement('great', correct);
+  } else if (correct >= 5) {
+    showAchievement('good', correct);
   } else {
-    document.getElementById('copt-' + selected).classList.add('selected-wrong');
-    feedback.innerHTML = `❌ 不对哦，正确答案是 ${challenges[challengeIndex].options[correct]}。下次一定行！`;
-    feedback.style.color = 'var(--error)';
-    playWrongSound();
+    showAchievement('try', correct);
   }
 
-  // Show next button
-  feedback.innerHTML += `<br><button class="warmup-btn" style="margin-top:12px;" onclick="nextChallenge()">
-    ${challengeIndex < challenges.length - 1 ? '➡️ 下一题' : '🏆 看成就'}
-  </button>`;
+  document.getElementById('submitBtn').style.display = 'none';
+  document.getElementById('retryBtn').style.display = 'inline-flex';
 }
 
-function nextChallenge() {
-  challengeIndex++;
-  renderChallenge();
-}
+function showAchievement(level, correct) {
+  const ach = document.getElementById('achievement');
+  ach.style.display = 'block';
 
-renderChallenge();
-
-// ============ Achievement ============
-function showAchievement() {
-  const area = document.getElementById('achievementArea');
-  const total = coreCorrect + challengeCorrect;
-  const totalAll = problems.length + challenges.length;
-  const badge = document.getElementById('achievementBadge');
-  const title = document.getElementById('achievementTitle');
-  const desc = document.getElementById('achievementDesc');
-
-  area.classList.add('show');
-
-  if (total === totalAll) {
-    area.className = 'section achievement-area show perfect';
-    badge.textContent = '🏆';
-    title.textContent = '🌟 数学魔法大师！全对！🌟';
-    desc.textContent = '恭喜你！城堡里所有的魔法灯都亮起啦！你是最棒的小魔法师！';
+  let medal, title, text, stars;
+  if (level === 'full') {
+    medal = '👑'; title = '🎊 完美！宝藏找到了！🎊';
+    text = '小魔法师米娅说："谢谢你帮我找到了魔法书！你是最棒的数学魔法师！"🧙📖';
+    stars = '⭐⭐⭐⭐⭐';
     launchConfetti();
-    playCelebrationSound();
-  } else if (total >= totalAll * 0.7) {
-    area.className = 'section achievement-area show good';
-    badge.textContent = '🥈';
-    title.textContent = '✨ 很棒的魔法师！';
-    desc.textContent = `你答对了 ${total} / ${totalAll} 题！城堡亮起了大部分魔法灯，继续加油哦！`;
+  } else if (level === 'great') {
+    medal = '🥇'; title = '🌟 太厉害了！🌟';
+    text = '答对了 ' + correct + ' 题！小魔法师米娅说："你太聪明了，马上就能找到宝藏了！"';
+    stars = '⭐⭐⭐⭐';
+  } else if (level === 'good') {
+    medal = '🥈'; title = '👍 做得不错！👍';
+    text = '答对了 ' + correct + ' 题！再试一次，你会更棒的！';
+    stars = '⭐⭐⭐';
   } else {
-    area.className = 'section achievement-area show try-again';
-    badge.textContent = '🪄';
-    title.textContent = '💪 继续练习吧！';
-    desc.textContent = `你答对了 ${total} / ${totalAll} 题。多练习就会越来越厉害！再试一次吧！`;
+    medal = '🥉'; title = '💪 继续加油！💪';
+    text = '答对了 ' + correct + ' 题，没关系，多练习就会越来越厉害的！';
+    stars = '⭐⭐';
   }
 
-  area.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.getElementById('medal').textContent = medal;
+  document.getElementById('achieveTitle').textContent = title;
+  document.getElementById('achieveText').innerHTML = text;
+  document.getElementById('starsRow').textContent = stars;
+
+  ach.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-// ============ Confetti ============
-function launchConfetti() {
-  const container = document.getElementById('confettiContainer');
-  const colors = ['#f59e0b', '#7c3aed', '#10b981', '#ef4444', '#3b82f6', '#ec4899', '#fbbf24'];
-
-  for (let i = 0; i < 80; i++) {
-    setTimeout(() => {
-      const confetti = document.createElement('div');
-      confetti.className = 'confetti';
-      confetti.style.left = Math.random() * 100 + '%';
-      confetti.style.top = '-10px';
-      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      confetti.style.width = (6 + Math.random() * 8) + 'px';
-      confetti.style.height = (6 + Math.random() * 8) + 'px';
-      confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-      confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
-      confetti.style.animationDelay = '0s';
-      container.appendChild(confetti);
-
-      setTimeout(() => confetti.remove(), 4000);
-    }, i * 30);
-  }
-}
-
-// ============ Retry ============
-function retryAll() {
-  score = 0;
-  totalAnswered = 0;
-  coreAnswered = 0;
-  coreCorrect = 0;
-  challengeAnswered = 0;
-  challengeCorrect = 0;
-  challengeIndex = 0;
-
-  // Reset scoreboard
-  document.getElementById('scoreDisplay').textContent = '0 / 0';
-  document.getElementById('progressFill').style.width = '0%';
-  document.getElementById('progressText').textContent = '0%';
-
-  // Reset achievement
-  const area = document.getElementById('achievementArea');
-  area.classList.remove('show');
-  area.className = 'section achievement-area';
-
-  // Reset sections
-  document.getElementById('warmupSection').classList.remove('completed');
-  document.getElementById('coreSection').classList.remove('completed');
-  document.getElementById('challengeSection').classList.remove('completed');
-
-  // Reset warmup
-  document.getElementById('warmupArea').innerHTML = `
-    <div class="warmup-emoji">🏰</div>
-    <div class="instruction">
-      🧙‍♂️ 小魔法师！城堡大门需要你的能量！<br>
-      站起来，跟着数字做动作吧！
-    </div>
-    <button class="warmup-btn" onclick="startWarmup()">✨ 开始魔法热身！</button>
-  `;
-
-  // Reset problems
-  renderProblems();
-
-  // Reset challenge
-  renderChallenge();
-
-  // Scroll to top
+function retry() {
+  document.querySelectorAll('.answer-input').forEach(input => {
+    input.value = '';
+    input.className = 'answer-input';
+  });
+  document.querySelectorAll('.quest-card').forEach(card => {
+    card.className = 'quest-card';
+  });
+  document.querySelectorAll('.feedback').forEach(fb => {
+    fb.className = 'feedback';
+    fb.textContent = '';
+  });
+  document.getElementById('correctCount').textContent = '0';
+  document.getElementById('scoreStatus').textContent = '🏰 重新挑战吧！加油 💪';
+  document.getElementById('achievement').style.display = 'none';
+  document.getElementById('submitBtn').style.display = 'inline-flex';
+  document.getElementById('retryBtn').style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function launchConfetti() {
+  const container = document.createElement('div');
+  container.className = 'confetti-container';
+  document.body.appendChild(container);
+  const colors = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff6bc6','#845ef7'];
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.animationDelay = Math.random() * 2 + 's';
+    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+    c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.width = (6 + Math.random() * 8) + 'px';
+    c.style.height = (6 + Math.random() * 8) + 'px';
+    container.appendChild(c);
+  }
+  setTimeout(() => container.remove(), 5000);
 }
 </script>
 </body>
