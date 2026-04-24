@@ -11,22 +11,19 @@
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
   .container {
     max-width: 800px;
-    width: 100%;
+    margin: 0 auto;
     background: rgba(255,255,255,0.95);
     border-radius: 24px;
-    padding: 40px 32px;
+    padding: 32px 24px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
   }
   h1 {
     text-align: center;
-    font-size: 32px;
-    margin-bottom: 8px;
+    font-size: 30px;
+    margin-bottom: 6px;
     background: linear-gradient(90deg, #667eea, #764ba2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -35,141 +32,190 @@
   .subtitle {
     text-align: center;
     color: #888;
-    font-size: 16px;
-    margin-bottom: 32px;
-  }
-  .week-group {
+    font-size: 15px;
     margin-bottom: 24px;
   }
-  .week-title {
+  .today-banner {
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    color: #fff;
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    text-align: center;
     font-size: 18px;
     font-weight: 700;
-    color: #555;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #eee;
   }
-  .day-link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  .today-banner a {
+    color: #fff;
+    text-decoration: underline;
+    margin: 0 8px;
+  }
+  .day-card {
     padding: 14px 18px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     background: #f8f9fa;
-    border-radius: 12px;
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
+    border-radius: 14px;
     transition: all 0.2s;
   }
-  .day-link:hover {
+  .day-card:hover {
     background: #e9ecef;
     transform: translateX(4px);
   }
-  .day-link .theme {
+  .day-card.is-today {
+    border: 2px solid #764ba2;
+    background: linear-gradient(135deg, #f0e6ff, #e6f0ff);
+  }
+  .day-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .day-date {
+    font-size: 17px;
+    font-weight: 700;
+    color: #333;
+  }
+  .day-theme {
     color: #888;
     font-size: 14px;
   }
-  .day-link .badges {
+  .badges {
     display: flex;
     gap: 6px;
+    flex-wrap: wrap;
   }
   .badge {
     font-size: 12px;
-    padding: 2px 8px;
-    border-radius: 8px;
+    padding: 3px 10px;
+    border-radius: 10px;
     font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s;
   }
+  .badge:hover { opacity: 0.8; }
   .badge-math { background: #e3f2fd; color: #1976d2; }
   .badge-thinking { background: #fce4ec; color: #c62828; }
   .badge-today {
     background: linear-gradient(90deg, #667eea, #764ba2);
     color: #fff;
     font-size: 11px;
-    padding: 2px 8px;
+    padding: 3px 8px;
     border-radius: 8px;
     font-weight: 700;
   }
-  .curriculum-link {
-    display: block;
+  .footer {
     text-align: center;
     margin-top: 24px;
-    padding: 14px;
+  }
+  .footer a {
+    display: inline-block;
+    padding: 14px 24px;
     background: linear-gradient(90deg, #667eea, #764ba2);
     color: #fff;
     text-decoration: none;
     border-radius: 12px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     transition: opacity 0.2s;
   }
-  .curriculum-link:hover { opacity: 0.9; }
+  .footer a:hover { opacity: 0.9; }
+  .total-count {
+    text-align: center;
+    color: #aaa;
+    font-size: 13px;
+    margin-top: 12px;
+  }
 </style>
 </head>
 <body>
 <div class="container">
   <h1>每日数学练习</h1>
-  <p class="subtitle">Math Magic - 5岁小朋友的数学冒险</p>
+  <p class="subtitle">Math Magic — 5岁小朋友的数学冒险</p>
 
-  <div class="week-group">
-    <div class="week-title">本周练习</div>
-    <a href="2026-04-20-math-magic.html" class="day-link">
-      <span>4月20日 <span class="theme">超市购物</span></span>
-      <span class="badges">
-        <span class="badge badge-today">今天</span>
-        <span class="badge badge-math">计算</span>
-        <span class="badge badge-thinking">思维</span>
-      </span>
-    </a>
-    <a href="2026-04-19-math-magic.html" class="day-link">
-      <span>4月19日 <span class="theme">魔法城堡</span></span>
-      <span class="badges">
-        <span class="badge badge-math">计算</span>
-        <span class="badge badge-thinking">思维</span>
-      </span>
-    </a>
-    <a href="2026-04-18-math-magic.html" class="day-link">
-      <span>4月18日 <span class="theme">魔法城堡</span></span>
-      <span class="badges">
-        <span class="badge badge-math">计算</span>
-        <span class="badge badge-thinking">思维</span>
-      </span>
-    </a>
+  <div id="today-banner" class="today-banner" style="display:none;"></div>
+
+  <div id="day-list"></div>
+
+  <div class="total-count" id="total-count"></div>
+
+  <div class="footer">
+    <a href="curriculum-plan.html">查看完整课程计划</a>
   </div>
-
-  <div class="week-group">
-    <div class="week-title">上周练习</div>
-    <a href="2026-04-17-math-magic.html" class="day-link">
-      <span>4月17日</span>
-      <span class="badges">
-        <span class="badge badge-math">计算</span>
-        <span class="badge badge-thinking">思维</span>
-      </span>
-    </a>
-    <a href="2026-04-16-math-magic.html" class="day-link">
-      <span>4月16日</span>
-      <span class="badges">
-        <span class="badge badge-math">计算</span>
-        <span class="badge badge-thinking">思维</span>
-      </span>
-    </a>
-    <a href="2026-04-15-math-magic.html" class="day-link">
-      <span>4月15日</span>
-      <span class="badges">
-        <span class="badge badge-math">计算</span>
-        <span class="badge badge-thinking">思维</span>
-      </span>
-    </a>
-    <a href="2026-04-14-math-magic.html" class="day-link">
-      <span>4月14日</span>
-      <span class="badges">
-        <span class="badge badge-math">计算</span>
-        <span class="badge badge-thinking">思维</span>
-      </span>
-    </a>
-  </div>
-
-  <a href="curriculum-plan.html" class="curriculum-link">查看完整课程计划</a>
 </div>
+
+<script>
+// 所有已生成的练习日期列表（按时间倒序）
+// 每天运行生成脚本时会自动更新此列表
+const ALL_DAYS = [
+  { date: "2026-04-24", theme: "🏰 魔法城堡" },
+  { date: "2026-04-23", theme: "🦁 动物园大冒险" },
+  { date: "2026-04-22", theme: "🌊 海底世界" },
+  { date: "2026-04-21", theme: "🚀 太空探险" },
+  { date: "2026-04-20", theme: "🛒 超市购物" },
+  { date: "2026-04-19", theme: "🏰 魔法城堡" },
+  { date: "2026-04-18", theme: "🏰 魔法城堡" },
+  { date: "2026-04-17", theme: "🦁 动物园大冒险" },
+  { date: "2026-04-16", theme: "🌊 海底世界" },
+  { date: "2026-04-15", theme: "🚀 太空探险" },
+  { date: "2026-04-14", theme: "🛒 超市购物" }
+];
+
+function formatDate(dateStr) {
+  const [, month, day] = dateStr.split('-');
+  return `${parseInt(month)}月${parseInt(day)}日`;
+}
+
+function getDayOfWeek(dateStr) {
+  const d = new Date(dateStr);
+  const days = ['周日','周一','周二','周三','周四','周五','周六'];
+  return days[d.getDay()];
+}
+
+function getTodayStr() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth()+1).padStart(2,'0');
+  const d = String(now.getDate()).padStart(2,'0');
+  return `${y}-${m}-${d}`;
+}
+
+const today = getTodayStr();
+const listEl = document.getElementById('day-list');
+const bannerEl = document.getElementById('today-banner');
+const countEl = document.getElementById('total-count');
+
+// Today banner
+const todayEntry = ALL_DAYS.find(d => d.date === today);
+if (todayEntry) {
+  bannerEl.style.display = 'block';
+  bannerEl.innerHTML = `🎉 今天的练习 — ${todayEntry.theme}<br>
+    <a href="${todayEntry.date}-math-magic.html">计算练习</a> · 
+    <a href="${todayEntry.date}-math-thinking.html">思维训练</a>`;
+}
+
+// Day list
+ALL_DAYS.forEach(day => {
+  const isToday = day.date === today;
+  const card = document.createElement('div');
+  card.className = 'day-card' + (isToday ? ' is-today' : '');
+  card.innerHTML = `
+    <div class="day-header">
+      <span>
+        <span class="day-date">${formatDate(day.date)} ${getDayOfWeek(day.date)}</span>
+        <span class="day-theme">${day.theme}</span>
+      </span>
+      <span class="badges">
+        ${isToday ? '<span class="badge badge-today">今天</span>' : ''}
+        <a href="${day.date}-math-magic.html" class="badge badge-math">计算</a>
+        <a href="${day.date}-math-thinking.html" class="badge badge-thinking">思维</a>
+      </span>
+    </div>`;
+  listEl.appendChild(card);
+});
+
+countEl.textContent = `共 ${ALL_DAYS.length} 天的练习`;
+</script>
 </body>
 </html>

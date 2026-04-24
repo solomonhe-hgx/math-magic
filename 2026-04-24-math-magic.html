@@ -3,738 +3,567 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🦁 动物园数学冒险 - 2026年4月24日</title>
+<title>🏰 魔法城堡大冒险 — 数学魔法任务</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
 
-  :root {
-    --primary: #FF9800;
-    --success: #4CAF50;
-    --error: #FF9800;
-    --bg: #FFF8E1;
-    --card: #FFFFFF;
-    --text: #333;
-    --shadow: 0 4px 15px rgba(0,0,0,0.1);
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'Comic Sans MS', 'PingFang SC', 'Microsoft YaHei', cursive, sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(180deg, #2d1b69 0%, #5b2c8e 20%, #7c3aed 40%, #a78bfa 60%, #c4b5fd 80%, #ddd6fe 100%);
     min-height: 100vh;
-    overflow-x: hidden;
+    padding: 24px 24px 60px;
+    color: #1a3a5c;
   }
 
-  /* ===== 主题背景动画 ===== */
-  .bg-animals {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none; z-index: 0; overflow: hidden;
-  }
-  .bg-animals span {
-    position: absolute; font-size: 2rem; opacity: 0.15;
-    animation: floatAnimal 20s linear infinite;
-  }
-  @keyframes floatAnimal {
-    0% { transform: translateY(110vh) rotate(0deg); }
-    100% { transform: translateY(-10vh) rotate(360deg); }
-  }
+  .container { max-width: 960px; margin: 0 auto; }
 
-  .container {
-    position: relative; z-index: 1;
-    max-width: 960px; margin: 0 auto; padding: 16px;
-  }
-
-  /* ===== 顶部标题 ===== */
-  .header {
-    text-align: center; padding: 20px 16px;
-    background: linear-gradient(135deg, #FF9800, #FF5722, #E91E63);
-    border-radius: 24px; color: white; margin-bottom: 20px;
-    box-shadow: var(--shadow); position: relative; overflow: hidden;
-  }
-  .header h1 { font-size: 1.8rem; margin-bottom: 4px; }
-  .header p { font-size: 1rem; opacity: 0.9; }
-  .header .theme-icon { font-size: 3rem; position: absolute; top: 10px; right: 16px; animation: bounce 2s infinite; }
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
-  /* ===== 计分板 ===== */
+  /* 顶部计分板 */
   .scoreboard {
-    display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
+    position: sticky; top: 12px; z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 14px 22px;
     margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0,60,120,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
   }
-  .score-item {
-    background: var(--card); border-radius: 16px; padding: 12px 20px;
-    box-shadow: var(--shadow); text-align: center; min-width: 120px;
-    border: 3px solid #E0E0E0; transition: border-color 0.3s;
+  .scoreboard .score {
+    font-size: 20px;
+    font-weight: 900;
+    color: #0d47a1;
   }
-  .score-item.active { border-color: var(--primary); }
-  .score-item .num { font-size: 2rem; font-weight: bold; color: var(--primary); }
-  .score-item .label { font-size: 0.85rem; color: #888; }
+  .scoreboard .score .correct { color: #2e7d32; }
+  .scoreboard .score .wrong { color: #c62828; }
+  .scoreboard .status { font-size: 14px; color: #555; }
 
-  /* ===== 区块 ===== */
-  .section {
-    background: var(--card); border-radius: 20px; padding: 24px;
-    margin-bottom: 20px; box-shadow: var(--shadow);
-    border-left: 6px solid var(--primary);
+  .header {
+    text-align: center;
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
+    border-radius: 24px;
+    padding: 28px 18px 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 30px rgba(124,58,237,0.35);
   }
-  .section-title {
-    font-size: 1.4rem; margin-bottom: 16px; display: flex;
-    align-items: center; gap: 8px;
-  }
-  .section-desc {
-    font-size: 1rem; color: #666; margin-bottom: 16px;
-    background: #FFF3E0; padding: 10px 14px; border-radius: 12px;
-  }
+  .header h1 { font-size: 28px; font-weight: 900; color: #fff; text-shadow: 2px 2px 6px rgba(0,0,0,0.2); margin-top: 20px; }
+  .header .subtitle { font-size: 15px; color: #ede9fe; margin-top: 8px; line-height: 1.6; }
+  .header .date-badge { display: inline-block; background: rgba(255,255,255,0.25); border-radius: 20px; padding: 4px 16px; font-size: 13px; color: #fff; margin-top: 10px; }
 
-  /* ===== 热身区 ===== */
-  .warmup-card {
-    background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
-    border-radius: 16px; padding: 20px; text-align: center;
+  .card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    padding: 22px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 18px rgba(0,60,120,0.15);
   }
-  .warmup-card h3 { font-size: 1.2rem; margin-bottom: 10px; }
-  .warmup-card p { font-size: 1rem; line-height: 1.8; }
-  .warmup-btn {
-    display: inline-block; margin-top: 12px; padding: 14px 32px;
-    background: var(--primary); color: white; border: none;
-    border-radius: 50px; font-size: 1.1rem; cursor: pointer;
-    min-height: 44px; min-width: 44px; transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 12px rgba(255,152,0,0.4);
-  }
-  .warmup-btn:active { transform: scale(0.95); }
+  .card h2 { font-size: 20px; font-weight: 900; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .card h2 .icon { font-size: 26px; }
 
-  /* ===== 题目 ===== */
-  .question-list { display: flex; flex-direction: column; gap: 16px; }
-  .question-card {
-    background: linear-gradient(135deg, #FFFDE7, #FFF9C4);
-    border-radius: 16px; padding: 18px 20px;
-    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-    border: 3px solid #F0F0F0; transition: border-color 0.3s, background 0.3s;
-    min-height: 60px;
-  }
-  .question-card.correct { border-color: var(--success); background: linear-gradient(135deg, #E8F5E9, #C8E6C9); }
-  .question-card.wrong { border-color: var(--error); background: linear-gradient(135deg, #FFF3E0, #FFE0B2); }
+  .warmup-card { background: linear-gradient(135deg, #fff9e6, #fff3cc); border: 3px solid #ffc107; }
+  .warmup-card h2 { color: #e65100; }
+  .warmup-step { background: rgba(255,255,255,0.8); border-radius: 14px; padding: 14px; margin-bottom: 12px; border-left: 4px solid #ff9800; }
+  .warmup-step .step-title { font-size: 16px; font-weight: 700; color: #e65100; margin-bottom: 6px; }
+  .warmup-step .step-content { font-size: 15px; color: #4a3520; line-height: 1.8; }
 
-  .q-num {
-    background: var(--primary); color: white; border-radius: 50%;
-    width: 32px; height: 32px; display: flex; align-items: center;
-    justify-content: center; font-size: 0.9rem; font-weight: bold; flex-shrink: 0;
-  }
-  .q-text { font-size: 1.3rem; flex: 1; min-width: 150px; }
-  .q-visual { font-size: 1.5rem; margin-right: 4px; }
-  .q-input {
-    width: 70px; height: 44px; text-align: center; font-size: 1.4rem;
-    border: 3px solid #CCC; border-radius: 12px; outline: none;
+  /* 题目卡片 */
+  .quest-card {
+    background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+    border-radius: 18px;
+    padding: 18px 16px;
+    margin-bottom: 16px;
+    border-left: 5px solid #7c3aed;
     transition: border-color 0.3s, background 0.3s;
-    font-family: inherit; background: white;
   }
-  .q-input:focus { border-color: var(--primary); }
-  .q-input.correct-input { border-color: var(--success); background: #E8F5E9; }
-  .q-input.wrong-input { border-color: var(--error); background: #FFF3E0; }
-  .q-feedback { font-size: 1rem; min-width: 100px; }
-  .q-answer { font-size: 0.9rem; color: #E65100; display: none; }
+  .quest-card.correct { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-left-color: #43a047; }
+  .quest-card.wrong { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-left-color: #f57c00; }
 
-  /* ===== 互动挑战 ===== */
-  .challenge-area { text-align: center; }
-  .challenge-story {
-    font-size: 1.1rem; line-height: 2; background: #F3E5F5;
-    padding: 16px; border-radius: 14px; margin-bottom: 16px;
+  .quest-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .quest-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #7c3aed; color: #fff; width: 36px; height: 36px;
+    border-radius: 50%; font-size: 16px; font-weight: 900; flex-shrink: 0;
   }
-  .challenge-story .emoji { font-size: 2rem; }
-  .challenge-options {
-    display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
-  }
-  .challenge-btn {
-    padding: 16px 28px; font-size: 1.3rem; border: 3px solid #CE93D8;
-    background: white; border-radius: 16px; cursor: pointer;
-    min-height: 44px; min-width: 44px; transition: all 0.2s;
-    font-family: inherit;
-  }
-  .challenge-btn:hover { background: #F3E5F5; transform: scale(1.05); }
-  .challenge-btn.correct-ch { background: #C8E6C9; border-color: var(--success); }
-  .challenge-btn.wrong-ch { background: #FFCCBC; border-color: var(--error); }
-  .challenge-feedback {
-    margin-top: 14px; font-size: 1.2rem; min-height: 30px;
-  }
+  .quest-card.correct .quest-num { background: #43a047; }
+  .quest-card.wrong .quest-num { background: #f57c00; }
 
-  /* ===== 成就 ===== */
-  .achievement {
-    text-align: center; padding: 24px;
-    background: linear-gradient(135deg, #FFF8E1, #FFECB3);
-    border-radius: 20px; border: 3px solid #FFD54F;
-    display: none;
-  }
-  .achievement.show { display: block; animation: popIn 0.5s ease; }
-  @keyframes popIn {
-    0% { transform: scale(0.5); opacity: 0; }
-    80% { transform: scale(1.05); }
-    100% { transform: scale(1); opacity: 1; }
-  }
-  .achievement .badge { font-size: 4rem; margin-bottom: 8px; }
-  .achievement h2 { color: #F57F17; margin-bottom: 8px; }
-  .achievement p { font-size: 1rem; color: #666; }
+  .quest-scene { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 12px; padding-left: 46px; }
 
-  /* ===== 重试按钮 ===== */
+  .quest-row {
+    display: flex; align-items: center; gap: 12px; padding-left: 46px; flex-wrap: wrap;
+  }
+  .quest-math { font-size: 24px; font-weight: 900; color: #4a148c; letter-spacing: 3px; }
+  .quest-card.correct .quest-math { color: #1b5e20; }
+  .quest-card.wrong .quest-math { color: #e65100; }
+
+  .answer-input {
+    width: 80px; height: 48px;
+    border: 3px solid #c4b5fd; border-radius: 12px;
+    font-size: 22px; font-weight: 700; text-align: center;
+    color: #4a148c; background: rgba(255,255,255,0.8);
+    outline: none; transition: border-color 0.3s, background 0.3s;
+    -webkit-appearance: none; appearance: none;
+  }
+  .answer-input:focus { border-color: #7c3aed; background: #fff; }
+  .answer-input.correct-input { border-color: #43a047; background: #e8f5e9; color: #2e7d32; }
+  .answer-input.wrong-input { border-color: #f57c00; background: #fff3e0; color: #e65100; }
+
+  .feedback {
+    display: none; margin-top: 10px; padding-left: 46px;
+    font-size: 15px; font-weight: 600; line-height: 1.6;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct-fb { color: #2e7d32; }
+  .feedback.wrong-fb { color: #e65100; }
+
+  /* 提交按钮 */
+  .submit-area { text-align: center; margin: 32px 0; }
+  .submit-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
+    color: #fff; border: none; border-radius: 20px;
+    padding: 16px 48px; font-size: 22px; font-weight: 900;
+    cursor: pointer; box-shadow: 0 6px 20px rgba(124,58,237,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-width: 200px; justify-content: center;
+  }
+  .submit-btn:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(124,58,237,0.4); }
+  .submit-btn:active { transform: scale(0.97); }
+
   .retry-btn {
-    display: inline-block; margin-top: 16px; padding: 14px 36px;
-    background: #2196F3; color: white; border: none;
-    border-radius: 50px; font-size: 1.1rem; cursor: pointer;
-    min-height: 44px; transition: transform 0.2s;
-    box-shadow: 0 4px 12px rgba(33,150,243,0.4);
-    font-family: inherit;
+    display: none; margin-top: 14px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff; border: none; border-radius: 16px;
+    padding: 12px 36px; font-size: 18px; font-weight: 700;
+    cursor: pointer; box-shadow: 0 4px 15px rgba(99,102,241,0.3);
+    transition: transform 0.2s;
   }
-  .retry-btn:active { transform: scale(0.95); }
+  .retry-btn:hover { transform: scale(1.05); }
 
-  /* ===== 烟花/Confetti ===== */
-  .confetti-container {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none; z-index: 999; overflow: hidden;
+  /* 成就 */
+  .achievement-card {
+    background: linear-gradient(135deg, #fff8e1, #ffecb3);
+    border: 3px solid #ffc107; text-align: center; padding: 26px 18px;
   }
+  .medal { font-size: 64px; display: block; margin-bottom: 10px; animation: bounce 2s infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .achievement-card h2 { color: #e65100; justify-content: center; font-size: 22px; }
+  .achievement-card .cheer { font-size: 17px; color: #bf360c; line-height: 2; margin-top: 10px; }
+  .stars-row { font-size: 32px; letter-spacing: 8px; margin-top: 12px; }
+
+  .tip { background: #ede9fe; border-radius: 14px; padding: 12px 14px; margin-top: 12px; font-size: 14px; color: #5b21b6; line-height: 1.7; border-left: 4px solid #8b5cf6; }
+  .intro-text { font-size: 16px; color: #333; line-height: 2; margin-bottom: 10px; }
+  .divider { text-align: center; margin: 24px 0; font-size: 24px; letter-spacing: 12px; opacity: 0.6; }
+
+  /* 庆祝动画 */
+  .confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; }
   .confetti {
     position: absolute; width: 10px; height: 10px;
-    top: -10px; border-radius: 2px;
-    animation: confettiFall 3s ease-in forwards;
+    top: -10px; opacity: 0;
+    animation: confetti-fall 3s ease-out forwards;
   }
-  @keyframes confettiFall {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-  }
-
-  /* ===== 进度条 ===== */
-  .progress-bar {
-    width: 100%; height: 12px; background: #E0E0E0;
-    border-radius: 10px; overflow: hidden; margin-bottom: 16px;
-  }
-  .progress-fill {
-    height: 100%; background: linear-gradient(90deg, #FF9800, #4CAF50);
-    border-radius: 10px; transition: width 0.5s ease; width: 0%;
+  @keyframes confetti-fall {
+    0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+    100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
   }
 
-  /* ===== 响应式 ===== */
+  /* 响应式 */
   @media (max-width: 600px) {
-    .container { padding: 10px; }
-    .header h1 { font-size: 1.4rem; }
-    .header .theme-icon { font-size: 2rem; }
-    .section { padding: 16px; }
-    .section-title { font-size: 1.2rem; }
-    .q-text { font-size: 1.1rem; min-width: 120px; }
-    .q-input { width: 60px; height: 44px; font-size: 1.2rem; }
-    .score-item { min-width: 90px; padding: 8px 14px; }
-    .score-item .num { font-size: 1.5rem; }
-    .challenge-btn { padding: 14px 20px; font-size: 1.1rem; }
-    .warmup-card p { font-size: 0.95rem; }
+    body { padding: 12px 8px 40px; }
+    .container { max-width: 100%; }
+    .header { padding: 22px 14px 16px; }
+    .header h1 { font-size: 22px; }
+    .card { padding: 16px 12px; }
+    .quest-row { padding-left: 0; }
+    .quest-scene { padding-left: 0; }
+    .feedback { padding-left: 0; }
+    .quest-math { font-size: 20px; }
+    .answer-input { width: 70px; height: 44px; font-size: 20px; }
+    .submit-btn { padding: 14px 36px; font-size: 18px; }
   }
-
-  @media (min-width: 600px) and (max-width: 1024px) {
-    .container { max-width: 700px; }
-  }
-
-  /* ===== 隐藏 ===== */
-  .hidden { display: none !important; }
-
-  /* ===== 提示文字 ===== */
-  .hint-text {
-    font-size: 0.85rem; color: #999; text-align: center; margin-top: 8px;
-  }
-
-  /* ===== 周计划 ===== */
-  .week-plan {
-    background: #E3F2FD; border-radius: 14px; padding: 14px;
-    font-size: 0.9rem; color: #1565C0; margin-bottom: 16px;
-  }
-  .week-plan strong { color: #0D47A1; }
+  @media (min-width: 601px) and (max-width: 1024px) { .container { max-width: 760px; } }
+  @media (min-width: 1025px) { .container { max-width: 860px; } }
 </style>
 </head>
 <body>
-
-<!-- 背景漂浮动物 -->
-<div class="bg-animals" id="bgAnimals"></div>
-
-<!-- Confetti容器 -->
-<div class="confetti-container" id="confettiContainer"></div>
-
 <div class="container">
 
-  <!-- 顶部标题 -->
-  <div class="header">
-    <span class="theme-icon">🦁</span>
-    <h1>🌟 动物园数学冒险 🌟</h1>
-    <p>2026年4月24日 星期五 · 第14周第5天</p>
-  </div>
-
-  <!-- 周计划提示 -->
-  <div class="week-plan">
-    📅 <strong>本周学习进度（第14周）：</strong>巩固10以内加减法 → 初探10-20不进位加法 | 今日重点：混合练习，提升速度
-  </div>
-
   <!-- 计分板 -->
-  <div class="scoreboard">
-    <div class="score-item" id="scoreCard">
-      <div class="num" id="scoreNum">0</div>
-      <div class="label">答对 ✅</div>
+  <div class="scoreboard" id="scoreboard">
+    <div class="score">
+      <span class="correct" id="correctCount">0</span> / <span id="totalCount">11</span> 正确
     </div>
-    <div class="score-item" id="totalCard">
-      <div class="num" id="totalNum">0</div>
-      <div class="label">总题数</div>
-    </div>
-    <div class="score-item" id="starCard">
-      <div class="num" id="starNum">0</div>
-      <div class="label">⭐ 星星</div>
-    </div>
+    <div class="status" id="scoreStatus">🏰 开始魔法城堡大冒险吧！加油 💪</div>
   </div>
 
-  <!-- 进度条 -->
-  <div class="progress-bar">
-    <div class="progress-fill" id="progressFill"></div>
+  <!-- 标题 -->
+  <div class="header">
+    <h1>🏰 魔法城堡大冒险 🏰</h1>
+    <div class="subtitle">帮小魔法师米娅找到魔法书！每道数学题都是一把钥匙 🔑<br>填完每道题会自动检查，也可以点提交按钮统一检查！</div>
+    <div class="date-badge">📅 2026年4月24日 · 星期五</div>
   </div>
 
-  <!-- ===== 1. 热身小游戏 ===== -->
-  <div class="section" id="warmupSection">
-    <div class="section-title">🔥 热身小游戏：动物拍手操</div>
-    <div class="section-desc">⏱️ 约2分钟 · 动一动身体，准备好学数学吧！</div>
-    <div class="warmup-card">
-      <h3>🐘 跟着做动作！</h3>
-      <p id="warmupText">
-        小朋友，站好啦！<br><br>
-        🦒 长颈鹿伸长脖子——向上伸手！够最高的树叶！<br>
-        🐸 小青蛙跳3下——准备……跳！跳！跳！<br>
-        🐧 企鹅左右摇摆——左边~右边~左边~右边~<br>
-        🦋 蝴蝶飞呀飞——打开双臂，转个圈圈！<br><br>
-        <strong>准备好了吗？下面开始数动物！</strong>
-      </p>
-      <button class="warmup-btn" onclick="doWarmup()">👏 我做完啦，开始吧！</button>
+  <!-- 热身 -->
+  <div class="card warmup-card">
+    <h2><span class="icon">🔥</span> 热身小游戏：魔法城堡热身操</h2>
+    <div class="intro-text">👋 小宝贝，准备好了吗？我们一起活动活动身体！</div>
+    <div class="warmup-step">
+      <div class="step-title">🫧 倒数热身</div>
+      <div class="step-content">从 <b>20</b> 倒数到 <b>1</b>，每数一个数就拍一下手 👏</div>
+    </div>
+    <div class="warmup-step">
+      <div class="step-title">🏰 数字游戏</div>
+      <div class="step-content">家长说数字，孩子用手比出来："🏰说——<b>13</b>！"</div>
     </div>
   </div>
 
-  <!-- ===== 2. 核心任务 ===== -->
-  <div class="section hidden" id="coreSection">
-    <div class="section-title">⭐ 核心任务：动物园里的数学题</div>
-    <div class="section-desc">⏱️ 约8分钟 · 答完每道题按 <strong>回车键</strong> 或点击下一个输入框，会自动检查哦！</div>
-    <div class="question-list" id="questionList"></div>
-    <p class="hint-text">💡 小提示：填完答案后按回车（Enter）就能知道对错啦！</p>
-  </div>
+  <div class="divider">🏰🔮🗝️👑🧙</div>
 
-  <!-- ===== 3. 互动挑战 ===== -->
-  <div class="section hidden" id="challengeSection">
-    <div class="section-title">🎮 互动挑战：动物管理员大考验</div>
-    <div class="section-desc">⏱️ 约3-5分钟 · 帮动物管理员解决难题！</div>
-    <div class="challenge-area">
-      <div id="challengeStory" class="challenge-story"></div>
-      <div id="challengeOptions" class="challenge-options"></div>
-      <div id="challengeFeedback" class="challenge-feedback"></div>
-      <button class="warmup-btn hidden" id="nextChallengeBtn" onclick="nextChallenge()" style="margin-top:16px;">下一题 ➡️</button>
+  <!-- 核心任务 -->
+  <div class="card">
+    <h2><span class="icon">⭐</span> 核心任务：帮小魔法师米娅找魔法书钥匙</h2>
+    <div class="intro-text">🧙 <b>小魔法师米娅</b>听说藏着一本魔法书 📖<br>通往宝藏的路上有 <b>10 道门</b>，在输入框里写上答案，答对就能打开宝藏！</div>
+
+    <!-- Q1 -->
+    <div class="quest-card" id="q1-card">
+      <div class="quest-header"><span class="quest-num">1</span><span style="font-weight:700;">🚪 第一道门——卫星发射场</span></div>
+      <div class="quest-scene">空间站里有 6 朵太空珊瑚，消耗了 2 朵，还剩几朵？</div>
+      <div class="quest-row">
+        <span class="quest-math">6 － 2 ＝</span>
+        <input type="number" class="answer-input" id="q1" data-answer="4" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q1-fb"></div>
     </div>
+
+    <!-- Q2 -->
+    <div class="quest-card" id="q2-card">
+      <div class="quest-header"><span class="quest-num">2</span><span style="font-weight:700;">🚪 第二道门——外星生物馆</span></div>
+      <div class="quest-scene">宇航员收集了 3 只星星虫，又找到 5 只，一共几只？</div>
+      <div class="quest-row">
+        <span class="quest-math">3 ＋ 5 ＝</span>
+        <input type="number" class="answer-input" id="q2" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q2-fb"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quest-card" id="q3-card">
+      <div class="quest-header"><span class="quest-num">3</span><span style="font-weight:700;">🚪 第三道门——彗星研究中心</span></div>
+      <div class="quest-scene">月球基地有 3 颗太空种子，地球又送来 6 颗，现在有几颗？</div>
+      <div class="quest-row">
+        <span class="quest-math">3 ＋ 6 ＝</span>
+        <input type="number" class="answer-input" id="q3" data-answer="9" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q3-fb"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quest-card" id="q4-card">
+      <div class="quest-header"><span class="quest-num">4</span><span style="font-weight:700;">🚪 第四道门——太空植物园</span></div>
+      <div class="quest-scene">空间站里有 1 颗太空种子，又运来 7 颗，现在有几颗？</div>
+      <div class="quest-row">
+        <span class="quest-math">1 ＋ 7 ＝</span>
+        <input type="number" class="answer-input" id="q4" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q4-fb"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quest-card" id="q5-card">
+      <div class="quest-header"><span class="quest-num">5</span><span style="font-weight:700;">🚪 第五道门——宇航训练中心</span></div>
+      <div class="quest-scene">宇航员收集了 3 块月光石，又找到 6 块，一共几块？</div>
+      <div class="quest-row">
+        <span class="quest-math">3 ＋ 6 ＝</span>
+        <input type="number" class="answer-input" id="q5" data-answer="9" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q5-fb"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quest-card" id="q6-card">
+      <div class="quest-header"><span class="quest-num">6</span><span style="font-weight:700;">🚪 第六道门——太阳能电站</span></div>
+      <div class="quest-scene">太空温室里种了 4 朵太空珊瑚，又种了 2 朵，现在有几朵？</div>
+      <div class="quest-row">
+        <span class="quest-math">4 ＋ 2 ＝</span>
+        <input type="number" class="answer-input" id="q6" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q6-fb"></div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quest-card" id="q7-card">
+      <div class="quest-header"><span class="quest-num">7</span><span style="font-weight:700;">🚪 第七道门——太空博物馆</span></div>
+      <div class="quest-scene">空间站里有 4 株彗星草，消耗了 2 株，还剩几株？</div>
+      <div class="quest-row">
+        <span class="quest-math">4 － 2 ＝</span>
+        <input type="number" class="answer-input" id="q7" data-answer="2" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q7-fb"></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="quest-card" id="q8-card">
+      <div class="quest-header"><span class="quest-num">8</span><span style="font-weight:700;">🚪 第八道门——星际导航塔</span></div>
+      <div class="quest-scene">太空温室里有 7 朵太空珊瑚，送给外星人 1 朵，还剩几朵？</div>
+      <div class="quest-row">
+        <span class="quest-math">7 － 1 ＝</span>
+        <input type="number" class="answer-input" id="q8" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q8-fb"></div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="quest-card" id="q9-card">
+      <div class="quest-header"><span class="quest-num">9</span><span style="font-weight:700;">🚪 第九道门——太阳能电站</span></div>
+      <div class="quest-scene">太空温室里有 9 朵太空花，送给外星人 1 朵，还剩几朵？</div>
+      <div class="quest-row">
+        <span class="quest-math">9 － 1 ＝</span>
+        <input type="number" class="answer-input" id="q9" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q9-fb"></div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="quest-card" id="q10-card">
+      <div class="quest-header"><span class="quest-num">10</span><span style="font-weight:700;">🚪 最后一道门——宝藏大门 🏆</span></div>
+      <div class="quest-scene">大门上有两把锁，都要解开！</div>
+      <div class="quest-row">
+        <span class="quest-math">🔒 第一把锁：10 － 8 ＝</span>
+        <input type="number" class="answer-input" id="q10a" data-answer="2" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="quest-row" style="margin-top:8px;">
+        <span class="quest-math">🔒 第二把锁：6 ＋ 4 ＝</span>
+        <input type="number" class="answer-input" id="q10b" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+      </div>
+      <div class="feedback" id="q10-fb"></div>
+    </div>
+
+    <div class="tip">💡 <b>提示：</b>如果算不出来，可以用手指头或小糖果帮忙哦！每道题填完会自动检查。</div>
   </div>
 
-  <!-- ===== 4. 成就 ===== -->
-  <div class="achievement" id="achievement">
-    <div class="badge" id="achieveBadge">🏆</div>
-    <h2 id="achieveTitle">太棒了！</h2>
-    <p id="achieveText"></p>
-    <button class="retry-btn" onclick="retryAll()">🔄 再试一次</button>
+  <!-- 提交按钮 -->
+  <div class="submit-area">
+    <button class="submit-btn" id="submitBtn" onclick="checkAnswers()">🔑 提交全部答案</button>
+    <br>
+    <button class="retry-btn" id="retryBtn" onclick="retry()">🔄 再试一次</button>
+  </div>
+
+  <div class="divider">🏆🏆🏆</div>
+
+  <!-- 成就 -->
+  <div class="card achievement-card" id="achievement" style="display:none;">
+    <span class="medal" id="medal">🏆</span>
+    <h2 id="achieveTitle">🎉 恭喜！🎉</h2>
+    <div class="cheer" id="achieveText"></div>
+    <div class="stars-row" id="starsRow"></div>
+  </div>
+
+  <div class="footer" style="text-align:center;font-size:13px;color:rgba(255,255,255,0.7);padding:16px 0;">
+    🏰 数学魔法师 · 魔法城堡篇 · 第 2 期 🏰
   </div>
 
 </div>
 
 <script>
-// ===== Web Audio 音效 =====
-const AudioCtx = window.AudioContext || window.webkitAudioContext;
-let audioCtx;
-function getAudioCtx() {
-  if (!audioCtx) audioCtx = new AudioCtx();
-  return audioCtx;
-}
+const totalQuestions = 11;
 
-function playCorrect() {
-  try {
-    const ctx = getAudioCtx();
-    const notes = [523.25, 659.25, 783.99];
-    notes.forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.3, ctx.currentTime + i * 0.12);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.12 + 0.3);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime + i * 0.12);
-      osc.stop(ctx.currentTime + i * 0.12 + 0.3);
-    });
-  } catch(e) {}
-}
-
-function playWrong() {
-  try {
-    const ctx = getAudioCtx();
-    const notes = [392, 349.23];
-    notes.forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.3, ctx.currentTime + i * 0.15);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.15 + 0.35);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime + i * 0.15);
-      osc.stop(ctx.currentTime + i * 0.15 + 0.35);
-    });
-  } catch(e) {}
-}
-
-function playCelebrate() {
-  try {
-    const ctx = getAudioCtx();
-    const melody = [523.25, 587.33, 659.25, 783.99, 880, 1046.5];
-    melody.forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.25, ctx.currentTime + i * 0.1);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.1 + 0.25);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime + i * 0.1);
-      osc.stop(ctx.currentTime + i * 0.1 + 0.25);
-    });
-  } catch(e) {}
-}
-
-// ===== 背景动物 =====
-(function initBgAnimals() {
-  const animals = ['🐘','🦁','🐼','🦒','🐧','🦋','🐸','🐨','🐯','🐵','🦜','🐢','🐬','🦩','🐝'];
-  const container = document.getElementById('bgAnimals');
-  for (let i = 0; i < 15; i++) {
-    const span = document.createElement('span');
-    span.textContent = animals[i % animals.length];
-    span.style.left = Math.random() * 100 + '%';
-    span.style.animationDelay = Math.random() * 20 + 's';
-    span.style.animationDuration = (15 + Math.random() * 15) + 's';
-    span.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
-    container.appendChild(span);
-  }
-})();
-
-// ===== 状态 =====
-let score = 0;
-let totalQuestions = 0;
-let coreCorrect = 0;
-let coreTotal = 0;
-let challengeCorrect = 0;
-let challengeTotal = 0;
-let currentChallenge = 0;
-
-// ===== 核心题目数据 =====
-// 阶段：10以内加减法巩固 + 10-20不进位加法初探
-const coreQuestions = [
-  // 10以内加减法（巩固，4题）
-  { q: '3 + 4 = ?', a: 7, visual: '🍎🍎🍎 + 🍎🍎🍎🍎', hint: '3个苹果加4个苹果' },
-  { q: '9 - 2 = ?', a: 7, visual: '🐟🐟🐟🐟🐟🐟🐟🐟🐟 游走2条', hint: '9条小鱼游走2条' },
-  { q: '5 + 3 = ?', a: 8, visual: '🌺🌺🌺🌺🌺 + 🌺🌺🌺', hint: '5朵花加3朵花' },
-  { q: '8 - 5 = ?', a: 3, visual: '🎈🎈🎈🎈🎈🎈🎈🎈 飞走5个', hint: '8个气球飞走5个' },
-  // 10以内混合（巩固，2题）
-  { q: '6 + 2 = ?', a: 8, visual: '🐣🐣🐣🐣🐣🐣 + 🐣🐣', hint: '6只小鸡加2只小鸡' },
-  { q: '10 - 4 = ?', a: 6, visual: '🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟 拿走4颗', hint: '10颗星星拿走4颗' },
-  // 10-20不进位加法（初探，3题）
-  { q: '10 + 3 = ?', a: 13, visual: '🐘🐘🐘🐘🐘🐘🐘🐘🐘🐘 + 🐘🐘🐘', hint: '10头大象加3头大象' },
-  { q: '12 + 4 = ?', a: 16, visual: '🦋🦋🦋🦋🦋🦋🦋🦋🦋🦋🦋🦋 + 🦋🦋🦋🦋', hint: '12只蝴蝶加4只蝴蝶' },
-  { q: '11 + 5 = ?', a: 16, visual: '🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸 + 🌸🌸🌸🌸🌸', hint: '11朵花加5朵花' },
-  // 10-20不进位减法（初探，1题）
-  { q: '15 - 3 = ?', a: 12, visual: '🐧🐧🐧🐧🐧🐧🐧🐧🐧🐧🐧🐧🐧🐧🐧 走掉3只', hint: '15只企鹅走掉3只' },
-];
-
-const totalCoreQ = coreQuestions.length;
-
-// ===== 生成核心题目 =====
-function renderCoreQuestions() {
-  const list = document.getElementById('questionList');
-  list.innerHTML = '';
-  coreQuestions.forEach((item, i) => {
-    const card = document.createElement('div');
-    card.className = 'question-card';
-    card.id = 'qcard-' + i;
-    card.innerHTML = `
-      <div class="q-num">${i + 1}</div>
-      <div class="q-visual">${item.visual}</div>
-      <div class="q-text">
-        ${item.q}
-        <div style="font-size:0.8rem;color:#999;margin-top:2px;">${item.hint}</div>
-      </div>
-      <input type="number" class="q-input" id="qinput-${i}"
-        onkeydown="checkEnter(event, ${i})" onblur="checkAnswer(${i})"
-        inputmode="numeric" autocomplete="off" min="0" max="20">
-      <div class="q-feedback" id="qfeedback-${i}"></div>
-      <div class="q-answer" id="qanswer-${i}">正确答案：<strong>${item.a}</strong></div>
-    `;
-    list.appendChild(card);
-  });
-  totalQuestions = totalCoreQ;
-  document.getElementById('totalNum').textContent = totalQuestions;
-}
-
-function checkEnter(e, idx) {
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    checkAnswer(idx);
-    // 聚焦下一题
-    const nextInput = document.getElementById('qinput-' + (idx + 1));
-    if (nextInput) nextInput.focus();
-  }
-}
-
-function checkAnswer(idx) {
-  const input = document.getElementById('qinput-' + idx);
-  const card = document.getElementById('qcard-' + idx);
-  const feedback = document.getElementById('qfeedback-' + idx);
-  const answerEl = document.getElementById('qanswer-' + idx);
-
-  // 如果已经判定过，跳过
-  if (card.classList.contains('correct') || card.classList.contains('wrong')) return;
-
-  const val = parseInt(input.value);
-  if (isNaN(val)) return; // 空的不判定
-
-  const correct = coreQuestions[idx].a;
-
-  if (val === correct) {
-    card.classList.add('correct');
-    input.classList.add('correct-input');
-    feedback.innerHTML = '✅ 太棒了！';
-    feedback.style.color = '#4CAF50';
-    score++;
-    coreCorrect++;
-    playCorrect();
-  } else {
-    card.classList.add('wrong');
-    input.classList.add('wrong-input');
-    feedback.innerHTML = '❌ 再想想';
-    feedback.style.color = '#E65100';
-    answerEl.style.display = 'inline';
-    playWrong();
-  }
-
-  coreTotal++;
-  updateScore();
-}
-
-// ===== 更新分数 =====
-function updateScore() {
-  document.getElementById('scoreNum').textContent = score;
-  document.getElementById('starNum').textContent = score;
-  const pct = coreTotal > 0 ? (coreCorrect / totalCoreQ) * 100 : 0;
-  document.getElementById('progressFill').style.width = pct + '%';
-}
-
-// ===== 热身 =====
-function doWarmup() {
-  document.getElementById('warmupSection').classList.add('hidden');
-  document.getElementById('coreSection').classList.remove('hidden');
-  renderCoreQuestions();
-  // 聚焦第一题
-  setTimeout(() => {
-    const first = document.getElementById('qinput-0');
-    if (first) first.focus();
-  }, 300);
-}
-
-// ===== 互动挑战 =====
-const challenges = [
-  {
-    story: '🦁 狮子园长说："我们有 <strong>10只</strong> 小狮子，又来了 <strong>5只</strong>，现在一共有几只？"',
-    options: ['12只', '15只', '18只'],
-    answer: 1, // index
-    emoji: '🦁'
-  },
-  {
-    story: '🐧 企鹅馆原来有 <strong>14只</strong> 企鹅，有 <strong>3只</strong> 去游泳了，还剩几只？',
-    options: ['11只', '10只', '17只'],
-    answer: 0,
-    emoji: '🐧'
-  },
-  {
-    story: '🦒 长颈鹿吃了 <strong>6片</strong> 树叶，小长颈鹿吃了 <strong>4片</strong>，它们一共吃了几片？',
-    options: ['8片', '12片', '10片'],
-    answer: 2,
-    emoji: '🦒'
-  },
-  {
-    story: '🐼 熊猫馆上午来了 <strong>11个</strong> 小朋友，下午又来了 <strong>6个</strong>，一共来了几个小朋友？',
-    options: ['15个', '18个', '17个'],
-    answer: 2,
-    emoji: '🐼'
-  },
-  {
-    story: '🐘 大象有 <strong>16根</strong> 香蕉，吃了 <strong>4根</strong>，还剩几根？',
-    options: ['13根', '11根', '12根'],
-    answer: 2,
-    emoji: '🐘'
-  }
-];
-
-function renderChallenge() {
-  if (currentChallenge >= challenges.length) {
-    showAchievement();
+// 单题即时检查
+function checkSingle(input) {
+  const val = input.value.trim();
+  if (val === '') {
+    // 清空时恢复默认状态
+    input.className = 'answer-input';
+    const card = input.closest('.quest-card');
+    if (card) card.className = 'quest-card';
     return;
   }
-  const ch = challenges[currentChallenge];
-  document.getElementById('challengeStory').innerHTML = ch.emoji + ' ' + ch.story;
-  const optDiv = document.getElementById('challengeOptions');
-  optDiv.innerHTML = '';
-  ch.options.forEach((opt, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'challenge-btn';
-    btn.textContent = opt;
-    btn.onclick = () => checkChallenge(i, btn);
-    optDiv.appendChild(btn);
+  const answer = parseInt(input.dataset.answer);
+  const userAnswer = parseInt(val);
+  if (isNaN(userAnswer)) return;
+
+  const card = input.closest('.quest-card');
+
+  if (userAnswer === answer) {
+    input.className = 'answer-input correct-input';
+    if (card) card.className = 'quest-card correct';
+    // Show brief feedback
+    const fb = card ? card.querySelector('.feedback') : null;
+    if (fb) {
+      fb.className = 'feedback show correct-fb';
+      fb.textContent = '✅ 答对了！太棒了！🌟';
+    }
+  } else {
+    input.className = 'answer-input wrong-input';
+    if (card) card.className = 'quest-card wrong';
+    const fb = card ? card.querySelector('.feedback') : null;
+    if (fb) {
+      fb.className = 'feedback show wrong-fb';
+      fb.textContent = '❌ 不对哦，再想想！正确答案是 ' + answer + '。';
+    }
+  }
+
+  // Update scoreboard live
+  updateScoreboard();
+}
+
+function updateScoreboard() {
+  let correct = 0;
+  let answered = 0;
+  document.querySelectorAll('.answer-input').forEach(input => {
+    if (input.value.trim() !== '') {
+      answered++;
+      const answer = parseInt(input.dataset.answer);
+      const userAnswer = parseInt(input.value);
+      if (userAnswer === answer) correct++;
+    }
   });
-  document.getElementById('challengeFeedback').textContent = '';
-  document.getElementById('nextChallengeBtn').classList.add('hidden');
+  document.getElementById('correctCount').textContent = correct;
+  const statusEl = document.getElementById('scoreStatus');
+  if (correct === totalQuestions) {
+    statusEl.textContent = '🎊 全部答对！太厉害了！';
+  } else if (answered > 0) {
+    statusEl.textContent = '已答 ' + answered + ' 题，对 ' + correct + ' 题';
+  }
 }
 
-function checkChallenge(idx, btn) {
-  // 防止重复点击
-  const allBtns = document.querySelectorAll('.challenge-btn');
-  allBtns.forEach(b => b.onclick = null);
+// 提交按钮统一检查
+function checkAnswers() {
+  let correct = 0;
+  const questions = [
+    { id: 'q1', card: 'q1-card', fb: 'q1-fb' },
+    { id: 'q2', card: 'q2-card', fb: 'q2-fb' },
+    { id: 'q3', card: 'q3-card', fb: 'q3-fb' },
+    { id: 'q4', card: 'q4-card', fb: 'q4-fb' },
+    { id: 'q5', card: 'q5-card', fb: 'q5-fb' },
+    { id: 'q6', card: 'q6-card', fb: 'q6-fb' },
+    { id: 'q7', card: 'q7-card', fb: 'q7-fb' },
+    { id: 'q8', card: 'q8-card', fb: 'q8-fb' },
+    { id: 'q9', card: 'q9-card', fb: 'q9-fb' },
+    { id: 'q10a', card: 'q10-card', fb: 'q10-fb', label: '第一把锁' },
+    { id: 'q10b', card: 'q10-card', fb: 'q10-fb', label: '第二把锁' },
+  ];
 
-  const ch = challenges[currentChallenge];
-  challengeTotal++;
+  const encouragements = [
+    '答对了！太棒了！🌟', '真聪明！🎉', '太厉害了！⭐', '好棒啊！👏',
+    '答对了！继续加油！💪', '正确！你是小天才！✨', '完美！🎊', '厉害！🏆',
+    '太对了！给你一个大大的赞！👍', '正确！门打开啦！🚪', '答对了！🌟'
+  ];
 
-  if (idx === ch.answer) {
-    btn.classList.add('correct-ch');
-    document.getElementById('challengeFeedback').innerHTML = '✅ ' + ch.emoji + ' 答对啦！真聪明！';
-    document.getElementById('challengeFeedback').style.color = '#4CAF50';
-    score++;
-    challengeCorrect++;
-    playCorrect();
+  questions.forEach((q, i) => {
+    const input = document.getElementById(q.id);
+    const card = document.getElementById(q.card);
+    const fb = document.getElementById(q.fb);
+    const answer = parseInt(input.dataset.answer);
+    const userAnswer = parseInt(input.value);
+
+    if (userAnswer === answer) {
+      correct++;
+      input.className = 'answer-input correct-input';
+      card.className = 'quest-card correct';
+      fb.className = 'feedback show correct-fb';
+      fb.textContent = '✅ ' + encouragements[i];
+    } else {
+      input.className = 'answer-input wrong-input';
+      card.className = 'quest-card wrong';
+      fb.className = 'feedback show wrong-fb';
+      const label = q.label ? q.label + '：' : '';
+      fb.textContent = '❌ ' + label + '正确答案是 ' + answer + '，下次一定能答对！加油 💪';
+    }
+  });
+
+  updateScoreboard();
+
+  // Show achievement
+  if (correct === totalQuestions) {
+    showAchievement('full', correct);
+  } else if (correct >= 8) {
+    showAchievement('great', correct);
+  } else if (correct >= 5) {
+    showAchievement('good', correct);
   } else {
-    btn.classList.add('wrong-ch');
-    allBtns[ch.answer].classList.add('correct-ch');
-    document.getElementById('challengeFeedback').innerHTML = '❌ 不对哦~ 正确答案是 <strong>' + ch.options[ch.answer] + '</strong>';
-    document.getElementById('challengeFeedback').style.color = '#E65100';
-    playWrong();
+    showAchievement('try', correct);
   }
 
-  updateScore();
-  totalQuestions = totalCoreQ + challengeTotal;
-  document.getElementById('totalNum').textContent = totalQuestions;
-
-  setTimeout(() => {
-    document.getElementById('nextChallengeBtn').classList.remove('hidden');
-  }, 800);
+  document.getElementById('submitBtn').style.display = 'none';
+  document.getElementById('retryBtn').style.display = 'inline-flex';
 }
 
-function nextChallenge() {
-  currentChallenge++;
-  renderChallenge();
-}
-
-// ===== 成就 =====
-function showAchievement() {
+function showAchievement(level, correct) {
   const ach = document.getElementById('achievement');
-  const badge = document.getElementById('achieveBadge');
-  const title = document.getElementById('achieveTitle');
-  const text = document.getElementById('achieveText');
+  ach.style.display = 'block';
 
-  ach.classList.add('show');
-
-  const totalQ = totalCoreQ + challenges.length;
-  const pct = score / totalQ;
-
-  if (pct === 1) {
-    badge.textContent = '🏆';
-    title.textContent = '🌟 满分小天才！🌟';
-    text.textContent = `全部 ${totalQ} 道题都答对啦！你是动物园最厉害的数学小明星！`;
+  let medal, title, text, stars;
+  if (level === 'full') {
+    medal = '👑'; title = '🎊 完美！宝藏找到了！🎊';
+    text = '小魔法师米娅说："谢谢你帮我找到了魔法书！你是最棒的数学魔法师！"🧙📖';
+    stars = '⭐⭐⭐⭐⭐';
     launchConfetti();
-    playCelebrate();
-  } else if (pct >= 0.8) {
-    badge.textContent = '🥇';
-    title.textContent = '金牌小算术家！';
-    text.textContent = `答对了 ${score}/${totalQ} 道题，太厉害了！下次一定能全对！`;
-    launchConfetti();
-    playCelebrate();
-  } else if (pct >= 0.6) {
-    badge.textContent = '🥈';
-    title.textContent = '银牌小勇士！';
-    text.textContent = `答对了 ${score}/${totalQ} 道题，继续加油哦！`;
+  } else if (level === 'great') {
+    medal = '🥇'; title = '🌟 太厉害了！🌟';
+    text = '答对了 ' + correct + ' 题！小魔法师米娅说："你太聪明了，马上就能找到宝藏了！"';
+    stars = '⭐⭐⭐⭐';
+  } else if (level === 'good') {
+    medal = '🥈'; title = '👍 做得不错！👍';
+    text = '答对了 ' + correct + ' 题！再试一次，你会更棒的！';
+    stars = '⭐⭐⭐';
   } else {
-    badge.textContent = '🥉';
-    title.textContent = '铜牌小达人！';
-    text.textContent = `答对了 ${score}/${totalQ} 道题，多练习就会越来越棒的！`;
+    medal = '🥉'; title = '💪 继续加油！💪';
+    text = '答对了 ' + correct + ' 题，没关系，多练习就会越来越厉害的！';
+    stars = '⭐⭐';
   }
 
-  // 显示成就按钮
-  ach.querySelector('.retry-btn').style.display = 'inline-block';
+  document.getElementById('medal').textContent = medal;
+  document.getElementById('achieveTitle').textContent = title;
+  document.getElementById('achieveText').innerHTML = text;
+  document.getElementById('starsRow').textContent = stars;
+
+  ach.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-// ===== Confetti =====
-function launchConfetti() {
-  const container = document.getElementById('confettiContainer');
-  const colors = ['#FF9800', '#4CAF50', '#2196F3', '#E91E63', '#FFEB3B', '#9C27B0', '#00BCD4'];
-  for (let i = 0; i < 80; i++) {
-    const c = document.createElement('div');
-    c.className = 'confetti';
-    c.style.left = Math.random() * 100 + '%';
-    c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    c.style.animationDelay = Math.random() * 2 + 's';
-    c.style.animationDuration = (2 + Math.random() * 2) + 's';
-    c.style.width = (6 + Math.random() * 8) + 'px';
-    c.style.height = (6 + Math.random() * 8) + 'px';
-    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-    container.appendChild(c);
-  }
-  setTimeout(() => { container.innerHTML = ''; }, 5000);
-}
-
-// ===== 重试 =====
-function retryAll() {
-  score = 0;
-  coreCorrect = 0;
-  coreTotal = 0;
-  challengeCorrect = 0;
-  challengeTotal = 0;
-  currentChallenge = 0;
-  totalQuestions = 0;
-
-  document.getElementById('scoreNum').textContent = '0';
-  document.getElementById('totalNum').textContent = '0';
-  document.getElementById('starNum').textContent = '0';
-  document.getElementById('progressFill').style.width = '0%';
-  document.getElementById('achievement').classList.remove('show');
-
-  document.getElementById('coreSection').classList.add('hidden');
-  document.getElementById('challengeSection').classList.add('hidden');
-  document.getElementById('warmupSection').classList.remove('hidden');
+function retry() {
+  document.querySelectorAll('.answer-input').forEach(input => {
+    input.value = '';
+    input.className = 'answer-input';
+  });
+  document.querySelectorAll('.quest-card').forEach(card => {
+    card.className = 'quest-card';
+  });
+  document.querySelectorAll('.feedback').forEach(fb => {
+    fb.className = 'feedback';
+    fb.textContent = '';
+  });
+  document.getElementById('correctCount').textContent = '0';
+  document.getElementById('scoreStatus').textContent = '🏰 重新挑战吧！加油 💪';
+  document.getElementById('achievement').style.display = 'none';
+  document.getElementById('submitBtn').style.display = 'inline-flex';
+  document.getElementById('retryBtn').style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ===== 核心题目全部完成后显示挑战 =====
-const origCheckAnswer = checkAnswer;
-// Override: check when all core done
-function watchCoreCompletion() {
-  if (coreTotal >= totalCoreQ && !document.getElementById('challengeSection').classList.contains('shown')) {
-    document.getElementById('challengeSection').classList.remove('hidden');
-    document.getElementById('challengeSection').classList.add('shown');
-    renderChallenge();
-    setTimeout(() => {
-      document.getElementById('challengeSection').scrollIntoView({ behavior: 'smooth' });
-    }, 500);
+function launchConfetti() {
+  const container = document.createElement('div');
+  container.className = 'confetti-container';
+  document.body.appendChild(container);
+  const colors = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff6bc6','#845ef7'];
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.animationDelay = Math.random() * 2 + 's';
+    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+    c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.width = (6 + Math.random() * 8) + 'px';
+    c.style.height = (6 + Math.random() * 8) + 'px';
+    container.appendChild(c);
   }
+  setTimeout(() => container.remove(), 5000);
 }
-
-// 重写checkAnswer加入监测
-const _checkAnswer = checkAnswer;
-checkAnswer = function(idx) {
-  _checkAnswer(idx);
-  watchCoreCompletion();
-};
-
-// ===== 初始化 =====
-document.addEventListener('DOMContentLoaded', () => {
-  // 页面加载后不需要额外初始化，等待用户点击热身按钮
-});
 </script>
 </body>
 </html>
