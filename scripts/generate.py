@@ -205,16 +205,18 @@ def generate_html(date_str, questions):
     weekday_names = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"]
     weekday_display = weekday_names[weekday]
     
-    # Build answers JSON
+    # Build answers JSON - use the actual input IDs
     answers = {}
     explanations = {}
     for q in questions:
         if q["type"] == "multi-input":
-            answers[q["id"] + "_1"] = q["answers"][0]
-            answers[q["id"] + "_2"] = q["answers"][1]
-            explanations[q["id"] + "_1"] = q["explanation"]
-            explanations[q["id"] + "_2"] = q["explanation"]
+            # Q10 has two inputs: q10_1 and q10_2
+            answers[f"{q['id']}_1"] = q["answers"][0]
+            answers[f"{q['id']}_2"] = q["answers"][1]
+            explanations[f"{q['id']}_1"] = q["explanation"]
+            explanations[f"{q['id']}_2"] = q["explanation"]
         else:
+            # Q1-Q9: input ID matches question ID (q1, q2, ..., q9)
             answers[q["id"]] = q["answer"]
             explanations[q["id"]] = q["explanation"]
     
@@ -226,6 +228,7 @@ def generate_html(date_str, questions):
     for i, q in enumerate(questions):
         q_num = i + 1
         if q["type"] == "multi-input":
+            # Q10: two inputs with IDs q10_1 and q10_2
             questions_html += f'''
     <!-- Q{q_num} -->
     <div class="quest-card lock-card" id="q{q_num}-card">
@@ -247,6 +250,9 @@ def generate_html(date_str, questions):
     </div>
 '''
         else:
+            # Q1-Q9: input ID is q1, q2, ..., q9 (same as q["id"])
+            # Card ID is q1-card, q2-card, ..., q9-card
+            # Feedback ID is q1-fb, q2-fb, ..., q9-fb
             questions_html += f'''
     <!-- Q{q_num} -->
     <div class="quest-card" id="q{q_num}-card">
@@ -256,9 +262,9 @@ def generate_html(date_str, questions):
       <div class="quest-scene">{q["scene"]}</div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q{q["id"]}" data-answer="{q["answer"]}" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <input type="number" class="answer-input" id="{q["id"]}" data-answer="{q["answer"]}" min="0" max="99" inputmode="numeric" autocomplete="off">
       </div>
-      <div class="feedback" id="q{q["id"]}-fb"></div>
+      <div class="feedback" id="{q["id"]}-fb"></div>
     </div>
 '''
     
@@ -483,18 +489,14 @@ function playWrong() {{
   }} catch(e) {{}}
 }}
 
-function checkSingle(input) {{
+// Unified answer checking
+const answers = {answers_json};
+const explanations = {explanations_json};
+
+function checkInput(input) {{
   const val = input.value.trim();
-  if (val === '') {{
-    input.className = 'answer-input';
-    const card = input.closest('.quest-card');
-    if (card) {{
-      card.className = card.classList.contains('lock-card') ? 'quest-card lock-card' : 'quest-card';
-      const fb = card.querySelector('.feedback');
-      if (fb) {{ fb.className = 'feedback'; fb.textContent = ''; }}
-    }}
-    return;
-  }}
+  if (val === '') return;
+  
   const qId = input.id;
   const expected = answers[qId];
   const userAnswer = parseInt(val);
@@ -502,20 +504,22 @@ function checkSingle(input) {{
 
   const card = input.closest('.quest-card');
   const fb = card ? card.querySelector('.feedback') : null;
+  const data = explanations[qId];
 
   if (String(userAnswer) === String(expected)) {{
     input.className = 'answer-input correct-input';
+    input.disabled = true;
+    if (card) card.className = card.classList.contains('lock-card') ? 'quest-card lock-card correct' : 'quest-card correct';
     if (fb) {{
       fb.className = 'feedback show correct-fb';
-      const data = explanations[qId];
-      fb.textContent = '✅ ' + (data ? data.ok : '答对了！🌟');
+      fb.textContent = '✅ ' + (data ? data.ok : '答对了！🎉');
     }}
     playCorrect();
   }} else {{
     input.className = 'answer-input wrong-input';
+    if (card) card.className = card.classList.contains('lock-card') ? 'quest-card lock-card wrong' : 'quest-card wrong';
     if (fb) {{
       fb.className = 'feedback show wrong-fb';
-      const data = explanations[qId];
       fb.innerHTML = '❌ 不对哦<br>💡 正确答案：' + (data ? data.fix : expected);
     }}
     playWrong();
@@ -530,21 +534,16 @@ function updateScore() {{
   document.getElementById('progressFill').style.width = (correct / 12 * 100) + '%';
 }}
 
-const TOTAL = 12;
-const checked = new Set();
-const answers = {answers_json};
-const explanations = {explanations_json};
-
 function submitAll() {{
   let correct = 0;
   document.querySelectorAll('.answer-input').forEach(input => {{
     const val = input.value.trim();
     if (val === '') return;
     const qId = input.id;
-    checked.add(qId);
     if (String(parseInt(val)) === String(answers[qId])) {{
       correct++;
       input.className = 'answer-input correct-input';
+      input.disabled = true;
     }} else {{
       input.className = 'answer-input wrong-input';
     }}
@@ -553,7 +552,7 @@ function submitAll() {{
   document.getElementById('correctCount').textContent = correct;
   document.getElementById('progressFill').style.width = (correct / 12 * 100) + '%';
   
-  if (correct === TOTAL) {{
+  if (correct === 12) {{
     showAchievement(true);
   }} else {{
     showAchievement(false, correct);
@@ -570,17 +569,17 @@ function showAchievement(perfect, score) {{
     launchConfetti();
   }} else {{
     document.getElementById('medal').textContent = '🌟';
-    document.getElementById('achieveTitle').textContent = `🌟 完成挑战！`;
+    document.getElementById('achieveTitle').textContent = '🌟 完成挑战！';
     document.getElementById('achieveText').innerHTML = `答对了 ${{score}}/12 题，继续加油！每天进步一点点！💪`;
   }}
   ach.scrollIntoView({{ behavior: 'smooth', block: 'center' }});
 }}
 
 function retry() {{
-  checked.clear();
   document.querySelectorAll('.answer-input').forEach(input => {{
     input.value = '';
     input.className = 'answer-input';
+    input.disabled = false;
   }});
   document.querySelectorAll('.feedback').forEach(fb => {{
     fb.className = 'feedback';
@@ -618,9 +617,13 @@ function launchConfetti() {{
   setTimeout(() => container.innerHTML = '', 5000);
 }}
 
+// Bind events to all input fields
 document.querySelectorAll('.answer-input').forEach(input => {{
   input.addEventListener('keydown', function(e) {{
-    if (e.key === 'Enter') {{ e.preventDefault(); checkSingle(this); }}
+    if (e.key === 'Enter') {{ e.preventDefault(); checkInput(this); }}
+  }});
+  input.addEventListener('blur', function() {{
+    if (this.value !== '' && !this.disabled) checkInput(this);
   }});
 }});
 </script>
