@@ -213,7 +213,7 @@
 <div class="quest-scene">3 ＋ 3</div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q1" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <input type="number" class="answer-input" id="q1" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off">
       </div>
       <div class="feedback" id="q1-fb"></div>
     </div>
@@ -224,7 +224,7 @@
 <div class="quest-scene">3 ＋ 4</div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q2" data-answer="7" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <input type="number" class="answer-input" id="q2" data-answer="7" min="0" max="99" inputmode="numeric" autocomplete="off">
       </div>
       <div class="feedback" id="q2-fb"></div>
     </div>
@@ -251,10 +251,10 @@
     <!-- Q4 -->
     <div class="quest-card" id="q4-card">
       <div class="quest-header"><span class="quest-num">4</span><span style="font-weight:700;">找规律填数</span></div>
-<div class="quest-scene">3，6，9，12，下一个数是几？</div>
+<div class="quest-scene">2，4，6，8，下一个数是几？</div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q4" data-answer="15" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <input type="number" class="answer-input" id="q4" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off">
       </div>
       <div class="feedback" id="q4-fb"></div>
     </div>
@@ -262,11 +262,11 @@
     <!-- Q5 -->
     <div class="quest-card" id="q5-card">
       <div class="quest-header"><span class="quest-num">5</span><span style="font-weight:700;">图形找规律</span></div>
-<div class="quest-scene">🍎 🍎 🍐 🍎 🍎 🍐 🍎 ❓ 接下来是什么？</div>
+<div class="quest-scene">🔺 🔻 🔺 🔻 🔺 🔻 🔺 ❓ 接下来是什么？</div>
       <div class="options-group" id="q5-options">
-        <div class="option-card"><input type="radio" name="q5" id="q5-a" value="a"><label for="q5-a">🍎 苹果</label></div>
-        <div class="option-card"><input type="radio" name="q5" id="q5-b" value="b"><label for="q5-b">🍐 梨</label></div>
-        <div class="option-card"><input type="radio" name="q5" id="q5-c" value="c"><label for="q5-c">🍊 橙子</label></div>
+        <div class="option-card"><input type="radio" name="q5" id="q5-a" value="a"><label for="q5-a">🔺 上三角</label></div>
+        <div class="option-card"><input type="radio" name="q5" id="q5-b" value="b"><label for="q5-b">🔻 下三角</label></div>
+        <div class="option-card"><input type="radio" name="q5" id="q5-c" value="c"><label for="q5-c">⬜ 方形</label></div>
       </div>
       <div class="feedback" id="q5-fb"></div>
     </div>
@@ -274,11 +274,11 @@
     <!-- Q6 -->
     <div class="quest-card" id="q6-card">
       <div class="quest-header"><span class="quest-num">6</span><span style="font-weight:700;">推理链</span></div>
-<div class="quest-scene">铅笔说："我比橡皮长。"<br>尺子说："我比铅笔长。"<br>请问：谁最短？</div>
+<div class="quest-scene">小明跑了8秒，<br>小红比小明慢2秒，<br>小刚比小红快1秒。<br>请问：谁跑得最快？</div>
       <div class="options-group" id="q6-options">
-        <div class="option-card"><input type="radio" name="q6" id="q6-a" value="a"><label for="q6-a">✏️ 铅笔</label></div>
-        <div class="option-card"><input type="radio" name="q6" id="q6-b" value="b"><label for="q6-b">🧹 橡皮</label></div>
-        <div class="option-card"><input type="radio" name="q6" id="q6-c" value="c"><label for="q6-c">📏 尺子</label></div>
+        <div class="option-card"><input type="radio" name="q6" id="q6-a" value="a"><label for="q6-a">👦 小明</label></div>
+        <div class="option-card"><input type="radio" name="q6" id="q6-b" value="b"><label for="q6-b">👧 小红</label></div>
+        <div class="option-card"><input type="radio" name="q6" id="q6-c" value="c"><label for="q6-c">👦 小刚</label></div>
       </div>
       <div class="feedback" id="q6-fb"></div>
     </div>
@@ -293,10 +293,10 @@
     <!-- Q7 -->
     <div class="quest-card" id="q7-card">
       <div class="quest-header"><span class="quest-num">7</span><span style="font-weight:700;">括号里填几</span></div>
-<div class="quest-scene">( ? ) + 6 = 9，括号里应该填几？</div>
+<div class="quest-scene">( ? ) + 3 = 13，括号里应该填几？</div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q7" data-answer="3" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <input type="number" class="answer-input" id="q7" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off">
       </div>
       <div class="feedback" id="q7-fb"></div>
     </div>
@@ -316,10 +316,10 @@
     <!-- Q9 -->
     <div class="quest-card" id="q9-card">
       <div class="quest-header"><span class="quest-num">9</span><span style="font-weight:700;">应用题</span></div>
-<div class="quest-scene">水池里有 9 条小鱼 🐟<br>游走了 2 条<br>又游来了 3 条</div>
+<div class="quest-scene">花园里有 4 只蝴蝶 🦋<br>飞走了 1 只<br>又来了 4 只</div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q9" data-answer="10" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <input type="number" class="answer-input" id="q9" data-answer="7" min="0" max="99" inputmode="numeric" autocomplete="off">
       </div>
       <div class="feedback" id="q9-fb"></div>
     </div>
@@ -327,10 +327,10 @@
     <!-- Q10 -->
     <div class="quest-card" id="q10-card">
       <div class="quest-header"><span class="quest-num">10</span><span style="font-weight:700;">连加连减</span></div>
-<div class="quest-scene">12 ＋ 11 ＋ 7</div>
+<div class="quest-scene">11 － 8 ＋ 5</div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q10" data-answer="30" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <input type="number" class="answer-input" id="q10" data-answer="8" min="0" max="99" inputmode="numeric" autocomplete="off">
       </div>
       <div class="feedback" id="q10-fb"></div>
     </div>
@@ -345,13 +345,13 @@
     <!-- Q11 -->
     <div class="quest-card" id="q11-card">
       <div class="quest-header"><span class="quest-num">11</span><span style="font-weight:700;">数图形</span></div>
-<div class="quest-scene">数一数，下面一共有多少个 🟢 ？</div>
-<div class="shape-grid"><div class="shape-item">🟢</div><div class="shape-item">🟢</div><div class="shape-item">🟢</div><div class="shape-item">🟢</div><div class="shape-item">🟢</div><div class="shape-item">🟢</div><div class="shape-item">🟢</div><div class="shape-item">🟢</div></div>
+<div class="quest-scene">数一数，下面一共有多少个 🔵 ？</div>
+<div class="shape-grid"><div class="shape-item">🔵</div><div class="shape-item">🔵</div><div class="shape-item">🔵</div><div class="shape-item">🔵</div><div class="shape-item">🔵</div><div class="shape-item">🔵</div><div class="shape-item">🔵</div></div>
       <div class="options-group" id="q11-options">
-        <div class="option-card"><input type="radio" name="q11" id="q11-a" value="a"><label for="q11-a">8 个</label></div>
-        <div class="option-card"><input type="radio" name="q11" id="q11-b" value="b"><label for="q11-b">9 个</label></div>
-        <div class="option-card"><input type="radio" name="q11" id="q11-c" value="c"><label for="q11-c">6 个</label></div>
-        <div class="option-card"><input type="radio" name="q11" id="q11-d" value="d"><label for="q11-d">7 个</label></div>
+        <div class="option-card"><input type="radio" name="q11" id="q11-a" value="a"><label for="q11-a">7 个</label></div>
+        <div class="option-card"><input type="radio" name="q11" id="q11-b" value="b"><label for="q11-b">6 个</label></div>
+        <div class="option-card"><input type="radio" name="q11" id="q11-c" value="c"><label for="q11-c">5 个</label></div>
+        <div class="option-card"><input type="radio" name="q11" id="q11-d" value="d"><label for="q11-d">8 个</label></div>
       </div>
       <div class="feedback" id="q11-fb"></div>
     </div>
@@ -359,10 +359,10 @@
     <!-- Q12 -->
     <div class="quest-card" id="q12-card">
       <div class="quest-header"><span class="quest-num">12</span><span style="font-weight:700;">排队问题</span></div>
-<div class="scene-box">小朋友们排队领新书 📚<br>小刚前面有 3 个人<br>后面有 5 个人</div>
+<div class="scene-box">小朋友们排队领新书 📚<br>小红前面有 4 个人<br>后面有 4 个人</div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q12" data-answer="9" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <input type="number" class="answer-input" id="q12" data-answer="9" min="0" max="99" inputmode="numeric" autocomplete="off">
       </div>
       <div class="feedback" id="q12-fb"></div>
     </div>
@@ -433,50 +433,15 @@ function playWrong() {
   } catch(e) {}
 }
 
-// 单题即时检查（输入框专用）
-function checkSingle(input) {
+// 检查输入框的值
+function checkInputValue(input) {
   const val = input.value.trim();
-  if (val === '') {
-    input.className = 'answer-input';
-    const card = input.closest('.quest-card');
-    if (card) {
-      card.className = 'quest-card';
-      const fb = card.querySelector('.feedback');
-      if (fb) { fb.className = 'feedback'; fb.textContent = ''; }
-    }
-    return;
-  }
+  if (val === '' || isNaN(parseInt(val))) return;
+  
   const qId = input.id;
-  const expected = answers[qId];
-  const userAnswer = parseInt(val);
-  if (isNaN(userAnswer)) return;
-
-  const card = input.closest('.quest-card');
-  const fb = card ? card.querySelector('.feedback') : null;
-
-  if (String(userAnswer) === String(expected)) {
-    input.className = 'answer-input correct-input';
-    if (card) card.className = 'quest-card correct';
-    if (fb) {
-      fb.className = 'feedback show correct-fb';
-      const data = explanations[qId];
-      fb.textContent = '✅ ' + (data ? data.ok : '答对了！太棒了！🌟');
-    }
-    playCorrect();
-  } else {
-    input.className = 'answer-input wrong-input';
-    if (card) card.className = 'quest-card wrong';
-    if (fb) {
-      fb.className = 'feedback show wrong-fb';
-      const data = explanations[qId];
-      fb.innerHTML = '❌ 不对哦<br>💡 正确答案：' + (data ? data.fix : expected);
-    }
-    playWrong();
+  if (!checked.has(qId)) {
+    checkAnswer(qId);
   }
-
-  // Update scoreboard
-  document.getElementById('correctCount').textContent =
-    Array.from(document.querySelectorAll('.answer-input.correct-input')).length;
 }
 
 // ===== 答案 =====
@@ -484,8 +449,8 @@ const TOTAL = 12;
 let correctCount = 0;
 const checked = new Set();
 
-const answers = {"q1": "6", "q2": "7", "q3": "b", "q4": "15", "q5": "a", "q6": "b", "q7": "3", "q8": "b", "q9": "10", "q10": "30", "q11": "a", "q12": "9"};
-const explanations = {"q1": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是6。"}, "q2": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是7。"}, "q3": {"ok": "选择正确！7 大🎉", "fix": "正确答案是：7 大"}, "q4": {"ok": "15！规律找得很准！🎉", "fix": "规律是每次+3，下一个数是15。"}, "q5": {"ok": "选择正确！🍎 苹果🎉", "fix": "正确答案是：🍎 苹果"}, "q6": {"ok": "选择正确！橡皮最短🎉", "fix": "正确答案是：橡皮最短"}, "q7": {"ok": "括号里填3，完全正确！🎉", "fix": "用逆运算：9 - 6 = 3。"}, "q8": {"ok": "选择正确！8 + 5=13最大🎉", "fix": "8 + 5=13，结果最大。"}, "q9": {"ok": "答对了！太棒了！🎉", "fix": "9 - 2 + 3 = 10，正确答案是10。"}, "q10": {"ok": "30，计算正确！🎉", "fix": "从左到右一步步算，答案是30。"}, "q11": {"ok": "选择正确！一共8个🎉", "fix": "正确答案是：8 个"}, "q12": {"ok": "9人，排队问题理解到位！🎉", "fix": "前面的人 + 后面的人 + 自己 = 总人数，答案是9。"}};
+const answers = {"q1": "6", "q2": "7", "q3": "b", "q4": "10", "q5": "b", "q6": "a", "q7": "10", "q8": "b", "q9": "7", "q10": "8", "q11": "a", "q12": "9"};
+const explanations = {"q1": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是6。"}, "q2": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是7。"}, "q3": {"ok": "选择正确！7 大🎉", "fix": "正确答案是：7 大"}, "q4": {"ok": "10！规律找得很准！🎉", "fix": "规律是每次+2，下一个数是10。"}, "q5": {"ok": "选择正确！🔻 下三角🎉", "fix": "正确答案是：🔻 下三角"}, "q6": {"ok": "选择正确！小明用时最短，跑得最快🎉", "fix": "正确答案是：小明用时最短，跑得最快"}, "q7": {"ok": "括号里填10，完全正确！🎉", "fix": "用逆运算：13 - 3 = 10。"}, "q8": {"ok": "选择正确！8 + 5=13最大🎉", "fix": "8 + 5=13，结果最大。"}, "q9": {"ok": "答对了！太棒了！🎉", "fix": "4 - 1 + 4 = 7，正确答案是7。"}, "q10": {"ok": "8，计算正确！🎉", "fix": "从左到右一步步算，答案是8。"}, "q11": {"ok": "选择正确！一共7个🎉", "fix": "正确答案是：7 个"}, "q12": {"ok": "9人，排队问题理解到位！🎉", "fix": "前面的人 + 后面的人 + 自己 = 总人数，答案是9。"}};
 
 function getInputValue(qId) {
   const input = document.getElementById(qId);
@@ -501,7 +466,7 @@ function checkAnswer(qId) {
   if (!userAnswer) return;
 
   checked.add(qId);
-  const isCorrect = userAnswer === answers[qId];
+  const isCorrect = String(parseInt(userAnswer)) === String(answers[qId]) || userAnswer === answers[qId];
   const card = document.getElementById(qId + '-card');
   const fb = document.getElementById(qId + '-fb');
   const data = explanations[qId];
@@ -515,7 +480,10 @@ function checkAnswer(qId) {
     fb.textContent = '✅ ' + data.ok;
 
     const input = document.getElementById(qId);
-    if (input) input.className = 'answer-input correct-input';
+    if (input) {
+      input.className = 'answer-input correct-input';
+      input.disabled = true;
+    }
 
     card.querySelectorAll('input[type="radio"]').forEach(r => { r.disabled = true; });
     card.querySelectorAll('.option-card label').forEach(l => {

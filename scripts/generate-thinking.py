@@ -372,24 +372,23 @@ def generate_number_sense(week):
     })
     
     # Q10: Chain calculation
-    ops_config = random.choice([
-        ("+", "-", lambda a, b, c: a + b - c, "＋", "－"),
-        ("-", "+", lambda a, b, c: a - b + c, "－", "＋"),
-        ("+", "+", lambda a, b, c: a + b + c, "＋", "＋"),
-    ])
+    op_type = random.choice(["add_add", "add_sub", "sub_add"])
     
-    if ops_config[2] == (lambda a, b, c: a + b + c):
+    if op_type == "add_add":
         a, b, c = random.randint(2, 6), random.randint(1, 5), random.randint(1, 4)
-    elif ops_config[2] == (lambda a, b, c: a + b - c):
+        answer = a + b + c
+        q_scene = f"{a} ＋ {b} ＋ {c}"
+    elif op_type == "add_sub":
         a, b = random.randint(3, 8), random.randint(1, 5)
         c = random.randint(1, a + b - 1)
+        answer = a + b - c
+        q_scene = f"{a} ＋ {b} － {c}"
     else:
         a = random.randint(5, 12)
         b = random.randint(1, a - 1)
         c = random.randint(1, 8)
-    
-    answer = ops_config[2](a, b, c)
-    q_scene = f"{a} {ops_config[3]} {b} {ops_config[4]} {c}"
+        answer = a - b + c
+        q_scene = f"{a} － {b} ＋ {c}"
     
     questions.append({
         "id": "q10",
@@ -409,12 +408,18 @@ def generate_spatial(week):
     # Q11: Count shapes
     shapes = ["🌟", "🔵", "❤️", "🟢", "⭐", "🔶"]
     shape = random.choice(shapes)
-    count = random.randint(6, 12)
-    shape_display = "".join([shape] * count)
+    count = random.randint(6, 10)  # Reduced max to keep options reasonable
     
-    # Generate options around the correct answer
-    options = [count - 2, count - 1, count, count + 1]
-    options = [max(3, x) for x in options]
+    # Generate options around the correct answer, ensuring no negatives and no duplicates
+    wrong_options = []
+    for offset in [-2, -1, 1, 2, -3, 3]:
+        opt = count + offset
+        if opt > 0 and opt != count and opt not in wrong_options:
+            wrong_options.append(opt)
+        if len(wrong_options) >= 3:
+            break
+    
+    options = wrong_options[:3] + [count]
     random.shuffle(options)
     correct_idx = options.index(count)
     answer = chr(ord("a") + correct_idx)
@@ -797,50 +802,15 @@ function playWrong() {{
   }} catch(e) {{}}
 }}
 
-// 单题即时检查（输入框专用）
-function checkSingle(input) {{
+// 检查输入框的值
+function checkInputValue(input) {{
   const val = input.value.trim();
-  if (val === '') {{
-    input.className = 'answer-input';
-    const card = input.closest('.quest-card');
-    if (card) {{
-      card.className = 'quest-card';
-      const fb = card.querySelector('.feedback');
-      if (fb) {{ fb.className = 'feedback'; fb.textContent = ''; }}
-    }}
-    return;
-  }}
+  if (val === '' || isNaN(parseInt(val))) return;
+  
   const qId = input.id;
-  const expected = answers[qId];
-  const userAnswer = parseInt(val);
-  if (isNaN(userAnswer)) return;
-
-  const card = input.closest('.quest-card');
-  const fb = card ? card.querySelector('.feedback') : null;
-
-  if (String(userAnswer) === String(expected)) {{
-    input.className = 'answer-input correct-input';
-    if (card) card.className = 'quest-card correct';
-    if (fb) {{
-      fb.className = 'feedback show correct-fb';
-      const data = explanations[qId];
-      fb.textContent = '✅ ' + (data ? data.ok : '答对了！太棒了！🌟');
-    }}
-    playCorrect();
-  }} else {{
-    input.className = 'answer-input wrong-input';
-    if (card) card.className = 'quest-card wrong';
-    if (fb) {{
-      fb.className = 'feedback show wrong-fb';
-      const data = explanations[qId];
-      fb.innerHTML = '❌ 不对哦<br>💡 正确答案：' + (data ? data.fix : expected);
-    }}
-    playWrong();
+  if (!checked.has(qId)) {{
+    checkAnswer(qId);
   }}
-
-  // Update scoreboard
-  document.getElementById('correctCount').textContent =
-    Array.from(document.querySelectorAll('.answer-input.correct-input')).length;
 }}
 
 // ===== 答案 =====
@@ -865,7 +835,7 @@ function checkAnswer(qId) {{
   if (!userAnswer) return;
 
   checked.add(qId);
-  const isCorrect = userAnswer === answers[qId];
+  const isCorrect = String(parseInt(userAnswer)) === String(answers[qId]) || userAnswer === answers[qId];
   const card = document.getElementById(qId + '-card');
   const fb = document.getElementById(qId + '-fb');
   const data = explanations[qId];
@@ -879,7 +849,10 @@ function checkAnswer(qId) {{
     fb.textContent = '✅ ' + data.ok;
 
     const input = document.getElementById(qId);
-    if (input) input.className = 'answer-input correct-input';
+    if (input) {{
+      input.className = 'answer-input correct-input';
+      input.disabled = true;
+    }}
 
     card.querySelectorAll('input[type="radio"]').forEach(r => {{ r.disabled = true; }});
     card.querySelectorAll('.option-card label').forEach(l => {{
@@ -1078,7 +1051,7 @@ def render_question(q):
     if q["type"] == "input":
         html += f'''      <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="{q["id"]}" data-answer="{q["answer"]}" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <input type="number" class="answer-input" id="{q["id"]}" data-answer="{q["answer"]}" min="0" max="99" inputmode="numeric" autocomplete="off">
       </div>
 '''
     elif q["type"] == "choice":
