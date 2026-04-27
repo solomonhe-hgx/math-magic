@@ -411,7 +411,7 @@ def generate_html(date_str, questions):
 <div class="container">
 
   <div class="scoreboard">
-    <div class="score"><span class="correct" id="correctCount">0</span> / <span id="totalCount">12</span> 正确</div>
+    <div class="score"><span class="correct" id="correctCount">0</span> / <span id="totalCount">10</span> 正确</div>
     <div class="progress-mini"><div class="progress-mini-fill" id="progressFill"></div></div>
     <div class="status" id="scoreStatus">{theme_emoji} 开始今天的魔法练习吧！</div>
   </div>
@@ -531,7 +531,7 @@ function updateScore() {{
   let correct = 0;
   document.querySelectorAll('.answer-input.correct-input').forEach(() => correct++);
   document.getElementById('correctCount').textContent = correct;
-  document.getElementById('progressFill').style.width = (correct / 12 * 100) + '%';
+  document.getElementById('progressFill').style.width = (correct / 10 * 100) + '%';
 }}
 
 function submitAll() {{
@@ -550,9 +550,9 @@ function submitAll() {{
   }});
   
   document.getElementById('correctCount').textContent = correct;
-  document.getElementById('progressFill').style.width = (correct / 12 * 100) + '%';
+  document.getElementById('progressFill').style.width = (correct / 10 * 100) + '%';
   
-  if (correct === 12) {{
+  if (correct === 10) {{
     showAchievement(true);
   }} else {{
     showAchievement(false, correct);
@@ -565,12 +565,12 @@ function showAchievement(perfect, score) {{
   if (perfect) {{
     document.getElementById('medal').textContent = '👑';
     document.getElementById('achieveTitle').textContent = '🎊 满分通关！数学大师！🎊';
-    document.getElementById('achieveText').innerHTML = '12/12 全部正确！你已经是真正的数学魔法师了！✨';
+    document.getElementById('achieveText').innerHTML = '10/10 全部正确！你已经是真正的数学魔法师了！✨';
     launchConfetti();
   }} else {{
     document.getElementById('medal').textContent = '🌟';
     document.getElementById('achieveTitle').textContent = '🌟 完成挑战！';
-    document.getElementById('achieveText').innerHTML = `答对了 ${{score}}/12 题，继续加油！每天进步一点点！💪`;
+    document.getElementById('achieveText').innerHTML = `答对了 ${{score}}/10 题，继续加油！每天进步一点点！💪`;
   }}
   ach.scrollIntoView({{ behavior: 'smooth', block: 'center' }});
 }}
