@@ -1109,6 +1109,9 @@ def render_question(q, idx):
         elif '排队' in title:
             # Queue problems: show scene + question
             content = f'{scene_html}\n      <div class="quest-scene">{question}</div>'
+        elif question:
+            # Word problems with explicit question (e.g., Q12 alternatives)
+            content = f'{scene_html}\n      <div class="quest-scene">{question}</div>'
         elif equation:
             # Regular math problems
             content = f'<div class="quest-row">\n        <span class="quest-math">{equation}</span>\n      </div>'
