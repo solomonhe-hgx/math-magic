@@ -16,6 +16,10 @@ import random
 import hashlib
 from datetime import date
 
+# Import validation expert
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from validate import validate_thinking_questions, print_validation_report
+
 HISTORY_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '..', 'question-history.json')
 
 def load_history():
@@ -336,12 +340,12 @@ Q12_ALTERNATIVES = {
 
 def gen_q12_varied(title, front_min, front_max, back_min, back_max, use_queue=None):
     """Q12 generator that rotates between queue problems and other types.
-    use_queue: True/False to force queue or not. None means auto-rotate based on date hash.
+    Strongly prefers non-queue problems (only 20% queue, 80% other).
     """
     # Determine if we should use a queue problem this time
     if use_queue is None:
-        # Use a hash of the current date to decide — roughly 50% queue, 50% other
-        use_queue = random.random() < 0.5
+        # Only 20% chance of queue problem
+        use_queue = random.random() < 0.2
 
     if use_queue:
         return gen_queue_problem_from_pool(title, front_min, front_max, back_min, back_max)
@@ -490,17 +494,23 @@ def generate_week3_4():
     b_sub = random.randint(2, 5)
     b_add = random.randint(1, 4)
     return {
-        'q1': gen_fill('快速口算', 'a + b', 11, 16, 1, 3, '不进位'),
-        'q2': gen_fill('快速口算', 'a - b', 13, 19, 1, 5, '不退位'),
-        'q3': gen_compare('比一比', 'a', 'b', 13, 18, c_min=10, c_max=19),
-        'q4': gen_pattern('找规律填数', 'increasing_step', 3, 5),
-        'q5': gen_color_pattern('图形找规律', random.choice(['AABB', 'ABC', 'ABAB'])),
-        'q6': gen_logic_chain_from_pool('推理链', ['person', 'fruit', 'speed']),
-        'q7': gen_fill_blank('括号里填几', ['10 + ( ? ) = 15', '( ? ) + 6 = 17', '18 - ( ? ) = 12', '( ? ) - 3 = 13']),
+        'q1': gen_fill('快速口算', 'a + b', 11, 16, 1, 5, '不进位'),
+        'q2': gen_fill('快速口算', 'a - b', 13, 19, 1, 6, '不退位'),
+        'q3': gen_compare('比一比', 'a', 'b', 12, 18, c_min=10, c_max=19),
+        'q4': gen_pattern('找规律填数', random.choice(['increasing_step', 'increasing_diff']), 3, 5),
+        'q5': gen_color_pattern('图形找规律', random.choice(['AABB', 'ABC', 'ABAB', 'ABA'])),
+        'q6': gen_logic_chain_from_pool('推理链', random.choice([['person', 'fruit'], ['speed', 'vehicle'], ['height', 'person'], ['weight', 'fruit']])),
+        'q7': gen_fill_blank('括号里填几', random.sample([
+            '10 + ( ? ) = 15', '( ? ) + 6 = 17', '18 - ( ? ) = 12', '( ? ) - 3 = 13',
+            '11 + ( ? ) = 16', '( ? ) + 5 = 18', '17 - ( ? ) = 11', '( ? ) - 4 = 12',
+            '12 + ( ? ) = 19', '( ? ) + 7 = 16', '19 - ( ? ) = 13', '( ? ) - 2 = 14',
+        ], 1)),
         'q8': gen_which_largest('哪个结果最大', ['a+b', 'c+d', 'e-f'],
-                               [(10,3), (8,4), (18,5)]),
-        'q9': gen_word_problem_from_pool('应用题', random.choice(['sub_then_add', 'two_step']), b_base, b_sub, b_add),
-        'q10': gen_fill('连加连减', 'a + b - c + d', 3, 5, 1, 3, 1, 3, 1, 3),
+                               [(random.randint(10,14), random.randint(1,5)), 
+                                (random.randint(8,12), random.randint(1,5)), 
+                                (random.randint(15,19), random.randint(5,10))]),
+        'q9': gen_word_problem_from_pool('应用题', random.choice(['sub_then_add', 'two_step', 'add_then_sub']), b_base, b_sub, b_add),
+        'q10': gen_fill('连加连减', 'a + b - c + d', 2, 6, 1, 4, 1, 3, 1, 4),
         'q11': gen_count_shapes('数图形', 7, 12),
         'q12': gen_q12_varied('思维应用题', 3, 5, 4, 6),
     }
@@ -695,15 +705,19 @@ def gen_fill(title, op, *args):
     return {'type': 'fill', 'title': title, 'equation': equation, 'answer': answer}
 
 def gen_compare(title, left_op, right_label, a_min, a_max, c_min=None, c_max=None, d_min=None, d_max=None, right_val=None):
-    max_attempts = 20
-    for _ in range(max_attempts):
+    """Generate comparison question with guaranteed distinct options."""
+    max_attempts = 30
+    for attempt in range(max_attempts):
         a = random.randint(a_min, a_max)
         if left_op == 'a + b':
             b = random.randint(c_min or 1, c_max or 5)
             left_val = a + b
             left_str = f'{a} + {b}'
         elif left_op == 'a - b':
-            b = random.randint(c_min or 1, min(a - 1, c_max or 5))
+            b_max_val = min(a - 1, c_max or 5)
+            if b_max_val < (c_min or 1):
+                continue  # retry
+            b = random.randint(c_min or 1, b_max_val)
             left_val = a - b
             left_str = f'{a} - {b}'
         elif left_op == 'a + b - c':
@@ -720,11 +734,16 @@ def gen_compare(title, left_op, right_label, a_min, a_max, c_min=None, c_max=Non
         else:
             right_v = random.randint(c_min or 5, c_max or 12)
 
+        # Skip if equal - we want clear comparisons most of the time
+        if left_val == right_v and attempt < 20:
+            continue
+
+        # Build options with guaranteed distinct labels
         if left_val > right_v:
             answer = 'a'
-            answer_text = f'左边大'
+            answer_text = '左边大'
             options = [
-                ('a', f'左边大'),
+                ('a', '左边大'),
                 ('b', f'{right_v} 大'),
                 ('c', '一样大'),
             ]
@@ -733,10 +752,11 @@ def gen_compare(title, left_op, right_label, a_min, a_max, c_min=None, c_max=Non
             answer_text = f'{right_v} 大'
             options = [
                 ('a', f'{left_str} 大'),
-                ('b', f'右边大'),
+                ('b', '右边大'),
                 ('c', '一样大'),
             ]
         else:
+            # Equal case
             answer = 'c'
             answer_text = '一样大'
             options = [
@@ -744,12 +764,18 @@ def gen_compare(title, left_op, right_label, a_min, a_max, c_min=None, c_max=Non
                 ('b', f'{right_v} 大'),
                 ('c', '一样大'),
             ]
-        # Only retry if equal case produces confusing identical labels
-        if left_val == right_v:
-            # This is fine — options are distinct
+
+        # Verify options are distinct
+        opt_labels = [label for _, label in options]
+        if len(opt_labels) == len(set(opt_labels)):
             break
-        # For unequal cases, options are already distinct
-        break
+    else:
+        # Fallback: force a != b scenario
+        left_val = a_max
+        right_v = (c_min or 5)
+        answer = 'a'
+        answer_text = '左边大'
+        options = [('a', '左边大'), ('b', f'{right_v} 大'), ('c', '一样大')]
 
     return {
         'type': 'choice', 'title': title,
@@ -1810,7 +1836,7 @@ def main():
     if 'thinking' not in history.get('used_questions', {}):
         history.setdefault('used_questions', {})['thinking'] = {}
 
-    # Generate questions with retry on duplicates
+    # Generate questions with retry on validation failures
     generators = {
         'week1_2': generate_week1_2,
         'week3_4': generate_week3_4,
@@ -1823,22 +1849,34 @@ def main():
 
     gen_func = generators.get(difficulty, generate_week1_2)
     used_hashes = history['used_questions']['thinking']
-    max_retries = 30
+    max_retries = 50
+    questions = None
+    validation_issues = []
 
     for attempt in range(max_retries):
         seed_val = date_based_seed(target_date) + attempt * 1000
         random.seed(seed_val)
         questions = gen_func()
 
-        # Check for duplicates
-        has_duplicate = False
-        for qid, q in questions.items():
-            h = hash_question(q)
-            if h in used_hashes:
-                has_duplicate = True
-                break
-        if not has_duplicate:
+        # Run validation expert
+        is_valid, validation_issues = validate_thinking_questions(questions, history)
+        
+        # Only block on CRITICAL issues (answer errors, non-unique answers, option duplicates)
+        critical_issues = [i for i in validation_issues if any(
+            keyword in i for keyword in ['答案错误', '答案不唯一', '选项有重复', '答案不能为负数']
+        )]
+        
+        if not critical_issues:
             break
+        
+        # If critical issues exist, retry
+        if attempt < max_retries - 1:
+            print(f"   ⚠️  关键校验失败，重试 ({attempt+1}/{max_retries}): {critical_issues[0]}")
+
+    if not is_valid:
+        print(f"   ⚠️  校验未完全通过，生成最佳可用结果:")
+        for issue in validation_issues:
+            print(f"      - {issue}")
 
     # Record new questions in history
     for qid, q in questions.items():
@@ -1863,6 +1901,9 @@ def main():
     print(f"   Difficulty: {difficulty}")
     print(f"   Week: {week}")
     print(f"   Questions: {len(questions)} (4 sections)")
+
+    # Print validation report
+    print_validation_report(filename, is_valid, validation_issues)
 
     abs_path = os.path.abspath(filepath)
     file_url = f"file://{abs_path}"
