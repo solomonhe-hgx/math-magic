@@ -277,11 +277,11 @@
     <!-- Q6 -->
     <div class="quest-card" id="q6-card">
       <div class="quest-header"><span class="quest-num">6</span><span style="font-weight:700;">推理链</span></div>
-<div class="quest-scene">苹果说："我比梨重。"<br>香蕉说："我比苹果轻。"<br>请问：谁最轻？</div>
+<div class="quest-scene">西瓜说："我比哈密瓜重。"<br>菠萝说："我比西瓜轻，但比哈密瓜重。"<br>请问：谁最轻？</div>
       <div class="options-group" id="q6-options">
-        <div class="option-card"><input type="radio" name="q6" id="q6-a" value="a"><label for="q6-a">🍎 苹果</label></div>
-        <div class="option-card"><input type="radio" name="q6" id="q6-b" value="b"><label for="q6-b">🍐 梨</label></div>
-        <div class="option-card"><input type="radio" name="q6" id="q6-c" value="c"><label for="q6-c">🍌 香蕉</label></div>
+        <div class="option-card"><input type="radio" name="q6" id="q6-a" value="a"><label for="q6-a">🍉 西瓜</label></div>
+        <div class="option-card"><input type="radio" name="q6" id="q6-b" value="b"><label for="q6-b">🍍 菠萝</label></div>
+        <div class="option-card"><input type="radio" name="q6" id="q6-c" value="c"><label for="q6-c">🍈 哈密瓜</label></div>
       </div>
       <div class="feedback" id="q6-fb"></div>
     </div>
@@ -497,7 +497,7 @@ const checked = new Set();
 
 const answers = {"q1": "18", "q2": "21", "q3": "a", "q4": "17", "q5": "a", "q6": "c", "q7": "6", "q8": "a", "q9": "11", "q10": "8", "q11": "c", "q12": "13"};
 
-const explanations = {"q1": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是18。"}, "q2": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是21。"}, "q3": {"ok": "选择正确！左边大🎉", "fix": "正确答案是：左边大"}, "q4": {"ok": "17！规律找得很准！🎉", "fix": "仔细观察数列的规律，下一个数是17。"}, "q5": {"ok": "选择正确！🔴 红色🎉", "fix": "正确答案是：🔴 红色"}, "q6": {"ok": "选择正确！香蕉最轻🎉", "fix": "正确答案是：香蕉最轻"}, "q7": {"ok": "括号里填6，完全正确！🎉", "fix": "用逆运算：17 - ( ? ) = 11，括号里应该填几？，答案是6。"}, "q8": {"ok": "选择正确！10 + 4 结果最大🎉", "fix": "分别计算三个算式，10 + 4 的结果最大。"}, "q9": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是11。"}, "q10": {"ok": "8，从左到右计算正确！🎉", "fix": "从左到右一步步算，答案是8。"}, "q11": {"ok": "数对了！一共c个🎉", "fix": "仔细数一数，一共有c个。可以用\"划掉法\"避免重复。"}, "q12": {"ok": "答案是13，完全正确！🎉", "fix": "仔细阅读题目，一步步计算，答案是13。"}};
+const explanations = {"q1": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是18。"}, "q2": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是21。"}, "q3": {"ok": "选择正确！左边大🎉", "fix": "正确答案是：左边大"}, "q4": {"ok": "17！规律找得很准！🎉", "fix": "仔细观察数列的规律，下一个数是17。"}, "q5": {"ok": "选择正确！🔴 红色🎉", "fix": "正确答案是：🔴 红色"}, "q6": {"ok": "选择正确！哈密瓜最轻🎉", "fix": "正确答案是：哈密瓜最轻"}, "q7": {"ok": "括号里填6，完全正确！🎉", "fix": "用逆运算：17 - ( ? ) = 11，括号里应该填几？，答案是6。"}, "q8": {"ok": "选择正确！10 + 4 结果最大🎉", "fix": "分别计算三个算式，10 + 4 的结果最大。"}, "q9": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是11。"}, "q10": {"ok": "8，从左到右计算正确！🎉", "fix": "从左到右一步步算，答案是8。"}, "q11": {"ok": "数对了！一共c个🎉", "fix": "仔细数一数，一共有c个。可以用\"划掉法\"避免重复。"}, "q12": {"ok": "答案是13，完全正确！🎉", "fix": "仔细阅读题目，一步步计算，答案是13。"}};
 
 function getInputValue(qId) {
   const input = document.getElementById(qId);
