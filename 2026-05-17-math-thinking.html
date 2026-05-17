@@ -255,10 +255,14 @@
     <div class="quest-card" id="q4-card">
       <div class="quest-header"><span class="quest-num">4</span><span style="font-weight:700;">数字拆分</span></div>
 <div class="quest-scene">用两个数相加得到 13，可以是几加几？</div>
-      <div class="quest-scene">一种答案是 2 和 11，写第一个数即可</div>
       <div class="quest-row">
-        <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q4" data-answer="2" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <span class="quest-math">(___) ＋ (___) = 13</span>
+      </div>
+      <div class="quest-row">
+        <span class="quest-math">第一个数：</span>
+        <input type="number" class="answer-input dual-a" id="q4a" data-target="13" min="1" max="99" inputmode="numeric" autocomplete="off" oninput="checkDual(this)" onblur="checkDual(this)">
+        <span class="quest-math" style="margin-left:16px;">第二个数：</span>
+        <input type="number" class="answer-input dual-b" id="q4b" data-target="13" min="1" max="99" inputmode="numeric" autocomplete="off" oninput="checkDual(this)" onblur="checkDual(this)">
       </div>
       <div class="feedback" id="q4-fb"></div>
     </div>
@@ -486,16 +490,92 @@ function checkSingle(input) {
     Array.from(document.querySelectorAll('.answer-input.correct-input')).length;
 }
 
+// 双空检查（数字拆分题）
+const dualChecked = {};
+function checkDual(input) {
+  const card = input.closest('.quest-card');
+  if (!card) return;
+  const qId = card.id.replace('-card', '');
+  const target = parseInt(input.dataset.target);
+  const inputA = card.querySelector('.dual-a');
+  const inputB = card.querySelector('.dual-b');
+  const valA = inputA ? inputA.value.trim() : '';
+  const valB = inputB ? inputB.value.trim() : '';
+  const fb = card.querySelector('.feedback');
+
+  // Only check when both fields have values
+  if (valA === '' || valB === '') {
+    inputA.className = 'answer-input dual-a';
+    inputB.className = 'answer-input dual-b';
+    card.className = 'quest-card';
+    if (fb) { fb.className = 'feedback'; fb.textContent = ''; }
+    return;
+  }
+
+  if (dualChecked[qId]) return;
+
+  const numA = parseInt(valA);
+  const numB = parseInt(valB);
+  const correct = (numA + numB === target && numA > 0 && numB > 0);
+  dualChecked[qId] = true;
+
+  if (correct) {
+    correctCount++;
+    playCorrect();
+    card.className = 'quest-card correct checked';
+    card.querySelector('.quest-num').textContent = '✅';
+    if (fb) {
+      fb.className = 'feedback show correct-fb';
+      fb.textContent = '✅ ' + numA + ' + ' + numB + ' = ' + target + '，拆分正确！🎉';
+    }
+    inputA.className = 'answer-input dual-a correct-input';
+    inputB.className = 'answer-input dual-b correct-input';
+    inputA.disabled = true;
+    inputB.disabled = true;
+  } else {
+    playWrong();
+    card.className = 'quest-card wrong checked';
+    card.querySelector('.quest-num').textContent = '❌';
+    if (fb) {
+      fb.className = 'feedback show wrong-fb';
+      fb.innerHTML = '❌ ' + numA + ' + ' + numB + ' = ' + (numA+numB) + '，不等于 ' + target + '<br>💡 两个数相加必须等于 ' + target + '，再试试！';
+    }
+    inputA.className = 'answer-input dual-a wrong-input';
+    inputB.className = 'answer-input dual-b wrong-input';
+  }
+
+  checked.add(qId);
+  document.getElementById('correctCount').textContent = correctCount;
+  document.getElementById('progressFill').style.width = (checked.size / TOTAL * 100) + '%';
+
+  const s = document.getElementById('scoreStatus');
+  if (checked.size === TOTAL) {
+    if (correctCount === TOTAL) s.textContent = '🎊 全部答对！太厉害了！';
+    else if (correctCount >= 9) s.textContent = '🧠 思维大师！';
+    else if (correctCount >= 7) s.textContent = '⭐ 思维精英！';
+    else if (correctCount >= 5) s.textContent = '🌟 思维新秀！';
+    else s.textContent = '💪 继续加油！';
+  } else {
+    s.textContent = '已完成 ' + checked.size + '/' + TOTAL + ' · 答对 ' + correctCount + ' 题';
+  }
+
+  if (checked.size === TOTAL) {
+    setTimeout(() => showAchievement(), 600);
+  }
+}
+
 // ===== 答案 =====
 const TOTAL = 12;
 let correctCount = 0;
 const checked = new Set();
 
-const answers = {"q1": "23", "q2": "15", "q3": "a", "q4": "2", "q5": "c", "q6": "c", "q7": "15", "q8": "6", "q9": "6", "q10": "12", "q11": "a", "q12": "18"};
+const answers = {"q1": "23", "q2": "15", "q3": "a", "q4": "2+11", "q5": "c", "q6": "c", "q7": "15", "q8": "6", "q9": "6", "q10": "12", "q11": "a", "q12": "18"};
 
-const acceptAnswers = {"q4": ["2", "11"]};
+const acceptAnswers = {};
 
-const explanations = {"q1": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是23。"}, "q2": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是15。"}, "q3": {"ok": "选择正确！左边大🎉", "fix": "正确答案是：左边大"}, "q4": {"ok": "2，拆分正确！🎉", "fix": "2可以拆分成两个数相加，答案是2。"}, "q5": {"ok": "排序正确！🍉 西瓜🎉", "fix": "正确答案是🍉 西瓜，按大小顺序排列。"}, "q6": {"ok": "选择正确！小兔最大🎉", "fix": "正确答案是：小兔最大"}, "q7": {"ok": "括号里填15，完全正确！🎉", "fix": "用逆运算：( ? ) - 5 = 10，括号里应该填几？，答案是15。"}, "q8": {"ok": "6，代换正确！🎉", "fix": "一步步代换，答案是6。"}, "q9": {"ok": "答案是6，完全正确！🎉", "fix": "仔细阅读题目，答案是6。"}, "q10": {"ok": "12，从左到右计算正确！🎉", "fix": "从左到右一步步算，答案是12。"}, "q11": {"ok": "选择正确！🎉", "fix": "正确答案是："}, "q12": {"ok": "答案是18，完全正确！🎉", "fix": "仔细阅读题目，一步步计算，答案是18。"}};
+const dualTargets = {"q4": 13};
+
+const explanations = {"q1": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是23。"}, "q2": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是15。"}, "q3": {"ok": "选择正确！左边大🎉", "fix": "正确答案是：左边大"}, "q4": {"ok": "两个数相加等于13，拆分正确！🎉", "fix": "两个数相加必须等于13。"}, "q5": {"ok": "排序正确！🍉 西瓜🎉", "fix": "正确答案是🍉 西瓜，按大小顺序排列。"}, "q6": {"ok": "选择正确！小兔最大🎉", "fix": "正确答案是：小兔最大"}, "q7": {"ok": "括号里填15，完全正确！🎉", "fix": "用逆运算：( ? ) - 5 = 10，括号里应该填几？，答案是15。"}, "q8": {"ok": "6，代换正确！🎉", "fix": "一步步代换，答案是6。"}, "q9": {"ok": "答案是6，完全正确！🎉", "fix": "仔细阅读题目，答案是6。"}, "q10": {"ok": "12，从左到右计算正确！🎉", "fix": "从左到右一步步算，答案是12。"}, "q11": {"ok": "选择正确！🎉", "fix": "正确答案是："}, "q12": {"ok": "答案是18，完全正确！🎉", "fix": "仔细阅读题目，一步步计算，答案是18。"}};
 
 function getInputValue(qId) {
   const input = document.getElementById(qId);
@@ -633,6 +713,7 @@ function showAchievement() {
 
 function retry() {
   checked.clear();
+  for (const key in dualChecked) delete dualChecked[key];
   correctCount = 0;
   document.getElementById('correctCount').textContent = '0';
   document.getElementById('progressFill').style.width = '0%';
@@ -654,6 +735,12 @@ function retry() {
       input.disabled = false;
       input.className = 'answer-input';
     }
+    // Reset dual inputs
+    card.querySelectorAll('.dual-a, .dual-b').forEach(inp => {
+      inp.value = '';
+      inp.disabled = false;
+      inp.className = inp.className.includes('dual-b') ? 'answer-input dual-b' : 'answer-input dual-a';
+    });
     card.querySelectorAll('input[type="radio"]').forEach(r => {
       r.checked = false;
       r.disabled = false;
@@ -691,7 +778,7 @@ function launchConfetti() {
 }
 
 // 绑定事件
-document.querySelectorAll('.answer-input').forEach(input => {
+document.querySelectorAll('.answer-input:not(.dual-a):not(.dual-b)').forEach(input => {
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') { e.preventDefault(); checkAnswer(this.id); }
   });
