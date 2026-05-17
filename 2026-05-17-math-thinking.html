@@ -270,11 +270,11 @@
     <!-- Q5 -->
     <div class="quest-card" id="q5-card">
       <div class="quest-header"><span class="quest-num">5</span><span style="font-weight:700;">比大小排序</span></div>
-<div class="quest-scene">按从轻到重排列，最重的是哪个？</div>
+<div class="quest-scene">根据生活常识，按从小到大排列，中间的是谁？</div>
       <div class="options-group" id="q5-options">
-        <div class="option-card"><input type="radio" name="q5" id="q5-a" value="a"><label for="q5-a">🍇 葡萄</label></div>
-        <div class="option-card"><input type="radio" name="q5" id="q5-b" value="b"><label for="q5-b">🍎 苹果</label></div>
-        <div class="option-card"><input type="radio" name="q5" id="q5-c" value="c"><label for="q5-c">🍉 西瓜</label></div>
+        <div class="option-card"><input type="radio" name="q5" id="q5-a" value="a"><label for="q5-a">🐜 蚂蚁</label></div>
+        <div class="option-card"><input type="radio" name="q5" id="q5-b" value="b"><label for="q5-b">🐱 小猫</label></div>
+        <div class="option-card"><input type="radio" name="q5" id="q5-c" value="c"><label for="q5-c">🐘 大象</label></div>
       </div>
       <div class="feedback" id="q5-fb"></div>
     </div>
@@ -302,11 +302,11 @@
     <div class="quest-card" id="q7-card">
       <div class="quest-header"><span class="quest-num">7</span><span style="font-weight:700;">括号里填几</span></div>
 <div class="quest-row">
-        <span class="quest-math">( ? ) - 5 = 10，括号里应该填几？</span>
+        <span class="quest-math">17 - ( ? ) = 14，括号里应该填几？</span>
       </div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q7" data-answer="15" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <input type="number" class="answer-input" id="q7" data-answer="3" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q7-fb"></div>
     </div>
@@ -314,11 +314,11 @@
     <!-- Q8 -->
     <div class="quest-card" id="q8-card">
       <div class="quest-header"><span class="quest-num">8</span><span style="font-weight:700;">等量代换</span></div>
-<div class="quest-scene">1个🐘大象 = 3只🐷小猪<br>1只🐷小猪 = 2只🐔小鸡</div>
-      <div class="quest-scene">那1个🐘大象 = 几只🐔小鸡？</div>
+<div class="quest-scene">1个🐟大鱼 = 2条🐟小鱼<br>1条🐟小鱼 = 2只🦐虾</div>
+      <div class="quest-scene">那1个🐟大鱼 = 几只🦐虾？</div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q8" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <input type="number" class="answer-input" id="q8" data-answer="4" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q8-fb"></div>
     </div>
@@ -326,11 +326,11 @@
     <!-- Q9 -->
     <div class="quest-card" id="q9-card">
       <div class="quest-header"><span class="quest-num">9</span><span style="font-weight:700;">应用题</span></div>
-<div class="quest-scene">笔袋里有 15 支铅笔 ✏️<br>用掉了 6 支<br>又丢了 3 支</div>
-      <div class="quest-scene">笔袋里还剩几支铅笔？</div>
+<div class="quest-scene">鸟窝里有 15 个鸟蛋 🥚<br>又生了 4 个<br>被风吹走了 6 个</div>
+      <div class="quest-scene">鸟窝里有几个鸟蛋？</div>
       <div class="quest-row">
         <span class="quest-math">答案是：</span>
-        <input type="number" class="answer-input" id="q9" data-answer="6" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
+        <input type="number" class="answer-input" id="q9" data-answer="13" min="0" max="99" inputmode="numeric" autocomplete="off" oninput="checkSingle(this)" onblur="checkSingle(this)">
       </div>
       <div class="feedback" id="q9-fb"></div>
     </div>
@@ -569,13 +569,13 @@ const TOTAL = 12;
 let correctCount = 0;
 const checked = new Set();
 
-const answers = {"q1": "23", "q2": "15", "q3": "a", "q4": "2+11", "q5": "c", "q6": "c", "q7": "15", "q8": "6", "q9": "6", "q10": "12", "q11": "a", "q12": "18"};
+const answers = {"q1": "23", "q2": "15", "q3": "a", "q4": "2+11", "q5": "b", "q6": "c", "q7": "3", "q8": "4", "q9": "13", "q10": "12", "q11": "a", "q12": "18"};
 
 const acceptAnswers = {};
 
 const dualTargets = {"q4": 13};
 
-const explanations = {"q1": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是23。"}, "q2": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是15。"}, "q3": {"ok": "选择正确！左边大🎉", "fix": "正确答案是：左边大"}, "q4": {"ok": "两个数相加等于13，拆分正确！🎉", "fix": "两个数相加必须等于13。"}, "q5": {"ok": "排序正确！🍉 西瓜🎉", "fix": "正确答案是🍉 西瓜，按大小顺序排列。"}, "q6": {"ok": "选择正确！小兔最大🎉", "fix": "正确答案是：小兔最大"}, "q7": {"ok": "括号里填15，完全正确！🎉", "fix": "用逆运算：( ? ) - 5 = 10，括号里应该填几？，答案是15。"}, "q8": {"ok": "6，代换正确！🎉", "fix": "一步步代换，答案是6。"}, "q9": {"ok": "答案是6，完全正确！🎉", "fix": "仔细阅读题目，答案是6。"}, "q10": {"ok": "12，从左到右计算正确！🎉", "fix": "从左到右一步步算，答案是12。"}, "q11": {"ok": "选择正确！🎉", "fix": "正确答案是："}, "q12": {"ok": "答案是18，完全正确！🎉", "fix": "仔细阅读题目，一步步计算，答案是18。"}};
+const explanations = {"q1": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是23。"}, "q2": {"ok": "答对了！太棒了！🎉", "fix": "正确答案是15。"}, "q3": {"ok": "选择正确！左边大🎉", "fix": "正确答案是：左边大"}, "q4": {"ok": "两个数相加等于13，拆分正确！🎉", "fix": "两个数相加必须等于13。"}, "q5": {"ok": "排序正确！🐱 小猫🎉", "fix": "正确答案是🐱 小猫，按大小顺序排列。"}, "q6": {"ok": "选择正确！小兔最大🎉", "fix": "正确答案是：小兔最大"}, "q7": {"ok": "括号里填3，完全正确！🎉", "fix": "用逆运算：17 - ( ? ) = 14，括号里应该填几？，答案是3。"}, "q8": {"ok": "4，代换正确！🎉", "fix": "一步步代换，答案是4。"}, "q9": {"ok": "答案是13，完全正确！🎉", "fix": "仔细阅读题目，答案是13。"}, "q10": {"ok": "12，从左到右计算正确！🎉", "fix": "从左到右一步步算，答案是12。"}, "q11": {"ok": "选择正确！🎉", "fix": "正确答案是："}, "q12": {"ok": "答案是18，完全正确！🎉", "fix": "仔细阅读题目，一步步计算，答案是18。"}};
 
 function getInputValue(qId) {
   const input = document.getElementById(qId);
