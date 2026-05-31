@@ -127,16 +127,36 @@ def make_q(a, b, op):
     return {'a': a, 'b': b, 'op': op, 'answer': answer}
 
 def generate_questions_within_10(count=11):
-    """Generate 9 regular + 2 for Q10's two locks = 11 questions total."""
+    """Generate 9 regular + 2 for Q10's two locks = 11 questions total.
+    Progressive difficulty: Q1-4 simple, Q5-7 medium, Q8-10 harder.
+    """
     questions = []
     for i in range(9):
         if random.random() < 0.55:  # addition
-            a = random.randint(1, 8)
-            b = random.randint(1, 10 - a)
+            if i < 4:
+                # Simple: small numbers
+                a = random.randint(1, 5)
+                b = random.randint(1, 6)
+                if a + b > 10: b = 10 - a
+            elif i < 7:
+                # Medium: up to 8
+                a = random.randint(2, 7)
+                b = random.randint(1, 10 - a)
+            else:
+                # Harder: near 10
+                a = random.randint(4, 9)
+                b = random.randint(1, 10 - a)
             questions.append(make_q(a, b, '+'))
         else:
-            a = random.randint(2, 10)
-            b = random.randint(1, a - 1)
+            if i < 4:
+                a = random.randint(4, 8)
+                b = random.randint(1, a - 1)
+            elif i < 7:
+                a = random.randint(6, 10)
+                b = random.randint(1, a - 1)
+            else:
+                a = random.randint(8, 10)
+                b = random.randint(2, a - 1)
             questions.append(make_q(a, b, '-'))
     # Q10 lock 1: subtraction from 10
     b = random.randint(2, 8)
@@ -147,13 +167,26 @@ def generate_questions_within_10(count=11):
     return questions
 
 def generate_questions_teens_add_no_carry(count=11):
+    """Teens addition without carry. Progressive within week range."""
     questions = []
     for i in range(9):
-        a = random.randint(11, 18)
-        ones = a % 10
-        b = random.randint(1, 9 - ones)
+        if i < 4:
+            # Simple: 11-14 + 1-3
+            a = random.randint(11, 14)
+            ones = a % 10
+            b = random.randint(1, min(3, 9 - ones))
+        elif i < 7:
+            # Medium: 11-16 + 1-5
+            a = random.randint(11, 16)
+            ones = a % 10
+            b = random.randint(1, 9 - ones)
+        else:
+            # Harder: 13-18 + larger
+            a = random.randint(13, 18)
+            ones = a % 10
+            b = random.randint(1, 9 - ones)
         questions.append(make_q(a, b, '+'))
-    # Q10 locks
+    # Q10 locks: mix of teens add and review
     a = random.randint(10, 16)
     b = random.randint(1, 9)
     if a % 10 + b <= 9:
@@ -167,11 +200,24 @@ def generate_questions_teens_add_no_carry(count=11):
     return questions
 
 def generate_questions_teens_sub_no_borrow(count=11):
+    """Teens subtraction without borrow. Progressive within week range."""
     questions = []
     for i in range(9):
-        a = random.randint(12, 19)
-        ones = a % 10
-        b = random.randint(1, ones)
+        if i < 4:
+            # Simple: 12-15 - small
+            a = random.randint(12, 15)
+            ones = a % 10
+            b = random.randint(1, min(ones, 3))
+        elif i < 7:
+            # Medium: 13-17 - moderate
+            a = random.randint(13, 17)
+            ones = a % 10
+            b = random.randint(1, ones)
+        else:
+            # Harder: 15-19 - larger subtrahend
+            a = random.randint(15, 19)
+            ones = a % 10
+            b = random.randint(max(1, ones - 2), ones)
         questions.append(make_q(a, b, '-'))
     a = random.randint(12, 19)
     ones = a % 10
@@ -186,30 +232,80 @@ def generate_questions_teens_sub_no_borrow(count=11):
     return questions
 
 def generate_questions_carry_add(count=11):
+    """Carry addition (进位加法). Progressive: single-digit carry -> two-digit carry.
+    Week 7: mostly single-digit + single-digit with carry
+    Week 8: includes two-digit + single-digit with carry (e.g., 18+7=25)
+    Within each day: Q1-4 simple, Q5-7 medium, Q8-10 harder.
+    """
     questions = []
     for i in range(9):
-        a = random.randint(6, 9)
-        b = random.randint(10 - a, 9)
-        questions.append(make_q(a, b, '+'))
+        if i < 4:
+            # Simple: single-digit carry, smaller numbers (6-8 + complement)
+            a = random.randint(6, 8)
+            b = random.randint(10 - a, min(7, 9))
+            questions.append(make_q(a, b, '+'))
+        elif i < 7:
+            # Medium: single-digit carry, larger numbers (7-9 + complement)
+            a = random.randint(7, 9)
+            b = random.randint(10 - a, 9)
+            questions.append(make_q(a, b, '+'))
+        else:
+            # Harder: mix of two-digit carry (18+7) or larger single-digit (9+9)
+            if random.random() < 0.4:
+                # Two-digit + single-digit with carry
+                a = random.randint(16, 19)
+                ones = a % 10
+                b = random.randint(10 - ones, 9)
+                questions.append(make_q(a, b, '+'))
+            else:
+                a = random.randint(8, 9)
+                b = random.randint(10 - a, 9)
+                questions.append(make_q(a, b, '+'))
+    # Q10 lock 1: larger carry
     a = random.randint(8, 9)
     b = random.randint(10 - a, 9)
     questions.append(make_q(a, b, '+'))
-    a = random.randint(7, 9)
-    b = random.randint(10 - a, 9)
+    # Q10 lock 2: two-digit carry challenge
+    a = random.randint(15, 19)
+    ones = a % 10
+    b = random.randint(10 - ones, 9)
     questions.append(make_q(a, b, '+'))
     return questions
 
 def generate_questions_borrow_sub(count=11):
+    """Borrow subtraction (退位减法). Progressive: simple borrow -> complex borrow.
+    Within each day: Q1-4 simple borrow, Q5-7 medium, Q8-10 harder.
+    """
     questions = []
     for i in range(9):
-        a = random.randint(12, 18)
-        ones = a % 10
-        b = random.randint(ones + 1, 9)
+        if i < 4:
+            # Simple: 12-15, small borrow
+            a = random.randint(12, 15)
+            ones = a % 10
+            b = random.randint(ones + 1, min(ones + 2, 9))
+        elif i < 7:
+            # Medium: 13-17, moderate borrow
+            a = random.randint(13, 17)
+            ones = a % 10
+            b = random.randint(ones + 1, 9)
+        else:
+            # Harder: 15-19, larger borrow or two-digit
+            if random.random() < 0.3:
+                # Two-digit - single-digit with borrow
+                a = random.randint(21, 32)
+                ones = a % 10
+                b = random.randint(ones + 1, 9)
+            else:
+                a = random.randint(15, 19)
+                ones = a % 10
+                b = random.randint(ones + 1, 9)
         questions.append(make_q(a, b, '-'))
+    # Q10 lock 1: teen borrow
     a = random.randint(11, 15)
     ones = a % 10
     b = random.randint(ones + 1, 9)
     questions.append(make_q(a, b, '-'))
+    # Q10 lock 2: harder borrow
     a = random.randint(12, 17)
     ones = a % 10
     b = random.randint(ones + 1, 9)
@@ -217,11 +313,19 @@ def generate_questions_borrow_sub(count=11):
     return questions
 
 def generate_questions_mixed(count=11):
+    """Mixed carry/borrow with increasing difficulty within the set."""
     questions = []
-    generators = [generate_questions_carry_add, generate_questions_borrow_sub]
     for i in range(11):
-        gen = random.choice(generators)
-        qs = gen(1)
+        if i < 4:
+            # Start with simpler carry addition
+            qs = generate_questions_carry_add(1)
+        elif i < 8:
+            # Mix carry and borrow
+            gen = random.choice([generate_questions_carry_add, generate_questions_borrow_sub])
+            qs = gen(1)
+        else:
+            # End with harder borrow subtraction
+            qs = generate_questions_borrow_sub(1)
         questions.extend(qs)
     return questions
 
