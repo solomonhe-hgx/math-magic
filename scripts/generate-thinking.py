@@ -999,10 +999,20 @@ def gen_word_problem_from_pool(title, problem_type, base, sub, add, extra=None):
     if extra is None:
         extra = random.randint(1, min(add, sub))
 
-    scene = scene_tpl[0].format(base=base, sub=sub, add=add, extra=extra)
-    action = scene_tpl[1].format(base=base, sub=sub, add=add, extra=extra)
-    action2 = scene_tpl[2].format(base=base, sub=sub, add=add, extra=extra)
-    question = scene_tpl[3]
+    # Templates can have 4 or 5 elements: (scene, action, action2, [action3,] question)
+    if len(scene_tpl) == 5:
+        scene = scene_tpl[0].format(base=base, sub=sub, add=add, extra=extra)
+        action = scene_tpl[1].format(base=base, sub=sub, add=add, extra=extra)
+        action2 = scene_tpl[2].format(base=base, sub=sub, add=add, extra=extra)
+        action3 = scene_tpl[3].format(base=base, sub=sub, add=add, extra=extra)
+        question = scene_tpl[4]
+        full_scene = f'{scene}<br>{action}<br>{action2}<br>{action3}'
+    else:
+        scene = scene_tpl[0].format(base=base, sub=sub, add=add, extra=extra)
+        action = scene_tpl[1].format(base=base, sub=sub, add=add, extra=extra)
+        action2 = scene_tpl[2].format(base=base, sub=sub, add=add, extra=extra)
+        question = scene_tpl[3]
+        full_scene = f'{scene}<br>{action}<br>{action2}'
 
     if problem_type in ('add_then_sub', 'two_step'):
         answer = base - sub + add
