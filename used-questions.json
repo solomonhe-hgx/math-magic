@@ -2932,8 +2932,52 @@
       "38952de4cde97269db341cba991716ad": {
         "date": "2026-09-09",
         "equation": "36+41=77"
+      },
+      "efdde0f6fc4647bfcd81e9a5edec889e": {
+        "date": "2026-09-10",
+        "equation": "39-27=12"
+      },
+      "09e82d2e6dd865e7e5b1a40fa26b8358": {
+        "date": "2026-09-10",
+        "equation": "45-24=21"
+      },
+      "28b4b9de36f95fffebda70e25f7a1c9e": {
+        "date": "2026-09-10",
+        "equation": "39-28=11"
+      },
+      "976405e5e6fb6b812ced7de7c7daace6": {
+        "date": "2026-09-10",
+        "equation": "61-40=21"
+      },
+      "4bd23bdd035bcc42f768bca87e9eca0e": {
+        "date": "2026-09-10",
+        "equation": "55+28=83"
+      },
+      "e6df4ea4273dba0ebc8cdcfd4030f50e": {
+        "date": "2026-09-10",
+        "equation": "53+11=64"
+      },
+      "358721d906dc3753851a57aec5c211b1": {
+        "date": "2026-09-10",
+        "equation": "68+23=91"
+      },
+      "88e9c2ce7ad1bc4a9548487055cf122e": {
+        "date": "2026-09-10",
+        "equation": "38+35=73"
+      },
+      "d6d4bd144f454fe579c3dfb3117919d3": {
+        "date": "2026-09-10",
+        "equation": "48-18=30"
+      },
+      "eaf960fda1dbea67fa604ad9d045ede6": {
+        "date": "2026-09-10",
+        "equation": "46-26=20"
+      },
+      "4bf8bb8008f8de0dfa5ac2cc8824850f": {
+        "date": "2026-09-10",
+        "equation": "37+22=59"
       }
     }
   },
-  "last_date": "2026-09-09"
+  "last_date": "2026-09-10"
 }
